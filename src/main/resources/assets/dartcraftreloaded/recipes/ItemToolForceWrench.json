@@ -7,20 +7,20 @@
   "key": {
     "F": [
       {
-        "item": "dartcraftreloaded:ingot_force",
+        "item": "dartcraftreloaded:ingotForce",
         "data": 0
       }
     ],
     "G": [
       {
-        "item": "dartcraftreloaded:gear_force",
+        "item": "dartcraftreloaded:gearForce",
         "data": 0
       }
     ]
   },
 
   "result": {
-    "item": "dartcraftreloaded:force_wrench",
+    "item": "dartcraftreloaded:forceWrench",
     "data": 0
   }
 }

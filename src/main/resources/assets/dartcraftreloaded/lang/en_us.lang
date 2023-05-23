@@ -34,29 +34,28 @@ item.forceMitt.name=Force Mitts
 
 #Blocks
 tile.orePower.name=Power Ore
-tile.force_sapling.name=Force Sapling
+tile.forceSapling.name=Force Sapling
 tile.forceLog.name=Force Log
 tile.forceLeaves.name=Force Leaves
 tile.infuser.name=Force Infuser
 tile.forceFurnace.name=Force Furnace
 tile.forcePlanks.name=Force Planks
-tile.forceBrickBlack.name=Black Force Brick
-tile.forceBrickBlue.name=Blue Force Brick
-tile.forceBrickBrown.name=Brown Force Brick
-tile.forceBrickCyan.name=Cyan Force Brick
-tile.forceBrickGray.name=Gray Force Brick
-tile.forceBrickGreen.name=Green Force Brick
-tile.forceBrickLightBlue.name=Light Blue Force Brick
-tile.forceBrickLightGray.name=Light Gray Force Brick
-tile.forceBrickLime.name=Lime Force Brick
-tile.forceBrickMagenta.name=Magenta Force Brick
-tile.forceBrickOrange.name=Orange Force Brick
-tile.forceBrickPink.name=Pink Force Brick
-tile.forceBrickPurple.name=Purple Force Brick
-tile.forceBrickRed.name=Red Force Brick
-tile.forceBrickWhite.name=White Force Brick
-tile.forceBrickYellow.name=Yellow Force Brick
-tile.forceBrick.name=Force Brick
+tile.forceBrick.black.name=Black Force Brick
+tile.forceBrick.blue.name=Blue Force Brick
+tile.forceBrick.brown.name=Brown Force Brick
+tile.forceBrick.cyan.name=Cyan Force Brick
+tile.forceBrick.gray.name=Gray Force Brick
+tile.forceBrick.green.name=Green Force Brick
+tile.forceBrick.lightBlue.name=Light Blue Force Brick
+tile.forceBrick.silver.name=Light Gray Force Brick
+tile.forceBrick.lime.name=Lime Force Brick
+tile.forceBrick.magenta.name=Magenta Force Brick
+tile.forceBrick.orange.name=Orange Force Brick
+tile.forceBrick.pink.name=Pink Force Brick
+tile.forceBrick.purple.name=Purple Force Brick
+tile.forceBrick.red.name=Red Force Brick
+tile.forceBrick.white.name=White Force Brick
+tile.forceBrick.yellow.name=Yellow Force Brick
 tile.timeTorch.name=§bTime Torch
 tile.forceTorch.name=Force Torch
 
@@ -66,8 +65,6 @@ itemGroup.dartcraftreloaded=Dartcraft Reloaded
 #Text
 dartcraftReloaded.guideEmpty=This is Broken. Report to Github Please.
 
-#GUI
-gui.guideBook=Book of Mudora
 
 #Fluid
 fluid.force=Liquid Force

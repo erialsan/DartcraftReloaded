@@ -7,13 +7,13 @@
   "key": {
     "N": [
       {
-        "item": "dartcraftreloaded:nugget_force",
+        "item": "dartcraftreloaded:nuggetForce",
         "data": 0
       }
     ]
   },
   "result": {
-    "item": "dartcraftreloaded:ingot_force",
+    "item": "dartcraftreloaded:ingotForce",
     "data": 0
   }
 }

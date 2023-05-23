@@ -13,7 +13,7 @@
     ],
     "S": [
       {
-        "item": "dartcraftreloaded:cookie_snow",
+        "item": "dartcraftreloaded:cookieSnow",
         "data": 0
       }
     ],
@@ -36,7 +36,7 @@
     ]
   },
   "result": {
-    "item": "dartcraftreloaded:soul_wafer",
+    "item": "dartcraftreloaded:soulWafer",
     "data": 0
   }
 }

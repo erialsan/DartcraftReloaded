@@ -7,13 +7,13 @@
   "key": {
     "F": [
       {
-        "item": "dartcraftreloaded:ingot_force",
+        "item": "dartcraftreloaded:ingotForce",
         "data": 0
       }
     ],
     "S": [
       {
-        "item": "dartcraftreloaded:stick_force",
+        "item": "dartcraftreloaded:stickForce",
         "data": 0
       }
     ]

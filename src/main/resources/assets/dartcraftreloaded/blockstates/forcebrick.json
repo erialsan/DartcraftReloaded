@@ -1,16 +1,59 @@
 {
   "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "all": "dartcraftreloaded:block/forcebrick"
-    }
-  },
   "variants": {
     "normal": {
       "model": "cube_all"
     },
     "inventory": {
       "model": "cube_all"
-    }
+    },
+	"variant=black": {
+	  "model": "dartcraftreloaded:brick_black"
+	},
+	"variant=red": {
+	  "model": "dartcraftreloaded:brick_red"
+	},
+	"variant=green": {
+	  "model": "dartcraftreloaded:brick_green"
+	},
+	"variant=brown": {
+	  "model": "dartcraftreloaded:brick_brown"
+	},
+	"variant=blue": {
+	  "model": "dartcraftreloaded:brick_blue"
+	},
+	"variant=purple": {
+	  "model": "dartcraftreloaded:brick_purple"
+	},
+	"variant=cyan": {
+	  "model": "dartcraftreloaded:brick_cyan"
+	},
+	"variant=silver": {
+	  "model": "dartcraftreloaded:brick_lightgray"
+	},
+	"variant=gray": {
+	  "model": "dartcraftreloaded:brick_gray"
+	},
+	"variant=pink": {
+	  "model": "dartcraftreloaded:brick_pink"
+	},
+	"variant=lime": {
+	  "model": "dartcraftreloaded:brick_lime"
+	},
+	"variant=yellow": {
+	  "model": "dartcraftreloaded:brick_yellow"
+	},
+	"variant=light_blue": {
+	  "model": "dartcraftreloaded:brick_lightblue"
+	},
+	"variant=magenta": {
+	  "model": "dartcraftreloaded:brick_magenta"
+	},
+	"variant=orange": {
+	  "model": "dartcraftreloaded:brick_orange"
+	},
+	"variant=white": {
+	  "model": "dartcraftreloaded:brick_white"
+	}
   }
 }

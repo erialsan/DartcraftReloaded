@@ -19,8 +19,8 @@
     ]
   },
   "result": {
-    "item": "dartcraftreloaded:forceBrickPurple",
-    "data": 0,
+    "item": "dartcraftreloaded:forceBrick",
+    "data": 10,
     "count": 8
   }
 }

@@ -7,13 +7,13 @@
   "key": {
     "F": [
       {
-        "item": "dartcraftreloaded:ingot_force",
+        "item": "dartcraftreloaded:ingotForce",
         "data": 0
       }
     ]
   },
   "result": {
-    "item": "dartcraftreloaded:force_chest",
+    "item": "dartcraftreloaded:forceChest",
     "data": 0
   }
 }

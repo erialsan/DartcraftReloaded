@@ -7,26 +7,26 @@
   "key": {
     "F": [
       {
-        "item": "dartcraftreloaded:ingot_force",
+        "item": "dartcraftreloaded:ingotForce",
         "data": 0
       }
     ],
     "N": [
       {
-        "item": "dartcraftreloaded:nugget_force",
+        "item": "dartcraftreloaded:nuggetForce",
         "data": 0
       }
     ],
     "S": [
       {
-        "item": "dartcraftreloaded:stick_force",
+        "item": "dartcraftreloaded:stickForce",
         "data": 0
       }
     ]
   },
 
   "result": {
-    "item": "dartcraftreloaded:force_rod",
+    "item": "dartcraftreloaded:forceRod",
     "data": 0
   }
 }

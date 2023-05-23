@@ -6,7 +6,7 @@
       "data": 0
     },
     {
-      "item": "dartcraftreloaded:gem_forcegem",
+      "item": "dartcraftreloaded:gemForcegem",
       "data": 0
     },
     {
@@ -15,7 +15,7 @@
     }
   ],
   "result": {
-    "item": "dartcraftreloaded:ingot_force",
+    "item": "dartcraftreloaded:ingotForce",
     "data": 0,
     "count": 2
   }
