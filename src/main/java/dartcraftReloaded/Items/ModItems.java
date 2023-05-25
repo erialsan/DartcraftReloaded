@@ -26,6 +26,7 @@ public class ModItems {
     public static ItemArmor forceLegs = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.LEGS, FORCE_LEGS);
     public static ItemArmor forceBoots = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.FEET, FORCE_BOOTS);
     public static ItemForceRod forceRod = new ItemForceRod(FORCE_ROD);
+    public static ItemWoodenForceRod woodenForceRod = new ItemWoodenForceRod(WOODEN_FORCE_ROD);
     public static ItemForceWrench forceWrench = new ItemForceWrench(FORCE_WRENCH);
     public static ItemBase goldenPowerSource = new ItemBase(GOLDEN_POWER_SOURCE).setCreativeTab(DartcraftReloaded.creativeTab);
     public static ItemBase claw = new ItemBase(CLAW).setCreativeTab(DartcraftReloaded.creativeTab);
@@ -62,6 +63,7 @@ public class ModItems {
                 forceLegs,
                 forceBoots,
                 forceRod,
+                woodenForceRod,
                 forceWrench,
                 forcePickaxe,
                 forceAxe,
@@ -95,6 +97,7 @@ public class ModItems {
         forceLegs.registerItemModel();
         forceBoots.registerItemModel();
         forceRod.registerItemModel();
+        woodenForceRod.registerItemModel();
         forceWrench.registerItemModel();
         forcePickaxe.registerItemModel();
         forceAxe.registerItemModel();
@@ -119,7 +122,6 @@ public class ModItems {
         OreDictionary.registerOre("gemForceGem", gemForceGem);
         OreDictionary.registerOre("ingotForce", ingotForce);
         OreDictionary.registerOre("nuggetForce", nuggetForce);
-        OreDictionary.registerOre("stickWood", stickForce);
         OreDictionary.registerOre("gearForce", forceGear);
     }
 }

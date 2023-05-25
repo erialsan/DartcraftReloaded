@@ -34,6 +34,7 @@ public class Constants {
             FORCE_LEGS = "forceLegs",
             FORCE_BOOTS = "forceBoots",
             FORCE_ROD = "forceRod",
+            WOODEN_FORCE_ROD = "woodenForceRod",
             FORCE_WRENCH = "forceWrench",
             GOLDEN_POWER_SOURCE = "goldenPowerSource",
             CLAW = "forceClaw",

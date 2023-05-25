@@ -1,12 +1,10 @@
 package dartcraftReloaded.Items.Tools;
 
-import dartcraftReloaded.Handlers.DCRPacketHandler;
 import dartcraftReloaded.Handlers.DCRSoundHandler;
 import dartcraftReloaded.Items.ItemBase;
 import dartcraftReloaded.Items.ModItems;
 import dartcraftReloaded.Items.NonBurnable.EntityNonBurnableItem;
 import dartcraftReloaded.Items.NonBurnable.ItemInertCore;
-import dartcraftReloaded.Networking.SoundMessage;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.capablilities.ForceRod.ForceRodProvider;
 import dartcraftReloaded.DartcraftReloaded;

@@ -1,3 +1,6 @@
+#Sounds
+sparkle=Magic Sparkles
+
 #Items
 item.ingotForce.name=Force Ingot
 item.gemForceGem.name=Force Gem
@@ -29,6 +32,7 @@ item.forceSword.name=Force Sword
 item.forceShovel.name=Force Shovel
 item.forceWrench.name=Force Wrench
 item.forceRod.name=Force Rod
+item.woodenForceRod.name=Wooden Force Rod
 item.forceShears.name=Force Shears
 item.magnetGlove.name=Magnet Glove
 item.forceMitt.name=Force Mitts

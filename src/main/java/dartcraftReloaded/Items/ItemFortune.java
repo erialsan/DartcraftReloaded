@@ -5,6 +5,7 @@ import dartcraftReloaded.Handlers.DCRGUIHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,19 +29,17 @@ import java.util.Random;
  * Created by BURN447 on 6/2/2018.
  */
 public class ItemFortune extends ItemBase {
-    private static String[] fortunes = new String[186];
+    private static final String[] fortunes = new String[186];
 
+    static {
+        for (int i = 0; i <= 185; i++) {
+            fortunes[i] = "text.dartcraftReloaded.fortune" + i;
+        }
+    }
     public ItemFortune(String name) {
         super(name);
         this.name = name;
         this.setCreativeTab(DartcraftReloaded.creativeTab);
-
-        Arrays.fill(fortunes, "0");
-
-        for (int i = 0; i <= 185; i++) {
-            fortunes[i] = "text.dartcraftReloaded.fortune" + i;
-        }
-
     }
 
     @Override
@@ -49,42 +48,28 @@ public class ItemFortune extends ItemBase {
     }
 
 
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         NBTTagCompound nbt;
-        ItemStack stack = playerIn.getHeldItem(handIn);
-        if(stack.hasTagCompound()) {
+        if (stack.hasTagCompound()) {
             nbt = stack.getTagCompound();
-        }
-        else {
+        } else {
             nbt = new NBTTagCompound();
         }
-
         if(!nbt.hasKey("message")) {
             addMessage(stack, nbt);
         }
+    }
 
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         playerIn.openGui(DartcraftReloaded.instance, DCRGUIHandler.FORTUNE, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
-        return new ActionResult<>(EnumActionResult.PASS, stack);
+        return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     }
 
 
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        NBTTagCompound nbt;
-        ItemStack stack = player.getHeldItem(hand);
-        if(stack.hasTagCompound()) {
-            nbt = stack.getTagCompound();
-        }
-        else {
-            nbt = new NBTTagCompound();
-        }
-
-        if(!nbt.hasKey("message")) {
-            addMessage(stack, nbt);
-        }
-
         player.openGui(DartcraftReloaded.instance, DCRGUIHandler.FORTUNE, worldIn, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
         return EnumActionResult.PASS;
     }
