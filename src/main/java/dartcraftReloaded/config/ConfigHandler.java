@@ -1,14 +1,14 @@
 package dartcraftReloaded.config;
 
 
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = References.modId)
+@Config(modid = Constants.modId)
 public class ConfigHandler {
 
     @Config.Comment("Enable Time Torch. Default: true")
@@ -21,7 +21,7 @@ public class ConfigHandler {
     public static boolean betaMessage = false;
 
 
-    @Mod.EventBusSubscriber(modid = References.modId)
+    @Mod.EventBusSubscriber(modid = Constants.modId)
     private static class EventHandler {
 
         /**
@@ -31,8 +31,8 @@ public class ConfigHandler {
          */
         @SubscribeEvent
         public static void onConfigChanged(final ConfigChangedEvent.OnConfigChangedEvent event) {
-            if (event.getModID().equals(References.modId)) {
-                ConfigManager.sync(References.modId, Config.Type.INSTANCE);
+            if (event.getModID().equals(Constants.modId)) {
+                ConfigManager.sync(Constants.modId, Config.Type.INSTANCE);
             }
         }
     }

@@ -1,6 +1,6 @@
 package dartcraftReloaded.Fluids;
 
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
@@ -25,7 +25,7 @@ public class FluidForce extends Fluid {
 
 
     public FluidForce(){
-        super("force", new ResourceLocation(References.modId, "fluids/force_still"), new ResourceLocation(References.modId, "fluids/force_flow"));
+        super("force", new ResourceLocation(Constants.modId, "fluids/force_still"), new ResourceLocation(Constants.modId, "fluids/force_flow"));
 
         setRarity(EnumRarity.COMMON);
         setLuminosity(0);

@@ -23,7 +23,7 @@ public class ModItems {
     public static ItemBaseFood soulWafer = new ItemBaseFood(SOUL_WAFER, 2, 1, false);
     public static ItemArmor forceHelmet = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.HEAD, FORCE_HELMET);
     public static ItemArmor forceChest = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.CHEST, FORCE_CHEST);
-    public static ItemArmor forceLegs = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.LEGS, FORCE_LEGGINGS);
+    public static ItemArmor forceLegs = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.LEGS, FORCE_LEGS);
     public static ItemArmor forceBoots = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.FEET, FORCE_BOOTS);
     public static ItemForceRod forceRod = new ItemForceRod(FORCE_ROD);
     public static ItemForceWrench forceWrench = new ItemForceWrench(FORCE_WRENCH);

@@ -3,7 +3,7 @@ package dartcraftReloaded.Items.Tools;
 import dartcraftReloaded.capablilities.ToolModifier.ToolModProvider;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.util.DartUtils;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import com.google.common.collect.Lists;
 import dartcraftReloaded.Handlers.DCRCapabilityHandler;
 import gnu.trove.set.hash.THashSet;
@@ -37,7 +37,7 @@ public class ItemForceAxe extends ItemAxe {
 
     private static String name;
 
-    public List<References.MODIFIERS> applicableModifers = new ArrayList<>();
+    public List<Constants.MODIFIERS> applicableModifers = new ArrayList<>();
 
     public ItemForceAxe(String name) {
         super(DartcraftReloaded.forceToolMaterial, 8.0F, 8.0F);

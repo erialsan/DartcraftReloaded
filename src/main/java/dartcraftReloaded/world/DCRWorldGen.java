@@ -7,7 +7,6 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
@@ -19,11 +18,9 @@ import java.util.Random;
 public class DCRWorldGen implements IWorldGenerator {
 
     //World Generator
-    private WorldGenerator forceTree;
-    private WorldGenerator forceOre;
+    private final WorldGenerator forceOre;
 
     public DCRWorldGen(){
-        forceTree = new WorldGenTrees(false, 4, ModBlocks.forceLog.getStateFromMeta(0), ModBlocks.forceLeaves.getDefaultState(), false);
         forceOre = new WorldGenMinable(ModBlocks.orePower.getDefaultState(), 6);
     }
 
@@ -46,7 +43,6 @@ public class DCRWorldGen implements IWorldGenerator {
             //Overworld
             case 0:
                 if (!(world.getWorldType() == WorldType.FLAT)) {
-                    this.runGenerator(forceTree, world, random, chunkX, chunkZ, 10, 4, 256);
                     this.runGenerator(forceOre, world, random, chunkX, chunkZ, 5, 0, 64);
                 }
         }

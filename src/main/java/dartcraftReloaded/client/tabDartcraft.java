@@ -1,7 +1,7 @@
 package dartcraftReloaded.client;
 
 import dartcraftReloaded.Items.ModItems;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 public class tabDartcraft extends CreativeTabs {
 
     public tabDartcraft(){
-        super(References.modId);
+        super(Constants.modId);
     }
 
     @Override

@@ -1,12 +1,16 @@
 package dartcraftReloaded.Items.Tools;
 
+import dartcraftReloaded.Handlers.DCRPacketHandler;
+import dartcraftReloaded.Handlers.DCRSoundHandler;
 import dartcraftReloaded.Items.ItemBase;
 import dartcraftReloaded.Items.ModItems;
 import dartcraftReloaded.Items.NonBurnable.EntityNonBurnableItem;
 import dartcraftReloaded.Items.NonBurnable.ItemInertCore;
+import dartcraftReloaded.Networking.SoundMessage;
+import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.capablilities.ForceRod.ForceRodProvider;
 import dartcraftReloaded.DartcraftReloaded;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import dartcraftReloaded.Handlers.DCRCapabilityHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -20,10 +24,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,15 +34,15 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dartcraftReloaded.util.References.MODIFIERS.MOD_ENDER;
-import static dartcraftReloaded.util.References.MODIFIERS.MOD_HEALING;
+import static dartcraftReloaded.Constants.MODIFIERS.MOD_ENDER;
+import static dartcraftReloaded.Constants.MODIFIERS.MOD_HEALING;
 
 /**
  * Created by BURN447 on 2/23/2018.
  */
 public class ItemForceRod extends ItemBase {
 
-    public List<References.MODIFIERS> applicableModifers = new ArrayList<>();
+    public List<Constants.MODIFIERS> applicableModifers = new ArrayList<>();
 
     public ItemForceRod(String name){
         super(name);
@@ -49,12 +50,19 @@ public class ItemForceRod extends ItemBase {
         setTranslationKey(name);
         setApplicableModifers();
         this.setCreativeTab(DartcraftReloaded.creativeTab);
-        this.setMaxDamage(100);
+        this.setMaxDamage(50);
         this.setMaxStackSize(1);
+    }
+
+    private void doAction(ItemStack i, EntityPlayer p, World w) {
+        i.damageItem(1, p);
+        //DCRPacketHandler.packetHandler.sendToAll(new SoundMessage(p.getPosition(), 0));
     }
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        worldIn.playSound(player, player.getPosition(), DCRSoundHandler.SPARKLE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+        ItemStack held = player.getHeldItem(hand);
         if (!worldIn.isRemote) {
             if (worldIn.getBlockState(pos.offset(facing)).getBlock().equals(Blocks.FIRE)) {
                 worldIn.setBlockToAir(pos.offset(facing));
@@ -65,7 +73,7 @@ public class ItemForceRod extends ItemBase {
                         if(((EntityItem) i).getItem().getItem() instanceof ItemInertCore) {
                             EntityItem bottledWither = new EntityNonBurnableItem(worldIn, pos.getX(), pos.getY()  + 1, pos.getZ(), new ItemStack(ModItems.bottledWither, ((EntityItem) i).getItem().getCount()));
                             worldIn.spawnEntity(bottledWither);
-                            player.getHeldItem(hand).damageItem(1, player);
+                            doAction(held, player, worldIn);
                             bw = true;
                         }
                     }
@@ -79,6 +87,10 @@ public class ItemForceRod extends ItemBase {
                         }
                     }
                 }
+            } else if (worldIn.getBlockState(pos).getBlock().equals(Blocks.OBSIDIAN)) {
+                worldIn.setBlockState(pos, ModBlocks.infuser.getDefaultState(), 3);
+                worldIn.notifyBlockUpdate(pos, Blocks.OBSIDIAN.getDefaultState(), ModBlocks.infuser.getDefaultState(), 3);
+                doAction(held, player, worldIn);
             }
             else {
                 List<Entity> list = worldIn.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ())));
@@ -91,68 +103,69 @@ public class ItemForceRod extends ItemBase {
                                 if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 6)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
+
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 6)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceChest, 1)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                             }
                             if (((ItemArmor) ((EntityItem) i).getItem().getItem()).armorType == EntityEquipmentSlot.LEGS) {
                                 if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 5)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 5)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceLegs, 1)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                             }
                             if (((ItemArmor) ((EntityItem) i).getItem().getItem()).armorType == EntityEquipmentSlot.FEET) {
                                 if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 3)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 3)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceBoots, 1)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                             }
                             if (((ItemArmor) ((EntityItem) i).getItem().getItem()).armorType == EntityEquipmentSlot.HEAD) {
                                 if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 4)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 4)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                                 else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceHelmet, 1)));
-                                    player.getHeldItem(hand).damageItem(1, player);
+                                    doAction(held, player, worldIn);
                                 }
                             }
                         }
@@ -161,10 +174,9 @@ public class ItemForceRod extends ItemBase {
             }
         }
 
-        ItemStack stack = player.getHeldItem(hand);
 
-        if(stack.getCapability(DCRCapabilityHandler.CAPABILITY_FORCEROD, null).getHomeLocation() != null){
-            stack.getCapability(DCRCapabilityHandler.CAPABILITY_FORCEROD, null).teleportPlayerToLocation(player, stack.getCapability(DCRCapabilityHandler.CAPABILITY_FORCEROD, null).getHomeLocation());
+        if(held.getCapability(DCRCapabilityHandler.CAPABILITY_FORCEROD, null).getHomeLocation() != null){
+            held.getCapability(DCRCapabilityHandler.CAPABILITY_FORCEROD, null).teleportPlayerToLocation(player, held.getCapability(DCRCapabilityHandler.CAPABILITY_FORCEROD, null).getHomeLocation());
         }
 
         return EnumActionResult.SUCCESS;

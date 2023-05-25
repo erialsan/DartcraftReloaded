@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "dartcraftreloaded:block/forcebrickpink",
+        "top": "dartcraftreloaded:block/forcebrickpink",
+        "side": "dartcraftreloaded:block/forcebrickpink"
+    }
+}

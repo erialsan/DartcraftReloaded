@@ -13,8 +13,8 @@
     ],
     "D": [
       {
-        "item": "minecraft:dye",
-        "data": 8
+        "type": "forge:ore_dict",
+        "ore": "dyeGray"
       }
     ]
   },

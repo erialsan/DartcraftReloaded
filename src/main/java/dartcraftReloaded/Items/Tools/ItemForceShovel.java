@@ -2,7 +2,7 @@ package dartcraftReloaded.Items.Tools;
 
 import dartcraftReloaded.capablilities.ToolModifier.ToolModProvider;
 import dartcraftReloaded.DartcraftReloaded;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import com.google.common.collect.Sets;
 import dartcraftReloaded.Handlers.DCRCapabilityHandler;
 import net.minecraft.block.Block;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static dartcraftReloaded.util.References.MODIFIERS.*;
+import static dartcraftReloaded.Constants.MODIFIERS.*;
 
 /**
  * Created by BURN447 on 5/13/2018.
@@ -41,7 +41,7 @@ public class ItemForceShovel extends ItemSpade {
 
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
 
-    public List<References.MODIFIERS> applicableModifers = new ArrayList<>();
+    public List<Constants.MODIFIERS> applicableModifers = new ArrayList<>();
 
     public ItemForceShovel(String name) {
         super(DartcraftReloaded.forceToolMaterial);

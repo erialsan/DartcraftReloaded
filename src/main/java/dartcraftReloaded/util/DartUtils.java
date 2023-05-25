@@ -1,6 +1,7 @@
 package dartcraftReloaded.util;
 
 import dartcraftReloaded.Handlers.DCRPacketHandler;
+import dartcraftReloaded.Constants;
 import dartcraftReloaded.blocks.BlockForceLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
@@ -36,11 +37,11 @@ import java.util.Stack;
 public class DartUtils {
 
     public static Logger logger;
-    public static final String RESOURCE = References.modId.toLowerCase(Locale.US);
+    public static final String RESOURCE = Constants.modId.toLowerCase(Locale.US);
 
     public static Logger getLogger(){
         if(logger == null){
-            logger = LogManager.getFormatterLogger(References.modId);
+            logger = LogManager.getFormatterLogger(Constants.modId);
         }
         return logger;
     }

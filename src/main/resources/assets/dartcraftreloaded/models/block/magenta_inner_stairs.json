@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "dartcraftreloaded:block/forcebrickmagenta",
+        "top": "dartcraftreloaded:block/forcebrickmagenta",
+        "side": "dartcraftreloaded:block/forcebrickmagenta"
+    }
+}

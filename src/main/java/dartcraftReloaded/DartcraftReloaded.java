@@ -6,7 +6,6 @@ import dartcraftReloaded.Items.ModItems;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.client.tabDartcraft;
 import dartcraftReloaded.proxy.CommonProxy;
-import dartcraftReloaded.util.References;
 import dartcraftReloaded.world.DCRWorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
@@ -26,10 +25,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.lang.reflect.Method;
 
 import static net.minecraftforge.fml.relauncher.Side.CLIENT;
 
@@ -37,18 +33,18 @@ import static net.minecraftforge.fml.relauncher.Side.CLIENT;
  * Created by BURN447 on 2/4/2018.
  */
 
-@Mod(modid = References.modId, name = References.name, version = References.version)
+@Mod(modid = Constants.modId, name = Constants.name, version = Constants.version)
 public class DartcraftReloaded {
 
     public static final tabDartcraft creativeTab = new tabDartcraft();
 
-    @Mod.Instance(References.modId)
+    @Mod.Instance(Constants.modId)
     public static DartcraftReloaded instance;
 
     @SidedProxy(serverSide = "dartcraftReloaded.proxy.CommonProxy", clientSide = "dartcraftReloaded.proxy.ClientProxy")
     public static CommonProxy proxy;
 
-    public static final ItemArmor.ArmorMaterial forceArmorMaterial = EnumHelper.addArmorMaterial("FORCE", References.modId + ":force", 15, new int[]{1, 2, 3, 1}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4.0F);
+    public static final ItemArmor.ArmorMaterial forceArmorMaterial = EnumHelper.addArmorMaterial("FORCE", Constants.modId + ":force", 15, new int[]{1, 2, 3, 1}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4.0F);
     public static final ItemTool.ToolMaterial forceToolMaterial = EnumHelper.addToolMaterial("FORCE", 3, 1561, 8.0F, 8.0F, 22);
 
     static {
@@ -76,6 +72,7 @@ public class DartcraftReloaded {
         DCRPacketHandler.init();
         ModBlocks.registerOreDict();
         ModItems.registerOreDict();
+        DCRSoundHandler.registerSounds();
     }
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){

@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "dartcraftreloaded:block/forcebrickcyan",
+        "top": "dartcraftreloaded:block/forcebrickcyan",
+        "side": "dartcraftreloaded:block/forcebrickcyan"
+    }
+}

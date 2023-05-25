@@ -2,7 +2,7 @@ package dartcraftReloaded.client.gui.furnace;
 
 import dartcraftReloaded.container.ContainerBlockFurnace;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GUIFurnace extends GuiContainer {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(References.modId, "textures/gui/container/furnacegui.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/furnacegui.png");
     private final InventoryPlayer playerInventory;
     private final IInventory tileFurnace;
 

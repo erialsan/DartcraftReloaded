@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "dartcraftreloaded:block/forcebrickred",
+        "top": "dartcraftreloaded:block/forcebrickred",
+        "side": "dartcraftreloaded:block/forcebrickred"
+    }
+}

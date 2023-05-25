@@ -1,12 +1,12 @@
 package dartcraftReloaded.client.gui.infuser;
 
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 public class GUIGuideScreen extends GuiScreen {
 
-    private ResourceLocation TEXTURE = new ResourceLocation(References.modId, "textures/gui/guide/guide.png");
+    private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/guide/guide.png");
 
     private int xSize;
     private int ySize;

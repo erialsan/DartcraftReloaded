@@ -5,7 +5,7 @@ import dartcraftReloaded.Handlers.DCRPacketHandler;
 import dartcraftReloaded.Networking.InfuserMessage;
 import dartcraftReloaded.container.ContainerBlockInfuser;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -30,7 +30,7 @@ public class GUIInfuser extends GuiContainer {
     private GuiButton startButton = new GuiButton(0, 39, 101, 12, 12, "Start Button");
     private ProgressBar infuserProgress;
 
-    private ResourceLocation TEXTURE = new ResourceLocation(References.modId, "textures/gui/container/forceinfuser.png");
+    private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forceinfuser.png");
 
     public GUIInfuser(IInventory playerInv, TileEntityInfuser te) {
         super(new ContainerBlockInfuser(playerInv, te));

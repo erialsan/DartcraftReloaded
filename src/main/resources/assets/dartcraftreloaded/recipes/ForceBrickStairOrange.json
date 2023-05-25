@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B  ", "BB ", "BBB"],
+  "key": {
+    "B": [
+      {
+        "item": "dartcraftreloaded:forceBrick",
+        "data": 1
+      }
+    ]
+  },
+  "result": {
+    "item": "dartcraftreloaded:forceBrickStair.orange",
+    "count": 4
+  }
+}

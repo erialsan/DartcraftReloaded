@@ -1,7 +1,8 @@
 package dartcraftReloaded.Handlers;
 
 import dartcraftReloaded.Networking.InfuserMessage;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
+import dartcraftReloaded.Networking.SoundMessage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
@@ -15,12 +16,13 @@ import net.minecraftforge.fml.relauncher.Side;
  */
 public class DCRPacketHandler {
 
-    public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel(References.modId);
+    public static final SimpleNetworkWrapper packetHandler = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.modId);
 
     private static int id = 0;
 
     public static void init(){
         packetHandler.registerMessage(InfuserMessage.class, InfuserMessage.class, id++, Side.SERVER);
+        packetHandler.registerMessage(SoundMessage.class, SoundMessage.class, id++, Side.CLIENT);
     }
 
     public static void sendToServer(IMessage message){

@@ -3,7 +3,7 @@ package dartcraftReloaded.Items.Tools;
 import dartcraftReloaded.Items.ItemBase;
 import dartcraftReloaded.capablilities.Magnet.MagnetProvider;
 import dartcraftReloaded.DartcraftReloaded;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import dartcraftReloaded.Handlers.DCRCapabilityHandler;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
@@ -69,10 +69,10 @@ public class ItemMagnetGlove extends ItemBase {
     public ModelResourceLocation getModelLocation(ItemStack stack) {
         if(stack.hasCapability(DCRCapabilityHandler.CAPABILITY_MAGNET, null)) {
             if(stack.getCapability(DCRCapabilityHandler.CAPABILITY_MAGNET, null).isActivated()) {
-                return new ModelResourceLocation(References.modId + ":magnetglove", "active");
+                return new ModelResourceLocation(Constants.modId + ":magnetglove", "active");
             }
         }
-        return new ModelResourceLocation(References.modId + ":magnetglove", "deactivated");
+        return new ModelResourceLocation(Constants.modId + ":magnetglove", "deactivated");
     }
 
     @SideOnly(Side.CLIENT)

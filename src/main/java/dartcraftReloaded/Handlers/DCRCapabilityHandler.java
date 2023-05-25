@@ -24,7 +24,7 @@ import dartcraftReloaded.capablilities.Shearable.ShearableStorage;
 import dartcraftReloaded.capablilities.ToolModifier.IToolModifier;
 import dartcraftReloaded.capablilities.ToolModifier.ToolFactory;
 import dartcraftReloaded.capablilities.ToolModifier.ToolModStorage;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -33,9 +33,9 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class DCRCapabilityHandler {
 
-    public static final ResourceLocation BANE_CAP = new ResourceLocation(References.modId, "baneMod");
-    public static final ResourceLocation PLAYER_CAP = new ResourceLocation(References.modId, "playerMod");
-    public static final ResourceLocation SHEAR_CAP = new ResourceLocation(References.modId, "shearable");
+    public static final ResourceLocation BANE_CAP = new ResourceLocation(Constants.modId, "baneMod");
+    public static final ResourceLocation PLAYER_CAP = new ResourceLocation(Constants.modId, "playerMod");
+    public static final ResourceLocation SHEAR_CAP = new ResourceLocation(Constants.modId, "shearable");
 
     @CapabilityInject(IToolModifier.class)
     public static Capability<IToolModifier> CAPABILITY_TOOLMOD = null;

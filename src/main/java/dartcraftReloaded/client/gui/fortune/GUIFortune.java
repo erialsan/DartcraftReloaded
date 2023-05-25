@@ -1,12 +1,12 @@
 package dartcraftReloaded.client.gui.fortune;
 
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
 public class GUIFortune extends GuiScreen {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(References.modId, "textures/gui/fortune.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/fortune.png");
 
     private int guiLeft;
     private int guiTop;

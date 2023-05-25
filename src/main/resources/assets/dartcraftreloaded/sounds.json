@@ -1,0 +1,13 @@
+{
+	"sparkle":
+	{
+		"category": "player",
+		"subtitle": "sparkle",
+		"sounds": [
+		{
+		"name": "dartcraftreloaded:sparkle", "stream": true
+		}
+		]
+		
+	}
+}

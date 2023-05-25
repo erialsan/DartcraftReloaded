@@ -1,7 +1,7 @@
 package dartcraftReloaded.client.gui.pack;
 
 import dartcraftReloaded.container.ContainerItemForcePack;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.IInventory;
@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 public class GUIForcePack extends GuiContainer {
     private ItemStack fp;
 
-    private ResourceLocation TEXTURE = new ResourceLocation(References.modId, "textures/gui/container/forcepack.png");
+    private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack.png");
 
     public GUIForcePack(IInventory playerInv, ItemStack fp) {
         super(new ContainerItemForcePack(playerInv, fp));

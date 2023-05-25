@@ -1,0 +1,139 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:half_slab",
+    "textures": {
+      "bottom": "dartcraftreloaded:block/forcebrickyellow",
+      "top": "#bottom",
+      "side": "#bottom"
+    },
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+	  "model": "minecraft:half_slab"
+	},
+
+	"half": {
+	  "bottom": {"model": "minecraft:half_slab"},
+	  "top": {"model": "minecraft:upper_slab" }
+	},
+	
+	"variant": {
+		"black": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickblack",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"red": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickred",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"green": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickgreen",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"brown": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickbrown",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"blue": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickblue",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"purple": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickpurple",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"cyan": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickcyan",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"silver": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebricklightgray",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"gray": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickgray",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"pink": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickpink",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"lime": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebricklime",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"yellow": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickyellow",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"light_blue": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebricklightblue",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"magenta": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickmagenta",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"orange": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickorange",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		},
+		"white": {
+			"textures": {
+			  "bottom": "dartcraftreloaded:block/forcebrickwhite",
+			  "top": "#bottom",
+			  "side": "#bottom"
+			}
+		}
+	}
+	
+  }
+}

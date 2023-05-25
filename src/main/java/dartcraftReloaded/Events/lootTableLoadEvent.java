@@ -1,7 +1,7 @@
 package dartcraftReloaded.Events;
 
 import dartcraftReloaded.Items.ModItems;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
@@ -25,7 +25,7 @@ public class lootTableLoadEvent {
             }
 
             LootFunction amount = new SetCount(noCondition, new RandomValueRange(1, 2));
-            pool.addEntry(new LootEntryItem(ModItems.claw, 1, 0, new LootFunction[]{amount}, noCondition, References.modId + ":claws"));
+            pool.addEntry(new LootEntryItem(ModItems.claw, 1, 0, new LootFunction[]{amount}, noCondition, Constants.modId + ":claws"));
         }
     }
 }

@@ -1,7 +1,7 @@
 package dartcraftReloaded.client.gui.belt;
 
 import dartcraftReloaded.container.ContainerItemForceBelt;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.IInventory;
@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 public class GUIForceBelt extends GuiContainer {
     private ItemStack fp;
 
-    private ResourceLocation TEXTURE = new ResourceLocation(References.modId, "textures/gui/container/forcebelt.png");
+    private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcebelt.png");
 
     public GUIForceBelt(IInventory playerInv, ItemStack fp) {
         super(new ContainerItemForceBelt(playerInv, fp));

@@ -25,12 +25,20 @@ public class ModBlocks {
     public static BlockInfuser infuser = new BlockInfuser();
     public static BlockFluidForce blockFluidForce = new BlockFluidForce();
     public static BlockForceFurnace forceFurnace = new BlockForceFurnace(false, FORCE_FURNACE);
-    public static BlockForceFurnace LIT_FORCEFURNACE = new BlockForceFurnace(true, LIT_FORCE_FURNACE);
+    public static BlockForceFurnace litForceFurnace = new BlockForceFurnace(true, LIT_FORCE_FURNACE);
     public static BlockBase forcePlanks = new BlockBase(Material.WOOD, FORCE_PLANKS, SoundType.WOOD);
 
 
     public static BlockForceBrick forceBrick = new BlockForceBrick();
 
+    public static BlockForceBrickSlab forceBrickSlab = new BlockForceBrickSlab();
+    public static BlockForceBrickStair[] forceBrickStairs = new BlockForceBrickStair[16];
+    static {
+        for (int i = 0; i < 16; i++) {
+            String key = "forceBrickStair."+EnumDyeColor.values()[i].getTranslationKey();
+            forceBrickStairs[i] = (BlockForceBrickStair) new BlockForceBrickStair(forceBrick.getStateFromMeta(i)).setRegistryName(key).setTranslationKey(key);
+        }
+    }
     //Torches
     public static BlockForceTorch forceTorch = new BlockForceTorch();
     public static BlockTimetorch timetorch = new BlockTimetorch();
@@ -45,11 +53,14 @@ public class ModBlocks {
                 blockFluidForce,
                 forceFurnace,
                 forcePlanks,
-                LIT_FORCEFURNACE,
+                litForceFurnace,
                 forceBrick,
+                forceBrickSlab,
                 forceTorch,
                 timetorch
         );
+
+        registry.registerAll(forceBrickStairs);
 
     }
 
@@ -66,9 +77,12 @@ public class ModBlocks {
                 timetorch.createItemBlock()
         );
 
+        for (int i = 0; i < 16; i++) {
+            registry.register(forceBrickStairs[i].createItemBlock());
+        }
 
-        registry.register((new ItemMultiTexture(forceBrick, forceBrick, item -> EnumDyeColor.byMetadata(item.getMetadata()).getTranslationKey())).setRegistryName("forceBrick").setTranslationKey("forceBrick"));
-
+        registerDyeBlock(registry, forceBrick, FORCE_BRICK);
+        registerDyeBlock(registry, forceBrickSlab, FORCE_BRICK_SLAB);
     }
 
     public static void registerModels() {
@@ -79,11 +93,14 @@ public class ModBlocks {
         forcePlanks.registerItemModel(Item.getItemFromBlock(forcePlanks));
         forceSapling.registerItemModel(Item.getItemFromBlock(forceSapling));
         forceLeaves.registerItemModel(Item.getItemFromBlock(forceLeaves));
-        LIT_FORCEFURNACE.registerItemModel(Item.getItemFromBlock(LIT_FORCEFURNACE));
+        litForceFurnace.registerItemModel(Item.getItemFromBlock(litForceFurnace));
         forceBrick.registerItemModel(Item.getItemFromBlock(forceBrick));
         forceTorch.registerItemModel(Item.getItemFromBlock(forceTorch));
         timetorch.registerItemModel(Item.getItemFromBlock(timetorch));
-
+        forceBrickSlab.registerItemModel(Item.getItemFromBlock(forceBrickSlab));
+        for (int i = 0; i < 16; i++) {
+            forceBrickStairs[i].registerItemModel(Item.getItemFromBlock(forceBrickStairs[i]), "forceBrickStair."+EnumDyeColor.values()[i].getTranslationKey());
+        }
 
     }
 
@@ -93,5 +110,9 @@ public class ModBlocks {
         }
         OreDictionary.registerOre("logWood", forceLog);
         OreDictionary.registerOre("plankWood", forcePlanks);
+    }
+
+    private static void registerDyeBlock(IForgeRegistry<Item> registry, Block block, String name) {
+        registry.register((new ItemMultiTexture(block, block, item -> EnumDyeColor.byMetadata(item.getMetadata()).getTranslationKey())).setRegistryName(name).setTranslationKey(name));
     }
 }

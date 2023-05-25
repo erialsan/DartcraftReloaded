@@ -8,7 +8,7 @@ import dartcraftReloaded.Items.Tools.*;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.blocks.torch.BlockForceTorch;
 import dartcraftReloaded.util.EnchantUtils;
-import dartcraftReloaded.util.References;
+import dartcraftReloaded.Constants;
 import dartcraftReloaded.Handlers.DCRCapabilityHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -266,7 +266,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
 
     private boolean hasValidTool() {
         if (!handler.getStackInSlot(8).isEmpty()) {
-            for (int i = 0; i < References.numTools; i++) {
+            for (int i = 0; i < Constants.numTools; i++) {
                 if (handler.getStackInSlot(8).getItem() == validToolList.get(i)) {
                     return true;
                 }
@@ -277,7 +277,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
 
     private boolean hasValidModifer(int slot) {
         if (!handler.getStackInSlot(8).isEmpty()) {
-            for (int j = 0; j < References.numModifiers - 1; j++) {
+            for (int j = 0; j < Constants.numModifiers - 1; j++) {
                 if (handler.getStackInSlot(slot).getItem() == validModifierList.get(j)) {
                     return true;
                 }
@@ -329,7 +329,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
 
     private ItemStack getModifier(int slot) {
         if (!handler.getStackInSlot(8).isEmpty()) {
-            for (int j = 0; j < References.numModifiers - 1; j++) {
+            for (int j = 0; j < Constants.numModifiers - 1; j++) {
                 if (handler.getStackInSlot(slot).getItem() == validModifierList.get(j)) {
                     return handler.getStackInSlot(slot);
                 }

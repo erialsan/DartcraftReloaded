@@ -1,33 +1,34 @@
 #Items
-item.ingot_force.name=Force Ingot
-item.gem_forceGem.name=Force Gem
-item.nugget_force.name=Force Nugget
-item.stick_force.name=Force Stick
-item.cookie_fortune.name=Fortune Cookie
-item.soul_wafer.name=Soul Wafer
+item.ingotForce.name=Force Ingot
+item.gemForceGem.name=Force Gem
+item.nuggetForce.name=Force Nugget
+item.stickForce.name=Force Stick
+item.cookieFortune.name=Fortune Cookie
+item.soulWafer.name=Soul Wafer
 item.goldenPowerSource.name=Golden Power Source
 item.fortune.name=Fortune
 item.experienceTome.name=Experience Tome
 item.forceClaw.name=Claw
-item.gear_force.name=Force Gear
-item.cookie_snow.name=Snow Wafer
+item.forceGear.name=Force Gear
+item.snowCookie.name=Snow Wafer
 item.forcePack.name=Force Pack
 item.forceBelt.name=Force Belt
 item.bottledWither.name=Bottled Wither
+item.inertCore.name=Inert Core
 
 #Armor
-item.force_helmet.name=Force Cap
-item.force_chest.name=Force Tunic
-item.force_legs.name=Force Kilt
-item.force_boots.name=Force Boots
+item.forceHelmet.name=Force Cap
+item.forceChest.name=Force Tunic
+item.forceLegs.name=Force Kilt
+item.forceBoots.name=Force Boots
 
 #Tools
 item.forcePickaxe.name=Force Pickaxe
 item.forceAxe.name=Force Axe
 item.forceSword.name=Force Sword
-item.forceSpade.name=Force Shovel
-item.force_wrench.name=Force Wrench
-item.force_rod.name=Force Rod
+item.forceShovel.name=Force Shovel
+item.forceWrench.name=Force Wrench
+item.forceRod.name=Force Rod
 item.forceShears.name=Force Shears
 item.magnetGlove.name=Magnet Glove
 item.forceMitt.name=Force Mitts
@@ -58,7 +59,38 @@ tile.forceBrick.white.name=White Force Brick
 tile.forceBrick.yellow.name=Yellow Force Brick
 tile.timeTorch.name=§bTime Torch
 tile.forceTorch.name=Force Torch
-
+tile.forceBrickStair.black.name=Black Force Brick Stair
+tile.forceBrickStair.red.name=Red Force Brick Stair
+tile.forceBrickStair.green.name=Green Force Brick Stair
+tile.forceBrickStair.brown.name=Brown Force Brick Stair
+tile.forceBrickStair.blue.name=Blue Force Brick Stair
+tile.forceBrickStair.purple.name=Purple Force Brick Stair
+tile.forceBrickStair.cyan.name=Cyan Force Brick Stair
+tile.forceBrickStair.silver.name=Light Gray Force Brick Stair
+tile.forceBrickStair.gray.name=Gray Force Brick Stair
+tile.forceBrickStair.pink.name=Pink Force Brick Stair
+tile.forceBrickStair.lime.name=Lime Force Brick Stair
+tile.forceBrickStair.yellow.name=Yellow Force Brick Stair
+tile.forceBrickStair.lightBlue.name=Light Blue Force Brick Stair
+tile.forceBrickStair.magenta.name=Magenta Force Brick Stair
+tile.forceBrickStair.orange.name=Orange Force Brick Stair
+tile.forceBrickStair.white.name=White Force Brick Stair
+tile.forceBrickSlab.black.name=Black Force Brick Slab
+tile.forceBrickSlab.red.name=Red Force Brick Slab
+tile.forceBrickSlab.green.name=Green Force Brick Slab
+tile.forceBrickSlab.brown.name=Brown Force Brick Slab
+tile.forceBrickSlab.blue.name=Blue Force Brick Slab
+tile.forceBrickSlab.purple.name=Purple Force Brick Slab
+tile.forceBrickSlab.cyan.name=Cyan Force Brick Slab
+tile.forceBrickSlab.silver.name=Light Gray Force Brick Slab
+tile.forceBrickSlab.gray.name=Gray Force Brick Slab
+tile.forceBrickSlab.pink.name=Pink Force Brick Slab
+tile.forceBrickSlab.lime.name=Lime Force Brick Slab
+tile.forceBrickSlab.yellow.name=Yellow Force Brick Slab
+tile.forceBrickSlab.lightBlue.name=Light Blue Force Brick Slab
+tile.forceBrickSlab.magenta.name=Magenta Force Brick Slab
+tile.forceBrickSlab.orange.name=Orange Force Brick Slab
+tile.forceBrickSlab.white.name=White Force Brick Slab
 #Misc.
 itemGroup.dartcraftreloaded=Dartcraft Reloaded
 

@@ -1,10 +1,15 @@
 package dartcraftReloaded;
 
+/**
+ * Created by BURN447 on 3/18/2018.
+ */
 public class Constants {
 
     // Blocks
     public static final String
             FORCE_BRICK = "forceBrick",
+            FORCE_BRICK_SLAB = "forceBrickSlab",
+            FORCE_BRICK_STAIR = "forceBrickStair",
             FORCE_LOG = "forceLog",
             FORCE_SAPLING = "forceSapling",
             ORE_POWER = "orePower",
@@ -26,7 +31,7 @@ public class Constants {
             SOUL_WAFER = "soulWafer",
             FORCE_HELMET = "forceHelmet",
             FORCE_CHEST = "forceChest",
-            FORCE_LEGGINGS = "forceLeggings",
+            FORCE_LEGS = "forceLegs",
             FORCE_BOOTS = "forceBoots",
             FORCE_ROD = "forceRod",
             FORCE_WRENCH = "forceWrench",
@@ -47,4 +52,45 @@ public class Constants {
             FORCE_MITT = "forceMitt",
             MAGNET_GLOVE = "magnetGlove",
             EXPERIENCE_TOME = "experienceTome";
+
+
+
+
+    public enum MODIFIERS {
+        MOD_SPEED,
+        MOD_EXP,
+        MOD_CHARGE,
+        MOD_CHARGEII,
+        MOD_LUMBERJACK,
+        MOD_GRAFTING,
+        MOD_HOLDING,
+        MOD_HEALING,
+        MOD_ENDER,
+        MOD_CAMO,
+        MOD_SIGHT,
+        MOD_RAINBOW,
+        MOD_SOUL,
+        MOD_LIGHT,
+        MOD_BANE,
+        MOD_BLEED,
+        MOD_FORCE,
+        MOD_DAMAGE,
+        MOD_STURDY,
+        MOD_TOUCH,
+        MOD_HEAT,
+        MOD_LUCK,
+        MOD_CRAFT,
+        MOD_GRINDING,
+        MOD_REPAIR,
+        MOD_WING,
+        MOD_FREEZING,
+        MOD_TREASURE,
+        MOD_IMPERVIOUS
+    }
+
+    public static final String modId = "dartcraftreloaded";
+    public static final String name = "Dartcraft Reloaded";
+    public static final String version = "6.1.0";
+    public static final int numModifiers = 25;
+    public static final int numTools = 11;
 }
