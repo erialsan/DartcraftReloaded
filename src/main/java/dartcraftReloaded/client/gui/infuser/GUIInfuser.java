@@ -1,8 +1,8 @@
 package dartcraftReloaded.client.gui.infuser;
 
-import dartcraftReloaded.Fluids.ModFluids;
-import dartcraftReloaded.Handlers.DCRPacketHandler;
-import dartcraftReloaded.Networking.InfuserMessage;
+import dartcraftReloaded.fluids.ModFluids;
+import dartcraftReloaded.handlers.DCRPacketHandler;
+import dartcraftReloaded.networking.InfuserMessage;
 import dartcraftReloaded.container.ContainerBlockInfuser;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import dartcraftReloaded.Constants;

@@ -1,6 +1,6 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.Handlers.DCRGUIHandler;
+import dartcraftReloaded.handlers.DCRGUIHandler;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import net.minecraft.block.BlockContainer;

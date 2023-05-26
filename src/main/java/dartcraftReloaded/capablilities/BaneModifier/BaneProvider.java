@@ -1,6 +1,6 @@
 package dartcraftReloaded.capablilities.BaneModifier;
 
-import dartcraftReloaded.Handlers.DCRCapabilityHandler;
+import dartcraftReloaded.handlers.DCRCapabilityHandler;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

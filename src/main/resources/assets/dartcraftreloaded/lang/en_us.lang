@@ -18,6 +18,9 @@ item.forcePack.name=Force Pack
 item.forceBelt.name=Force Belt
 item.bottledWither.name=Bottled Wither
 item.inertCore.name=Inert Core
+item.upgradeTome.name=Upgrade Tome
+item.itemTE.name=Empty Package
+item.upgradeCore.name=Upgrade Core
 
 #Armor
 item.forceHelmet.name=Force Cap

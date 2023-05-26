@@ -1,7 +1,7 @@
 package dartcraftReloaded.container;
 
-import dartcraftReloaded.Items.ItemForceBelt;
-import dartcraftReloaded.Items.ItemForcePack;
+import dartcraftReloaded.items.ItemForceBelt;
+import dartcraftReloaded.items.ItemForcePack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;

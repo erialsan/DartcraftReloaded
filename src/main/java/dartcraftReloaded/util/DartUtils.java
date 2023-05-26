@@ -1,6 +1,6 @@
 package dartcraftReloaded.util;
 
-import dartcraftReloaded.Handlers.DCRPacketHandler;
+import dartcraftReloaded.handlers.DCRPacketHandler;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.blocks.BlockForceLog;
 import net.minecraft.block.Block;

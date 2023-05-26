@@ -1,6 +1,6 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.Items.ModItems;
+import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.DartcraftReloaded;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockLeaves;

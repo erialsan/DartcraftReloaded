@@ -1,8 +1,8 @@
 package dartcraftReloaded.proxy;
 
-import dartcraftReloaded.Handlers.DCRCapabilityHandler;
-import dartcraftReloaded.Handlers.DCROreDictionaryHandler;
-import dartcraftReloaded.Items.ModItems;
+import dartcraftReloaded.handlers.DCRCapabilityHandler;
+import dartcraftReloaded.handlers.DCROreDictionaryHandler;
+import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;

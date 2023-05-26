@@ -1,8 +1,8 @@
 package dartcraftReloaded;
 
-import dartcraftReloaded.Fluids.ModFluids;
-import dartcraftReloaded.Handlers.*;
-import dartcraftReloaded.Items.ModItems;
+import dartcraftReloaded.fluids.ModFluids;
+import dartcraftReloaded.handlers.*;
+import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.client.tabDartcraft;
 import dartcraftReloaded.proxy.CommonProxy;
@@ -44,7 +44,7 @@ public class DartcraftReloaded {
     @SidedProxy(serverSide = "dartcraftReloaded.proxy.CommonProxy", clientSide = "dartcraftReloaded.proxy.ClientProxy")
     public static CommonProxy proxy;
 
-    public static final ItemArmor.ArmorMaterial forceArmorMaterial = EnumHelper.addArmorMaterial("FORCE", Constants.modId + ":force", 15, new int[]{1, 2, 3, 1}, 0, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4.0F);
+    public static final ItemArmor.ArmorMaterial forceArmorMaterial = EnumHelper.addArmorMaterial("FORCE", Constants.modId + ":force", 15, new int[]{1, 2, 3, 1}, 25, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4.0F);
     public static final ItemTool.ToolMaterial forceToolMaterial = EnumHelper.addToolMaterial("FORCE", 3, 1561, 8.0F, 8.0F, 22);
 
     static {

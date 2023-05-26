@@ -1,6 +1,6 @@
 package dartcraftReloaded.container.Slot;
 
-import net.minecraft.init.Items;
+import dartcraftReloaded.items.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -18,7 +18,7 @@ public class SlotForceBook extends SlotItemHandler {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return stack.getItem() == Items.BOOK;
+        return stack.getItem() == ModItems.upgradeTome;
     }
 
     @Override

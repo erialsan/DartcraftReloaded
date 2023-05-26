@@ -1,6 +1,6 @@
 package dartcraftReloaded.util;
 
-import dartcraftReloaded.Potion.Effects.EffectBleeding;
+import dartcraftReloaded.potion.Effects.EffectBleeding;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;

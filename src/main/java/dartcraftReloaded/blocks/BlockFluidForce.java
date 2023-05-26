@@ -1,6 +1,6 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.Fluids.ModFluids;
+import dartcraftReloaded.fluids.ModFluids;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

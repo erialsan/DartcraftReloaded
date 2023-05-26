@@ -1,6 +1,6 @@
 package dartcraftReloaded.client;
 
-import dartcraftReloaded.Items.ModItems;
+import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.Constants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;

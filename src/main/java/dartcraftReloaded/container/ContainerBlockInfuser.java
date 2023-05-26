@@ -1,5 +1,6 @@
 package dartcraftReloaded.container;
 
+import dartcraftReloaded.container.Slot.SlotForceBook;
 import dartcraftReloaded.container.Slot.SlotForceGems;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,6 +39,9 @@ public class ContainerBlockInfuser extends Container {
 
         //Force Gem Slot
         this.addSlotToContainer(new SlotForceGems(te.handler, 9, 10, 35));
+
+        //Book slot
+        this.addSlotToContainer(new SlotForceBook(te.handler, 10, 10, 10));
 
         int xPos = 8;
         int yPos = 127;

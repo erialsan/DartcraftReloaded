@@ -1,6 +1,6 @@
 package dartcraftReloaded.container.Slot;
 
-import dartcraftReloaded.Items.ModItems;
+import dartcraftReloaded.items.ModItems;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

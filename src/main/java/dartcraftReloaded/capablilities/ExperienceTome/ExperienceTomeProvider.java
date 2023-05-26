@@ -1,6 +1,6 @@
 package dartcraftReloaded.capablilities.ExperienceTome;
 
-import dartcraftReloaded.Handlers.DCRCapabilityHandler;
+import dartcraftReloaded.handlers.DCRCapabilityHandler;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;

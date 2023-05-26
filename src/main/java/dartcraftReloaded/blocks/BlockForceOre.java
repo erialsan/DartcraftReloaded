@@ -1,9 +1,8 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.Items.ModItems;
+import dartcraftReloaded.items.ModItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 import java.util.Random;

@@ -1,5 +1,9 @@
 package dartcraftReloaded;
 
+import dartcraftReloaded.items.ModItems;
+import dartcraftReloaded.capablilities.Modifiable.Modifier;
+import net.minecraft.item.ItemStack;
+
 /**
  * Created by BURN447 on 3/18/2018.
  */
@@ -35,6 +39,7 @@ public class Constants {
             FORCE_BOOTS = "forceBoots",
             FORCE_ROD = "forceRod",
             WOODEN_FORCE_ROD = "woodenForceRod",
+            UPGRADE_TOME = "upgradeTome",
             FORCE_WRENCH = "forceWrench",
             GOLDEN_POWER_SOURCE = "goldenPowerSource",
             CLAW = "forceClaw",
@@ -52,46 +57,28 @@ public class Constants {
             FORCE_SWORD = "forceSword",
             FORCE_MITT = "forceMitt",
             MAGNET_GLOVE = "magnetGlove",
-            EXPERIENCE_TOME = "experienceTome";
+            EXPERIENCE_TOME = "experienceTome",
+            ITEM_TE = "itemTE",
+            UPGRADE_CORE = "upgradeCore";
 
 
+    // Tools
+    public static final long
+            PICKAXE = 0,
+            AXE = 1,
+            SHOVEL = 2,
+            ROD = 4,
+            SHEARS = 8,
+            SWORD = 16,
+            ARMOR = 32,
+            BACKPACK = 64,
+            CORE = 128;
 
-
-    public enum MODIFIERS {
-        MOD_SPEED,
-        MOD_EXP,
-        MOD_CHARGE,
-        MOD_CHARGEII,
-        MOD_LUMBERJACK,
-        MOD_GRAFTING,
-        MOD_HOLDING,
-        MOD_HEALING,
-        MOD_ENDER,
-        MOD_CAMO,
-        MOD_SIGHT,
-        MOD_RAINBOW,
-        MOD_SOUL,
-        MOD_LIGHT,
-        MOD_BANE,
-        MOD_BLEED,
-        MOD_FORCE,
-        MOD_DAMAGE,
-        MOD_STURDY,
-        MOD_TOUCH,
-        MOD_HEAT,
-        MOD_LUCK,
-        MOD_CRAFT,
-        MOD_GRINDING,
-        MOD_REPAIR,
-        MOD_WING,
-        MOD_FREEZING,
-        MOD_TREASURE,
-        MOD_IMPERVIOUS
-    }
+    // Modifiers
+    public static final Modifier
+            FORCE = new Modifier(0, 3, 1, new ItemStack(ModItems.nuggetForce), SWORD | AXE);
 
     public static final String modId = "dartcraftreloaded";
     public static final String name = "Dartcraft Reloaded";
     public static final String version = "6.1.0";
-    public static final int numModifiers = 25;
-    public static final int numTools = 11;
 }

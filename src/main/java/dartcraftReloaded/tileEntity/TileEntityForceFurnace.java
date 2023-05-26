@@ -1,6 +1,6 @@
 package dartcraftReloaded.tileEntity;
 
-import dartcraftReloaded.Items.ModItems;
+import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.blocks.BlockForceFurnace;
 import dartcraftReloaded.container.ContainerBlockFurnace;
 import net.minecraft.entity.player.EntityPlayer;

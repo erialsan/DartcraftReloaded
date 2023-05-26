@@ -1,7 +1,8 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.Handlers.DCRGUIHandler;
+import dartcraftReloaded.handlers.DCRGUIHandler;
 import dartcraftReloaded.DartcraftReloaded;
+import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,6 +18,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 import static dartcraftReloaded.Constants.INFUSER;
 
@@ -49,7 +51,7 @@ public class BlockInfuser extends BlockBase {
         return false;
     }
 
-
+/*
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntityInfuser te = (TileEntityInfuser) world.getTileEntity(pos);
@@ -62,7 +64,27 @@ public class BlockInfuser extends BlockBase {
             }
             super.breakBlock(world, pos, state);
         }
+    }*/
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+
+            if (tileentity instanceof TileEntityInfuser) {
+                ItemStackHandler i = ((TileEntityInfuser) tileentity).handler;
+                for (int j = 0; j < i.getSlots(); j++) {
+                    ItemStack itemstack = i.getStackInSlot(j);
+
+                    if (!itemstack.isEmpty())
+                    {
+                        InventoryHelper.spawnItemStack(worldIn,pos.getX(), pos.getY(), pos.getZ(), itemstack);
+                    }
+                }
+            }
+
+        super.breakBlock(worldIn, pos, state);
     }
+
 
 
     @Override
