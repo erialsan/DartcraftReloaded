@@ -18,17 +18,11 @@ public class ItemBase extends Item {
         this.oreName = name;
         setTranslationKey(name);
         setRegistryName(name);
-        this.setCreativeTab(DartcraftReloaded.creativeTab);
+        setCreativeTab(DartcraftReloaded.creativeTab);
     }
 
     public void registerItemModel() {
         DartcraftReloaded.proxy.registerItemRenderer(this, 0, name);
-    }
-
-    @Override
-    public ItemBase setCreativeTab(CreativeTabs tab) {
-        super.setCreativeTab(tab);
-        return this;
     }
 
     @Override

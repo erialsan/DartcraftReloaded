@@ -2,6 +2,7 @@ package dartcraftReloaded.container;
 
 import dartcraftReloaded.container.Slot.SlotForceBook;
 import dartcraftReloaded.container.Slot.SlotForceGems;
+import dartcraftReloaded.container.Slot.SlotForceTools;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -35,7 +36,7 @@ public class ContainerBlockInfuser extends Container {
         this.addSlotToContainer(new SlotItemHandler(te.handler, 7, 56, 32));
 
         //Tools Slot
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 8, 80, 57));
+        this.addSlotToContainer(new SlotForceTools(te.handler, 8, 80, 57));
 
         //Force Gem Slot
         this.addSlotToContainer(new SlotForceGems(te.handler, 9, 10, 35));
@@ -63,7 +64,7 @@ public class ContainerBlockInfuser extends Container {
     public boolean canInteractWith(EntityPlayer playerIn) {
         return !playerIn.isSpectator();
     }
-
+/*
     @Override
     @Nonnull
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
@@ -116,7 +117,7 @@ public class ContainerBlockInfuser extends Container {
         }
 
         return itemstack;
-    }
+    }*/
 
     public void setButtonPressed(boolean buttonPressed){
         te.canWork = buttonPressed;

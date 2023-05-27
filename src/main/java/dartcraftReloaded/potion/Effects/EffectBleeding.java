@@ -1,6 +1,6 @@
 package dartcraftReloaded.potion.Effects;
 
-import dartcraftReloaded.handlers.DCRPotionHandler;
+import dartcraftReloaded.handlers.PotionHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -11,7 +11,7 @@ import net.minecraft.util.DamageSource;
 public class EffectBleeding extends PotionEffect {
 
     public EffectBleeding(int duration) {
-        super(DCRPotionHandler.potionBleeding, duration, 0, false, true);
+        super(PotionHandler.potionBleeding, duration, 0, false, true);
     }
 
     @Override

@@ -1,8 +1,12 @@
 package dartcraftReloaded.capablilities.Modifiable;
 
+import dartcraftReloaded.Constants;
+import dartcraftReloaded.util.StringHelper;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public class ModifiableFactory implements Callable<IModifiable> {
@@ -51,6 +55,15 @@ public class ModifiableFactory implements Callable<IModifiable> {
             @Override
             public int getLevel(Modifier m) {
                 return getLevel(m.getId());
+            }
+
+            @Override
+            public void addText(List<String> text) {
+                for (int i : modifiers.keySet()) {
+                    Modifier m = Constants.MODIFIER_REGISTRY.get(i);
+
+                    text.add(m.getColor()+m.getName()+" "+ StringHelper.toRoman(modifiers.get(i)));
+                }
             }
 
 

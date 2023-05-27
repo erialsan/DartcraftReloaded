@@ -1,12 +1,10 @@
 package dartcraftReloaded.networking;
 
-import dartcraftReloaded.handlers.DCRSoundHandler;
+import dartcraftReloaded.handlers.SoundHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 
 public class SoundMessage extends MessageBase<SoundMessage> {
 
@@ -32,7 +30,7 @@ public class SoundMessage extends MessageBase<SoundMessage> {
     public void handleClientSide(SoundMessage message, EntityPlayer player) {
         switch (message.id) {
             case 0:
-                Minecraft.getMinecraft().player.playSound(DCRSoundHandler.SPARKLE, 1.0f, 1.0f);
+                Minecraft.getMinecraft().player.playSound(SoundHandler.SPARKLE, 1.0f, 1.0f);
             case 1:
                 break;
         }

@@ -26,12 +26,14 @@ public class BaneFactory implements Callable<IBaneModifier> {
 
             @Override
             public NBTTagCompound serializeNBT() {
-                return null;
+                NBTTagCompound nbt = new NBTTagCompound();
+                nbt.setBoolean("canTeleport", canTeleport);
+                return nbt;
             }
 
             @Override
             public void deserializeNBT(NBTTagCompound nbt) {
-
+                canTeleport = nbt.getBoolean("canTeleport");
             }
         };
     }

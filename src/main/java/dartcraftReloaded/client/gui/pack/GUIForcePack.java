@@ -1,27 +1,39 @@
 package dartcraftReloaded.client.gui.pack;
 
-import dartcraftReloaded.container.ContainerItemForcePack;
 import dartcraftReloaded.Constants;
+import dartcraftReloaded.container.ContainerItemForcePack;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
 public class GUIForcePack extends GuiContainer {
-    private ItemStack fp;
+    private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack1.png");
+    public GUIForcePack(ContainerItemForcePack container) {
+        super(container);
+        System.out.println(container.itemHandler.getSlots()+" "+container.slotCount+" asdf");
+        if (container.slotCount == 8) {
+            TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack1.png");
+            this.ySize = 136;
+        } else if (container.slotCount == 16) {
+            TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack2.png");
+            this.ySize = 154;
+        } else if (container.slotCount == 24) {
+            TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack3.png");
+            this.ySize = 172;
+        } else if (container.slotCount == 32) {
+            TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack4.png");
+            this.ySize = 190;
+        } else if (container.slotCount == 40) {
+            TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack5.png");
+            this.ySize = 208;
+        }
 
-    private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack.png");
-
-    public GUIForcePack(IInventory playerInv, ItemStack fp) {
-        super(new ContainerItemForcePack(playerInv, fp));
 
         this.xSize = 176;
-        this.ySize = 208;
-
-        this.fp = fp;
     }
-
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
@@ -36,12 +48,4 @@ public class GUIForcePack extends GuiContainer {
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
     }
 
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
-        int actualMouseX = mouseX - ((this.width - this.xSize) / 2);
-        int actualMouseY = mouseY - ((this.height - this.ySize) / 2);
-
-    }
 }

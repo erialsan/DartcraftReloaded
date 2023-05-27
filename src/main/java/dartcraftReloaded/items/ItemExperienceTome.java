@@ -1,11 +1,12 @@
 package dartcraftReloaded.items;
 
+import dartcraftReloaded.Constants;
 import dartcraftReloaded.capablilities.ExperienceTome.ExperienceTomeProvider;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.util.DartUtils;
 import dartcraftReloaded.util.ServerHelper;
 import dartcraftReloaded.util.StringHelper;
-import dartcraftReloaded.handlers.DCRCapabilityHandler;
+import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -26,36 +27,26 @@ import java.util.List;
  */
 public class ItemExperienceTome extends Item {
 
-    private String name;
-    public static final int CAPACITY = Int.MaxValue();
-
-    public ItemExperienceTome(String name){
+    public ItemExperienceTome(){
         this.setCreativeTab(DartcraftReloaded.creativeTab);
-        this.setTranslationKey(name);
-        this.setRegistryName(name);
-        this.name = name;
+        this.setTranslationKey(Constants.EXPERIENCE_TOME);
+        this.setRegistryName(Constants.EXPERIENCE_TOME);
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        if(StringHelper.displayShiftForDetail && !StringHelper.isShiftKeyDown()){
-            tooltip.add("Press Shift for Details");
-        }
-        if(!StringHelper.isShiftKeyDown()){
-            return;
-        }
-        tooltip.add(Float.toString(getExperience(stack)) + " / " + Float.toString(getMaxExperience(stack)));
+        tooltip.add(getExperience(stack) + " / " + Integer.MAX_VALUE);
     }
 
     public void registerItemModel() {
-        DartcraftReloaded.proxy.registerItemRenderer(this, 0, name);
+        DartcraftReloaded.proxy.registerItemRenderer(this, 0, Constants.EXPERIENCE_TOME);
     }
 
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-        if(!stack.hasCapability(DCRCapabilityHandler.CAPABILITY_EXPTOME, null))
-            return new ExperienceTomeProvider(DCRCapabilityHandler.CAPABILITY_EXPTOME, null);
+        if(!stack.hasCapability(CapabilityHandler.CAPABILITY_EXPTOME, null))
+            return new ExperienceTomeProvider(CapabilityHandler.CAPABILITY_EXPTOME, null);
         else
             return null;
     }
@@ -63,7 +54,7 @@ public class ItemExperienceTome extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (DartUtils.isFakePlayer(player) || hand != EnumHand.MAIN_HAND || ServerHelper.isClientWorld(world)) {
+        if (DartUtils.isFakePlayer(player) || hand != EnumHand.MAIN_HAND) {
             return new ActionResult<>(EnumActionResult.FAIL, stack);
         }
         int exp;
@@ -108,10 +99,6 @@ public class ItemExperienceTome extends Item {
     public static int getPlayerExperience(EntityPlayer player) {
 
         return getTotalExpForLevel(player.experienceLevel) + getExtraPlayerExperience(player);
-    }
-    public static int getLevelPlayerExperience(EntityPlayer player) {
-
-        return getTotalExpForLevel(player.experienceLevel);
     }
 
     public static int getExtraPlayerExperience(EntityPlayer player) {
@@ -164,34 +151,17 @@ public class ItemExperienceTome extends Item {
         return level >= 32 ? (9 * level * level - 325 * level + 4440) / 2 : level >= 17 ? (5 * level * level - 81 * level + 720) / 2 : (level * level + 6 * level);
     }
 
-    public static int modifyExperience(ItemStack stack, int exp) {
-
+    public static void modifyExperience(ItemStack stack, int exp) {
         int storedExp = getExperience(stack) + exp;
+        stack.getCapability(CapabilityHandler.CAPABILITY_EXPTOME, null).setExperienceValue(storedExp);
 
-        if (storedExp > getMaxExperience(stack)) {
-            storedExp = getMaxExperience(stack);
-        } else if (storedExp < 0) {
-            storedExp = 0;
-        }
-        stack.getTagCompound().setInteger("Experience", storedExp);
-        return storedExp;
     }
 
     public static int getExperience(ItemStack stack) {
-
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-        return stack.getTagCompound().getInteger("Experience");
-    }
-
-    public static int getMaxExperience(ItemStack stack) {
-
-        return CAPACITY;
+        return stack.getCapability(CapabilityHandler.CAPABILITY_EXPTOME, null).getExperienceValue();
     }
 
     public static int getSpace(ItemStack stack) {
-
-        return getMaxExperience(stack) - getExperience(stack);
+        return Integer.MAX_VALUE - getExperience(stack);
     }
 }

@@ -1,6 +1,7 @@
 package dartcraftReloaded.items;
 
-import dartcraftReloaded.handlers.DCRGUIHandler;
+import dartcraftReloaded.Constants;
+import dartcraftReloaded.handlers.GUIHandler;
 import dartcraftReloaded.DartcraftReloaded;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,8 +27,8 @@ public class ItemForceBelt extends ItemBase {
 
     public final ItemStackHandler handler;
 
-    public ItemForceBelt(String name) {
-        super(name);
+    public ItemForceBelt() {
+        super(Constants.FORCE_BELT);
         handler = new ItemStackHandler(8);
         this.setMaxStackSize(1);
     }
@@ -35,7 +36,7 @@ public class ItemForceBelt extends ItemBase {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if(playerIn.getHeldItem(handIn).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
-            playerIn.openGui(DartcraftReloaded.instance, DCRGUIHandler.BELT, worldIn, 0, 0, 0);
+            playerIn.openGui(DartcraftReloaded.instance, GUIHandler.BELT, worldIn, 0, 0, 0);
             return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -45,7 +46,7 @@ public class ItemForceBelt extends ItemBase {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(player.getHeldItem(hand).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)){
             //x,y,z coordinates are not important afaik
-            player.openGui(DartcraftReloaded.instance, DCRGUIHandler.BELT, worldIn, 0, 0, 0);
+            player.openGui(DartcraftReloaded.instance, GUIHandler.BELT, worldIn, 0, 0, 0);
             return EnumActionResult.PASS;
         }
         //If it doesn't nothing bad happens

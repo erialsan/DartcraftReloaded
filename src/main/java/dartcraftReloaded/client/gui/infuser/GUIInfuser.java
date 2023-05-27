@@ -1,18 +1,22 @@
 package dartcraftReloaded.client.gui.infuser;
 
+import dartcraftReloaded.capablilities.Modifiable.Modifier;
 import dartcraftReloaded.fluids.ModFluids;
-import dartcraftReloaded.handlers.DCRPacketHandler;
+import dartcraftReloaded.handlers.PacketHandler;
 import dartcraftReloaded.networking.InfuserMessage;
 import dartcraftReloaded.container.ContainerBlockInfuser;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import dartcraftReloaded.Constants;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
@@ -61,6 +65,18 @@ public class GUIInfuser extends GuiContainer {
     }
 
     @Override
+    public List<String> getItemToolTip(ItemStack stack) {
+        List<String> list = super.getItemToolTip(stack);
+
+        for (Modifier modifier : Constants.MODIFIER_REGISTRY.values()) {
+            if (modifier.getItem().getItem().equals(stack.getItem()) && modifier.getItem().getItemDamage() == stack.getItemDamage()) {
+                list.add(modifier.getColor()+modifier.getName());
+            }
+        }
+
+        return list;
+    }
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
@@ -73,8 +89,6 @@ public class GUIInfuser extends GuiContainer {
 
         this.infuserProgress.setMin(te.processTime).setMax(te.maxProcessTime);
         this.infuserProgress.draw(this.mc);
-        //this.energy.setMin(te.energy).setMax(TileEntityInfuser.MAX_POWER);
-        //this.energy.draw(this.mc);
         this.drawFluidBar();
 
         if(isPointInRegion(39, 101, 12, 12, mouseX, mouseY)){
@@ -114,7 +128,7 @@ public class GUIInfuser extends GuiContainer {
     protected void actionPerformed(GuiButton button) throws IOException {
         //Start Infusion
         if(button.id == 0){
-            DCRPacketHandler.sendToServer(new InfuserMessage(true));
+            PacketHandler.sendToServer(new InfuserMessage(true));
             te.canWork = true;
         }
     }

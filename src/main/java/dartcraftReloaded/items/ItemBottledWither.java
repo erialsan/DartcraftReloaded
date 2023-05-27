@@ -1,5 +1,6 @@
 package dartcraftReloaded.items;
 
+import dartcraftReloaded.Constants;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumActionResult;
@@ -11,8 +12,8 @@ import net.minecraft.world.World;
 public class ItemBottledWither extends ItemBase {
 
 
-    public ItemBottledWither(String name) {
-        super(name);
+    public ItemBottledWither() {
+        super(Constants.BOTTLED_WITHER);
     }
 
     @Override

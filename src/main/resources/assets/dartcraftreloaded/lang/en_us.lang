@@ -14,13 +14,20 @@ item.experienceTome.name=Experience Tome
 item.forceClaw.name=Claw
 item.forceGear.name=Force Gear
 item.snowCookie.name=Snow Wafer
-item.forcePack.name=Force Pack
+item.forcePack1.name=Force Pack I
+item.forcePack2.name=Force Pack II
+item.forcePack3.name=Force Pack III
+item.forcePack4.name=Force Pack IV
+item.forcePack5.name=Force Pack V
 item.forceBelt.name=Force Belt
 item.bottledWither.name=Bottled Wither
 item.inertCore.name=Inert Core
 item.upgradeTome.name=Upgrade Tome
 item.itemTE.name=Empty Package
 item.upgradeCore.name=Upgrade Core
+item.tear.name=Cold Tear
+item.arrowBundle.name=Arrow Bundle
+item.forceBow.name=Force Bow
 
 #Armor
 item.forceHelmet.name=Force Cap

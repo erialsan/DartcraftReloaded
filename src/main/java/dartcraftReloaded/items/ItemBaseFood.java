@@ -2,6 +2,7 @@ package dartcraftReloaded.items;
 
 import dartcraftReloaded.DartcraftReloaded;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,7 +14,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -29,9 +35,16 @@ public class ItemBaseFood extends ItemFood {
         setRegistryName(name);
         this.name = name;
         this.setCreativeTab(DartcraftReloaded.creativeTab);
-        if(name == "cookie_fortune"){
+        if(name.equals("cookie_fortune")){
             this.setAlwaysEdible();
             this.maxStackSize = 1;
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        if (Objects.equals(name, "cookie_fortune")) {
+            tooltip.add("Eat me");
         }
     }
 
@@ -42,7 +55,7 @@ public class ItemBaseFood extends ItemFood {
         {
             EntityPlayer entityplayer = (EntityPlayer)entityLiving;
             entityplayer.getFoodStats().addStats(this, stack);
-            worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+            worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
             this.onFoodEaten(stack, worldIn, entityplayer);
             entityplayer.addStat(StatList.getObjectUseStats(this));
 
@@ -50,10 +63,10 @@ public class ItemBaseFood extends ItemFood {
             {
                 CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
             }
-            if(name == "cookie_fortune"){
+            if(Objects.equals(name, "cookie_fortune")){
                 entityplayer.addItemStackToInventory(new ItemStack(ModItems.fortune));
             }
-            if(name == "soul_wafer" && !worldIn.isRemote){
+            if(Objects.equals(name, "soul_wafer") && !worldIn.isRemote){
                 this.randPotionEffect(entityplayer);
             }
 

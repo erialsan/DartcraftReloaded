@@ -1,6 +1,6 @@
 package dartcraftReloaded.potion.Effects;
 
-import dartcraftReloaded.handlers.DCRPotionHandler;
+import dartcraftReloaded.handlers.PotionHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.potion.PotionEffect;
@@ -13,7 +13,7 @@ public class EffectMagnet extends PotionEffect {
 
 
     public EffectMagnet(int duration) {
-        super(DCRPotionHandler.potionMagnet, duration, 1, true, false);
+        super(PotionHandler.potionMagnet, duration, 1, true, false);
 
     }
 
@@ -25,7 +25,7 @@ public class EffectMagnet extends PotionEffect {
         double y = entity.posY;
         double z = entity.posZ;
         double range = 10.0d;
-        PotionEffect activePotionEffect = entity.getActivePotionEffect(DCRPotionHandler.potionMagnet);
+        PotionEffect activePotionEffect = entity.getActivePotionEffect(PotionHandler.potionMagnet);
         if(activePotionEffect != null) {
             range += activePotionEffect.getAmplifier() * 0.3f;
         }

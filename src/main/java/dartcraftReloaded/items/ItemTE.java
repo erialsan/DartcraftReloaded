@@ -1,10 +1,10 @@
 package dartcraftReloaded.items;
 
 import dartcraftReloaded.Constants;
-import dartcraftReloaded.handlers.DCRCapabilityHandler;
+import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.capablilities.ItemTE.IItemTE;
 import dartcraftReloaded.capablilities.ItemTE.ItemTEProvider;
-import dartcraftReloaded.handlers.DCRSoundHandler;
+import dartcraftReloaded.handlers.SoundHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -31,7 +31,7 @@ public class ItemTE extends ItemBase {
 
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (worldIn.isRemote) {
-            IItemTE cap = stack.getCapability(DCRCapabilityHandler.CAPABILITY_TE, null);
+            IItemTE cap = stack.getCapability(CapabilityHandler.CAPABILITY_TE, null);
             if (cap != null) {
                 stack.setStackDisplayName("Packaged "+cap.getBlockName());
             }
@@ -40,7 +40,7 @@ public class ItemTE extends ItemBase {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        IItemTE cap = stack.getCapability(DCRCapabilityHandler.CAPABILITY_TE, null);
+        IItemTE cap = stack.getCapability(CapabilityHandler.CAPABILITY_TE, null);
         if (cap != null) {
             stack.setStackDisplayName("Packaged "+cap.getBlockName());
         }
@@ -50,8 +50,8 @@ public class ItemTE extends ItemBase {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-        if (!stack.hasCapability(DCRCapabilityHandler.CAPABILITY_TE, null))
-            return new ItemTEProvider(DCRCapabilityHandler.CAPABILITY_TE, null);
+        if (!stack.hasCapability(CapabilityHandler.CAPABILITY_TE, null))
+            return new ItemTEProvider(CapabilityHandler.CAPABILITY_TE, null);
         else
             return null;
     }
@@ -62,7 +62,7 @@ public class ItemTE extends ItemBase {
             if (placeBlockFromWrench(world, pos, player, hand, side)) {
                 player.getHeldItem(hand).shrink(1);
                 if (world.isRemote) {
-                    Minecraft.getMinecraft().player.playSound(DCRSoundHandler.SPARKLE, 1.0f, 1.0f);
+                    Minecraft.getMinecraft().player.playSound(SoundHandler.SPARKLE, 1.0f, 1.0f);
                 }
                 return EnumActionResult.SUCCESS;
             }
@@ -72,8 +72,8 @@ public class ItemTE extends ItemBase {
 
     private boolean placeBlockFromWrench(World world, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side) {
         ItemStack item = player.getHeldItem(hand);
-        if (item.getCapability(DCRCapabilityHandler.CAPABILITY_TE, null) != null) {
-            IItemTE cap = item.getCapability(DCRCapabilityHandler.CAPABILITY_TE, null);
+        if (item.getCapability(CapabilityHandler.CAPABILITY_TE, null) != null) {
+            IItemTE cap = item.getCapability(CapabilityHandler.CAPABILITY_TE, null);
             if (cap != null && cap.getBlockName() != null && cap.getBlockState() != null && cap.getNBT() != null) {
                 IBlockState old = world.getBlockState(pos.offset(side));
                 TileEntity te = TileEntity.create(world, cap.getNBT());

@@ -9,6 +9,9 @@ public class UpgradeTomeFactory implements Callable<IUpgradeTome> {
     public IUpgradeTome call() throws Exception {
         return new IUpgradeTome() {
 
+            private int level = 1;
+            private int points = 0;
+
             @Override
             public int getLevel() {
                 return level;
@@ -42,12 +45,6 @@ public class UpgradeTomeFactory implements Callable<IUpgradeTome> {
                 this.points = nbt.getInteger("points");
                 this.level = nbt.getInteger("level");
             }
-
-            private int level = 1;
-            private int points = 0;
-
-
-
         };
     }
 }

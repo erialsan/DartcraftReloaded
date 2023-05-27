@@ -16,7 +16,7 @@ public class ExperienceTomeStorage implements Capability.IStorage<IExperienceTom
     @Override
     public NBTBase writeNBT(Capability<IExperienceTome> capability, IExperienceTome instance, EnumFacing side) {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setFloat("experience", instance.getExperienceValue());
+        nbt.setInteger("experience", instance.getExperienceValue());
 
         return nbt;
     }
@@ -25,7 +25,7 @@ public class ExperienceTomeStorage implements Capability.IStorage<IExperienceTom
     public void readNBT(Capability<IExperienceTome> capability, IExperienceTome instance, EnumFacing side, NBTBase nbtIn) {
         if(nbtIn instanceof NBTTagCompound) {
             NBTTagCompound nbt = (NBTTagCompound) nbtIn;
-            instance.setExperienceValue(instance.getExperienceValue());
+            instance.setExperienceValue(nbt.getInteger("experience"));
 
         }
     }

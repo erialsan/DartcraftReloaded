@@ -12,36 +12,38 @@ public class ExperienceTomeFactory implements Callable<IExperienceTome> {
     public IExperienceTome call() throws Exception {
         return new IExperienceTome() {
 
-            private float experienceStored = 0.0F;
+            private int experienceStored = 0;
 
             @Override
-            public float getExperienceValue() {
+            public int getExperienceValue() {
                 return experienceStored;
             }
 
             @Override
-            public void addToExperienceValue() {
-
+            public void addToExperienceValue(int a) {
+                experienceStored += a;
             }
 
             @Override
-            public void subtractFromExperienceValue() {
-
+            public void subtractFromExperienceValue(int a) {
+                experienceStored -= a;
             }
 
             @Override
-            public void setExperienceValue(float newExp) {
+            public void setExperienceValue(int newExp) {
                 experienceStored = newExp;
             }
 
             @Override
             public NBTTagCompound serializeNBT() {
-                return null;
+                NBTTagCompound nbt = new NBTTagCompound();
+                nbt.setInteger("experience", experienceStored);
+                return nbt;
             }
 
             @Override
             public void deserializeNBT(NBTTagCompound nbt) {
-
+                experienceStored = nbt.getInteger("experience");
             }
         };
     }

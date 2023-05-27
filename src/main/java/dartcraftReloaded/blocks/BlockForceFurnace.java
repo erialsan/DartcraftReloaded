@@ -1,6 +1,6 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.handlers.DCRGUIHandler;
+import dartcraftReloaded.handlers.GUIHandler;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import net.minecraft.block.BlockContainer;
@@ -156,7 +156,7 @@ public class BlockForceFurnace extends BlockContainer
 
             if (tileentity instanceof TileEntityForceFurnace)
             {
-                playerIn.openGui(DartcraftReloaded.instance, DCRGUIHandler.FURNACE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+                playerIn.openGui(DartcraftReloaded.instance, GUIHandler.FURNACE, worldIn, pos.getX(), pos.getY(), pos.getZ());
                 playerIn.addStat(StatList.FURNACE_INTERACTION);
             }
 

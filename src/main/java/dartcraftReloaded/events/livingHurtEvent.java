@@ -10,6 +10,5 @@ public class livingHurtEvent {
 
     @SubscribeEvent
     public void livingHurtEvent(LivingHurtEvent event){
-
     }
 }

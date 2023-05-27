@@ -2,13 +2,13 @@ package dartcraftReloaded.items;
 
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.capablilities.UpgradeTome.UpgradeTomeProvider;
-import dartcraftReloaded.handlers.DCRCapabilityHandler;
-import dartcraftReloaded.capablilities.ExperienceTome.ExperienceTomeProvider;
+import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.capablilities.UpgradeTome.IUpgradeTome;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -27,10 +27,10 @@ public class ItemUpgradeTome extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        IUpgradeTome cap = stack.getCapability(DCRCapabilityHandler.CAPABILITY_UPGRADETOME, null);
+        IUpgradeTome cap = stack.getCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
         if (cap != null) {
-            tooltip.add("§b Level "+cap.getLevel());
-            tooltip.add(cap.getUpgradePoints()+" §b Upgrade Points");
+            tooltip.add(TextFormatting.BLUE+"Level "+cap.getLevel());
+            tooltip.add(TextFormatting.WHITE+String.valueOf(cap.getUpgradePoints())+TextFormatting.BLUE+" Upgrade Points");
         }
     }
 
@@ -41,8 +41,8 @@ public class ItemUpgradeTome extends Item {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-        if (!stack.hasCapability(DCRCapabilityHandler.CAPABILITY_UPGRADETOME, null))
-            return new UpgradeTomeProvider(DCRCapabilityHandler.CAPABILITY_UPGRADETOME, null);
+        if (!stack.hasCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null))
+            return new UpgradeTomeProvider(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
         else
             return null;
     }

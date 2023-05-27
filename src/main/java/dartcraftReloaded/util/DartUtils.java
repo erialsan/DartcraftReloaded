@@ -1,6 +1,6 @@
 package dartcraftReloaded.util;
 
-import dartcraftReloaded.handlers.DCRPacketHandler;
+import dartcraftReloaded.handlers.PacketHandler;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.blocks.BlockForceLog;
 import net.minecraft.block.Block;
@@ -143,7 +143,7 @@ public class DartUtils {
             }
 
             // always send block update to client
-            DCRPacketHandler.sendPacket(player, new SPacketBlockChange(world, pos));
+            PacketHandler.sendPacket(player, new SPacketBlockChange(world, pos));
         }
         // client sided handling
         else {
@@ -205,7 +205,7 @@ public class DartUtils {
 
             // send update to client
             if(!world.isRemote) {
-                DCRPacketHandler.sendPacket(player, new SPacketBlockChange(world, pos));
+                PacketHandler.sendPacket(player, new SPacketBlockChange(world, pos));
             }
             return false;
         }

@@ -2,6 +2,7 @@ package dartcraftReloaded.tileEntity;
 
 import dartcraftReloaded.energy.DCREnergyStorage;
 import dartcraftReloaded.fluids.FluidForce;
+import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.items.ModItems;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.inventory.ItemStackHelper;
@@ -152,7 +153,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
     //Processes force Gems in the force infuser slot
     private void processForceGems() {
         if (handler.getStackInSlot(9).getItem() == ModItems.gemForceGem) {
-            FluidStack force = new FluidStack(FluidRegistry.getFluid("force"), 500);
+            FluidStack force = new FluidStack(FluidRegistry.getFluid("force"), 1000);
 
             if (tank.getFluidAmount() < tank.getCapacity() - 100) {
                 fill(force, true);
@@ -264,5 +265,12 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
 
     protected boolean isFluidEqual(Fluid fluid) {
         return tank.getFluid().equals(fluid);
+    }
+
+    public static boolean isStackValid(ItemStack stack) {
+        if (stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+            return stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).getModifiers().size() == 0;
+        }
+        return false;
     }
 }

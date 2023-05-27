@@ -1,100 +1,107 @@
 package dartcraftReloaded.container;
 
-import dartcraftReloaded.items.ItemForceBelt;
-import dartcraftReloaded.items.ItemForcePack;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-import javax.annotation.Nonnull;
-
 public class ContainerItemForcePack extends Container {
-
-    private int numRows = 5;
-
-    @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return !playerIn.isSpectator();
+    private ItemStack item;
+    private InventoryPlayer playerInventory;
+    public int slotCount;
+    public IItemHandler itemHandler;
+    public int slot;
+    public String itemKey;
+    public ContainerItemForcePack(ItemStack item, InventoryPlayer playerInventory, int slot) {
+        super();
+        this.slot = slot;
+        itemHandler = item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        slotCount = itemHandler.getSlots();
+        itemKey = item.getItem().getUnlocalizedNameInefficiently(item);
+        addMySlots(item);
+        addPlayerSlots(playerInventory);
     }
 
-    public ContainerItemForcePack(IInventory playerInv, ItemStack fp) {
+    @Override
+    public boolean canInteractWith(EntityPlayer player) {
+        if (slot == -1) return true;
+        if (slot == -2) return !player.getHeldItemMainhand().isEmpty();
+        return !player.inventory.getStackInSlot(slot).isEmpty();
+    }
 
-        int xPosC = 17;
-        int yPosC = 20;
-        //Maxes at 40
-        int counter = 0;
+    @Override
+    public ItemStack slotClick(int slotid, int dragtype, ClickType clickType, EntityPlayer player) {
+        if (slotid >= 0) {
+            if (slot == -2) {
+                if (getSlot(slotid).getStack() == player.getHeldItemMainhand()) return ItemStack.EMPTY;
+            } else if (slot > -1) {
+                if (getSlot(slotid).getStack() == player.inventory.getStackInSlot(slot)) return ItemStack.EMPTY;
+            }
+        }
+        if (slotid >= 0) getSlot(slotid).inventory.markDirty();
+        return super.slotClick(slotid, dragtype, clickType, player);
 
-        for (int j = 0; j < this.numRows; ++j)
-        {
-            for (int k = 0; k < 8; ++k)
-            {
-                this.addSlotToContainer(new SlotItemHandler(fp.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), counter, xPosC + k * 18, yPosC + j * 18) {
-                    @Override
-                    public boolean isItemValid(@Nonnull ItemStack stack) {
-                        return !(stack.getItem() instanceof ItemForcePack || stack.getItem() instanceof ItemForceBelt);
-                    }
-                });
-                counter++;
+    }
+
+    public void addPlayerSlots(InventoryPlayer playerInventory) {
+        int originX = 8;
+        int originY;
+        if (slotCount == 8) originY = 54;
+        else if (slotCount == 16) originY = 72;
+        else if (slotCount == 24) originY = 90;
+        else if (slotCount == 32) originY = 108;
+        else originY = 126;
+
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
+                int x = originX + col * 18;
+                int y = originY + row * 18;
+                this.addSlotToContainer(new Slot(playerInventory, (col + row * 9) + 9, x, y));
             }
         }
 
-        //Player Inventory
-        int xPos = 8;
-        int yPos = 126;
-
-        //Slots 9-99
-        for (int y = 0; y < 3; ++y) {
-            for (int x = 0; x < 9; ++x) {
-                this.addSlotToContainer(new Slot(playerInv, x + y * 9 + 9, xPos + x * 18, yPos + y * 18));
-            }
-        }
-
-        //Slots 0-8
-        for (int x = 0; x < 9; ++x) {
-            this.addSlotToContainer(new Slot(playerInv, x, xPos + x * 18, yPos + 58));
+        for (int row = 0; row < 9; row++) {
+            int x = originX + row * 18;
+            int y = originY + 58;
+            this.addSlotToContainer(new Slot(playerInventory, row, x, y));
         }
     }
 
-    //Credit to Shadowfacts for this method
-    @Override
+    public void addMySlots(ItemStack item) {
+        if (itemHandler == null) return;
+        int cols = 8;
+        int rows = slotCount / cols;
+        int slotIndex = 0;
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int x = 17 + col * 18;
+                int y = 20 + row * 18;
+                addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
+                slotIndex++;
+                if (slotIndex >= slotCount) break;
+            }
+        }
+    }
+
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = inventorySlots.get(index);
-
+        Slot slot = this.inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
+            int bagSlotCount = inventorySlots.size() - player.inventory.mainInventory.size();
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-
-            if(itemstack.getItem() instanceof ItemForcePack)
-                return ItemStack.EMPTY;
-
-            int containerSlots = inventorySlots.size() - player.inventory.mainInventory.size();
-
-            if (index < containerSlots) {
-                if (!this.mergeItemStack(itemstack1, containerSlots, inventorySlots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
+            if (index < bagSlotCount) {
+                if (!this.mergeItemStack(itemstack1, bagSlotCount, this.inventorySlots.size(), true)) return ItemStack.EMPTY;
+            } else if (!this.mergeItemStack(itemstack1, 0, bagSlotCount, false)) {
                 return ItemStack.EMPTY;
             }
-
-            if (itemstack1.getCount() == 0) {
-                slot.putStack(ItemStack.EMPTY);
-            } else {
-                slot.onSlotChanged();
-            }
-
-            if (itemstack1.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot.onTake(player, itemstack1);
+            if (itemstack1.isEmpty()) slot.putStack(ItemStack.EMPTY);
+            else slot.onSlotChanged();
         }
-
         return itemstack;
     }
 

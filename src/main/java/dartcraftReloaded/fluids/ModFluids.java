@@ -11,13 +11,6 @@ public class ModFluids {
 
     public static FluidForce fluidForce = new FluidForce();
 
-    public static Fluid fluidForceBlock;
-
-    public static void setUpFluids(){
-        fluidForce = new FluidForce();
-        fluidForce.setBlock(Blocks.WATER);
-    }
-
     public static void registerFluids(){
         FluidRegistry.registerFluid(fluidForce);
     }

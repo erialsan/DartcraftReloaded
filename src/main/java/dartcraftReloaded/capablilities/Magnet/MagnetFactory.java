@@ -32,12 +32,14 @@ public class MagnetFactory implements Callable<IMagnet> {
 
             @Override
             public NBTTagCompound serializeNBT() {
-                return null;
+                NBTTagCompound nbt = new NBTTagCompound();
+                nbt.setBoolean("active", active);
+                return nbt;
             }
 
             @Override
             public void deserializeNBT(NBTTagCompound nbt) {
-
+                active = nbt.getBoolean("active");
             }
         };
     }

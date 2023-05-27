@@ -20,6 +20,12 @@ public class ConfigHandler {
     @Config.Comment("Enable Beta Message. Default = false")
     public static boolean betaMessage = false;
 
+    @Config.Comment("These ingots make force ingots 1:1")
+    public static String[] ingots2 = {"ingotIron", "ingotBronze"};
+
+    @Config.Comment("These ingots make force ingots 1:1.5")
+    public static String[] ingots3 = {"ingotGold", "ingotSilver", "ingotSteel", "ingotRefinedIron"};
+
 
     @Mod.EventBusSubscriber(modid = Constants.modId)
     private static class EventHandler {

@@ -8,9 +8,9 @@ import net.minecraftforge.common.util.INBTSerializable;
  */
 public interface IExperienceTome extends INBTSerializable<NBTTagCompound> {
 
-    float getExperienceValue();
-    void addToExperienceValue();
-    void subtractFromExperienceValue();
-    void setExperienceValue(float newExp);
+    int getExperienceValue();
+    void addToExperienceValue(int a);
+    void subtractFromExperienceValue(int a);
+    void setExperienceValue(int newExp);
 
 }

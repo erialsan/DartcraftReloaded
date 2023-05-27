@@ -10,6 +10,5 @@ public class livingDropsEvent {
 
     @SubscribeEvent
     public void livingDropsEvent(LivingDropsEvent event){
-
     }
 }

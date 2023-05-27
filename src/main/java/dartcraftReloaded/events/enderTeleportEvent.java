@@ -1,6 +1,6 @@
 package dartcraftReloaded.events;
 
-import dartcraftReloaded.handlers.DCRCapabilityHandler;
+import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -14,7 +14,7 @@ public class enderTeleportEvent {
     public void onEnderTeleportEvent(EnderTeleportEvent event){
         if(event.getEntity() instanceof EntityEnderman){
             EntityEnderman enderman = ((EntityEnderman) event.getEntity());
-            if(!enderman.getCapability(DCRCapabilityHandler.CAPABILITY_BANE, null).canTeleport()){
+            if(!enderman.getCapability(CapabilityHandler.CAPABILITY_BANE, null).canTeleport()){
                 event.setCanceled(true);
             }
         }

@@ -1,8 +1,7 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.handlers.DCRGUIHandler;
+import dartcraftReloaded.handlers.GUIHandler;
 import dartcraftReloaded.DartcraftReloaded;
-import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,8 +15,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import static dartcraftReloaded.Constants.INFUSER;
@@ -100,7 +97,7 @@ public class BlockInfuser extends BlockBase {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
-            playerIn.openGui(DartcraftReloaded.instance, DCRGUIHandler.INFUSER, worldIn, pos.getX(), pos.getY(), pos.getZ());
+            playerIn.openGui(DartcraftReloaded.instance, GUIHandler.INFUSER, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }

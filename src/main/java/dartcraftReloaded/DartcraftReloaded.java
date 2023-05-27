@@ -12,6 +12,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemTool;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.util.EnumHelper;
@@ -33,7 +34,7 @@ import static net.minecraftforge.fml.relauncher.Side.CLIENT;
  * Created by BURN447 on 2/4/2018.
  */
 
-@Mod(modid = Constants.modId, name = Constants.name, version = Constants.version)
+@Mod(modid = Constants.modId, name = Constants.name, version = Constants.version, dependencies = "after: forestry")
 public class DartcraftReloaded {
 
     public static final tabDartcraft creativeTab = new tabDartcraft();
@@ -55,27 +56,28 @@ public class DartcraftReloaded {
     public void preInit(FMLPreInitializationEvent e){
         GameRegistry.registerWorldGenerator(new DCRWorldGen(), 3);
         proxy.registerTileEntities();
-        DCRCapabilityHandler.register();
-        DCROreDictionaryHandler.registerOreDictionary();
-        DCRPotionHandler.preInit(e);
+        CapabilityHandler.register();
+        PotionHandler.preInit(e);
         ModFluids.registerFluids();
-        ModFluids.setUpFluids();
+        CompatHandler.preInit(e);
 
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
-        NetworkRegistry.INSTANCE.registerGuiHandler(DartcraftReloaded.instance, new DCRGUIHandler());
-        GameRegistry.registerFuelHandler(new DCRFuelHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(DartcraftReloaded.instance, new GUIHandler());
+        GameRegistry.registerFuelHandler(new FuelHandler());
         proxy.registerSmeltingRecipes();
-        DCREventHandler.init();
-        DCRPacketHandler.init();
+        EventHandler.init();
+        PacketHandler.init();
         ModBlocks.registerOreDict();
         ModItems.registerOreDict();
-        DCRSoundHandler.registerSounds();
+        SoundHandler.registerSounds();
+        CompatHandler.init(e);
     }
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
+        CompatHandler.postInit(e);
     }
 
     @Mod.EventBusSubscriber
@@ -105,7 +107,11 @@ public class DartcraftReloaded {
 
         @SubscribeEvent
         public static void registerPotions(RegistryEvent.Register<Potion> event) {
-            DCRPotionHandler.registerPotions(event.getRegistry());
+            PotionHandler.registerPotions(event.getRegistry());
+        }
+        @SubscribeEvent
+        public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+            RecipeHandler.registerRecipes(event.getRegistry());
         }
     }
 

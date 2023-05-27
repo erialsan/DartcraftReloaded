@@ -1,6 +1,6 @@
 package dartcraftReloaded.capablilities.BaneModifier;
 
-import dartcraftReloaded.handlers.DCRCapabilityHandler;
+import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -23,15 +23,15 @@ public class BaneProvider implements ICapabilitySerializable<NBTBase>, ICapabili
 
     public BaneProvider(Capability<IBaneModifier> capability, EnumFacing facing){
         if(capability != null){
-            DCRCapabilityHandler.CAPABILITY_BANE = capability;
+            CapabilityHandler.CAPABILITY_BANE = capability;
             this.facing = facing;
-            this.instance = DCRCapabilityHandler.CAPABILITY_BANE.getDefaultInstance();
+            this.instance = CapabilityHandler.CAPABILITY_BANE.getDefaultInstance();
         }
     }
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        if(capability == DCRCapabilityHandler.CAPABILITY_BANE)
+        if(capability == CapabilityHandler.CAPABILITY_BANE)
             return capability == getCapability();
         else
             return false;
@@ -40,7 +40,7 @@ public class BaneProvider implements ICapabilitySerializable<NBTBase>, ICapabili
     @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == DCRCapabilityHandler.CAPABILITY_BANE ? DCRCapabilityHandler.CAPABILITY_BANE.<T> cast(instance) : null;
+        return capability == CapabilityHandler.CAPABILITY_BANE ? CapabilityHandler.CAPABILITY_BANE.<T> cast(instance) : null;
     }
 
     @Override
@@ -56,6 +56,6 @@ public class BaneProvider implements ICapabilitySerializable<NBTBase>, ICapabili
     }
 
     public Capability<IBaneModifier> getCapability(){
-        return DCRCapabilityHandler.CAPABILITY_BANE;
+        return CapabilityHandler.CAPABILITY_BANE;
     }
 }

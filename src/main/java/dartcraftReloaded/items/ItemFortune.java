@@ -1,7 +1,8 @@
 package dartcraftReloaded.items;
 
+import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
-import dartcraftReloaded.handlers.DCRGUIHandler;
+import dartcraftReloaded.handlers.GUIHandler;
 import dartcraftReloaded.util.StringHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -30,9 +31,8 @@ public class ItemFortune extends ItemBase {
             fortunes[i] = "text.dartcraftReloaded.fortune" + i;
         }
     }
-    public ItemFortune(String name) {
-        super(name);
-        this.name = name;
+    public ItemFortune() {
+        super(Constants.FORTUNE);
         this.setCreativeTab(DartcraftReloaded.creativeTab);
     }
 
@@ -59,7 +59,7 @@ public class ItemFortune extends ItemBase {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        playerIn.openGui(DartcraftReloaded.instance, DCRGUIHandler.FORTUNE, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
+        playerIn.openGui(DartcraftReloaded.instance, GUIHandler.FORTUNE, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
         return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     }
 
@@ -67,7 +67,7 @@ public class ItemFortune extends ItemBase {
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        player.openGui(DartcraftReloaded.instance, DCRGUIHandler.FORTUNE, worldIn, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
+        player.openGui(DartcraftReloaded.instance, GUIHandler.FORTUNE, worldIn, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
         return EnumActionResult.PASS;
     }
 
