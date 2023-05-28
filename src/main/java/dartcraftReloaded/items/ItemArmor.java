@@ -51,11 +51,6 @@ public class ItemArmor extends net.minecraft.item.ItemArmor implements IModifiab
     }
 
     @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
-    }
-
-    @Override
     public long getTool() {
         return Constants.ARMOR;
     }

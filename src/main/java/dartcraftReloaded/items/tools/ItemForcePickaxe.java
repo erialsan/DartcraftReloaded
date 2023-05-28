@@ -42,16 +42,6 @@ public class ItemForcePickaxe extends ItemPickaxe implements IModifiableTool {
             return null;
     }
 
-    @Override
-    public int getItemEnchantability() {
-        return 0;
-    }
-
-    @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
-    }
-
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> lores, ITooltipFlag flagIn) {
@@ -64,7 +54,7 @@ public class ItemForcePickaxe extends ItemPickaxe implements IModifiableTool {
         float speed = super.getDestroySpeed(stack, state);
         IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
         if (cap.hasModifier(Constants.SPEED)) {
-            speed *= (1 + 0.075 * cap.getLevel(Constants.SPEED));
+            speed += 1 + cap.getLevel(Constants.SPEED)*cap.getLevel(Constants.SPEED);
         }
         return speed;
     }

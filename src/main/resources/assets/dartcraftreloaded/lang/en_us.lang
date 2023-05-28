@@ -2,6 +2,10 @@
 sparkle=Magic Sparkles
 start=Infuser Starts
 
+#Entities
+entity.coldcow.name=Cold Cow
+entity.coldchicken.name=Cold Chicken
+
 #Items
 item.ingotForce.name=Force Ingot
 item.gemForceGem.name=Force Gem

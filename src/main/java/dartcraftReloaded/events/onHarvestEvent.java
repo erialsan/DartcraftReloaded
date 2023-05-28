@@ -2,6 +2,7 @@ package dartcraftReloaded.events;
 
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
+import dartcraftReloaded.config.ConfigHandler;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,7 @@ public class onHarvestEvent {
                             ItemStack smelted = FurnaceRecipes.instance().getSmeltingResult(drop);
                             if (!smelted.isEmpty()) {
                                 smelted = smelted.copy();
-                                if(cap.hasModifier(Constants.LUCK)) {
+                                if(cap.hasModifier(Constants.LUCK) && ConfigHandler.luckHeatEnabled) {
                                     smelted.setCount(smelted.getCount() * random.nextInt(cap.getLevel(Constants.LUCK) + 1) + 1);
                                 } else {
                                     smelted.setCount(drop.getCount());
@@ -49,11 +50,10 @@ public class onHarvestEvent {
                             }
                         }
                     } else if (cap.hasModifier(Constants.LUCK)) {
-                        IBlockState i = event.getWorld().getBlockState(event.getPos());
+                        IBlockState i = event.getState();
                         event.getDrops().clear();
                         NonNullList<ItemStack> j = NonNullList.create();
-
-                        i.getBlock().getDrops(j, event.getWorld(), event.getPos(), i, cap.getLevel(Constants.LUCK));
+                        i.getBlock().getDrops(j, event.getWorld(), event.getPos(), i, event.getFortuneLevel() + cap.getLevel(Constants.LUCK));
                         for (ItemStack k : j) {
                             event.getDrops().add(k);
                         }

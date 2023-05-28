@@ -97,14 +97,13 @@ public class Constants {
             FORCE = new Modifier(0, 3, 0, "Force", YELLOW, new ItemStack(ModItems.nuggetForce), SWORD | AXE), //good
             DAMAGE = new Modifier(1, 5, 0, "Damage", RED, new ItemStack(ModItems.claw), SWORD | AXE | CORE | BOW), //good
             HEAT = new Modifier(2, 3, 1, "Heat", RED, new ItemStack(Items.BLAZE_ROD), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | CORE | BOW), //good
-            SPEED = new Modifier(3, 5, 1, "Speed", WHITE, new ItemStack(Items.SUGAR), AXE | PICKAXE | SHOVEL | ROD | ARMOR | CORE | BOW),
-            LUMBERJACK = new Modifier(4, 1, 1, "Lumberjack", GOLD, new ItemStack(ModBlocks.forceLog), AXE),
-            LUCK = new Modifier(5, 5, 2, "Luck", GREEN, new ItemStack(ModItems.fortune), PICKAXE | AXE | SHOVEL | SWORD | ROD | BOW),
-            GRINDING = new Modifier(6, 1, 2, "Grinding", DARK_GRAY, new ItemStack(Items.FLINT), PICKAXE),
-            RAINBOW = new Modifier(7, 1, 2, "Rainbow", LIGHT_PURPLE, new ItemStack(Items.DYE, 1, 4), SHEARS),
-            HOLDING = new Modifier(8, 1, 2, "Holding", GRAY, new ItemStack(ModItems.emptyJar), ROD),
-            EXPERIENCE = new Modifier(9, 3, 2, "Experience", GREEN, new ItemStack(ModItems.soulWafer), PICKAXE | AXE | SHOVEL | SWORD | CORE),
-            QUIVER = new Modifier(18, 4, 4, "Quiver", GRAY, new ItemStack(ModItems.arrowBundle), BOW);
+            SPEED = new Modifier(3, 5, 1, "Speed", WHITE, new ItemStack(Items.SUGAR), AXE | PICKAXE | SHOVEL | ROD | ARMOR | CORE | BOW), //good
+            LUMBERJACK = new Modifier(4, 1, 1, "Lumberjack", GOLD, new ItemStack(ModBlocks.forceLog), AXE), //good
+            LUCK = new Modifier(5, 5, 2, "Luck", GREEN, new ItemStack(ModItems.fortune), PICKAXE | AXE | SHOVEL | SWORD | ROD | BOW | SHEARS), //good
+            RAINBOW = new Modifier(6, 1, 2, "Rainbow", LIGHT_PURPLE, new ItemStack(Items.DYE, 1, 4), SHEARS),
+            HOLDING = new Modifier(7, 1, 2, "Holding", GRAY, new ItemStack(ModItems.emptyJar), ROD),
+            EXPERIENCE = new Modifier(8, 3, 2, "Experience", GREEN, new ItemStack(ModItems.soulWafer), PICKAXE | AXE | SHOVEL | SWORD | CORE),
+            QUIVER = new Modifier(17, 1, 4, "Quiver", GRAY, new ItemStack(ModItems.arrowBundle), BOW);
 
     public static final String modId = "dartcraftreloaded";
     public static final String name = "Dartcraft Reloaded";

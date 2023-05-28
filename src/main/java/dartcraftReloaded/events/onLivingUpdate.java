@@ -20,20 +20,27 @@ public class onLivingUpdate {
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
-            int level = 0;
+            int speedLevel = 0;
+            int luckLevel = 0;
             for (ItemStack i : player.inventory.armorInventory) {
                 if (i.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
                     IModifiable cap = i.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
                     if (cap.hasModifier(Constants.SPEED)) {
-                        level += cap.getLevel(Constants.SPEED);
+                        speedLevel += cap.getLevel(Constants.SPEED);
+                    }
+                    if (cap.hasModifier(Constants.LUCK)) {
+                        luckLevel += cap.getLevel(Constants.LUCK);
                     }
                 }
             }
-            if (level > 0) {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionById(1), 8, level));
-                if (level / 4 > 0) {
-                    player.addPotionEffect(new PotionEffect(Potion.getPotionById(3), 8, level / 4));
+            if (speedLevel > 0) {
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(1), 8, speedLevel));
+                if (speedLevel / 4 > 0) {
+                    player.addPotionEffect(new PotionEffect(Potion.getPotionById(3), 8, speedLevel / 4));
                 }
+            }
+            if (luckLevel > 0) {
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(26), 8, luckLevel));
             }
 
 

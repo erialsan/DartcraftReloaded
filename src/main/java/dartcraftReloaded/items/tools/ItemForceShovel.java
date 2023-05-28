@@ -103,15 +103,6 @@ public class ItemForceShovel extends ItemSpade implements IModifiableTool {
         }
     }
 
-    @Override
-    public int getItemEnchantability() {
-        return 0;
-    }
-
-    @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
-    }
 
     @Override
     public long getTool() {

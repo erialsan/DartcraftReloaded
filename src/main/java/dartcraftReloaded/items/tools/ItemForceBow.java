@@ -88,13 +88,9 @@ public class ItemForceBow extends ItemBow implements IModifiableTool {
         if (entityLiving instanceof EntityPlayer)
         {
             EntityPlayer entityplayer = (EntityPlayer)entityLiving;
-            boolean flag = entityplayer.capabilities.isCreativeMode;
             IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
-            if (cap.hasModifier(Constants.QUIVER)) {
-                if (Math.random() < 0.25*cap.getLevel(Constants.QUIVER)) flag = true;
-            }
             ItemStack itemstack = this.findAmmo(entityplayer);
-
+            boolean flag = entityplayer.capabilities.isCreativeMode || cap.hasModifier(Constants.QUIVER);
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
             i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, entityplayer, i, !itemstack.isEmpty() || flag);
             if (i < 0) return;

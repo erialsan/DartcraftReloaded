@@ -4,6 +4,8 @@ import dartcraftReloaded.Constants;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

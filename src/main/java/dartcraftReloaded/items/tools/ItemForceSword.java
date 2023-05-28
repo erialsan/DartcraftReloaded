@@ -105,16 +105,6 @@ public class ItemForceSword extends ItemSword implements IModifiableTool {
 
 
     @Override
-    public int getItemEnchantability() {
-        return 0;
-    }
-
-    @Override
-    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return false;
-    }
-
-    @Override
     public long getTool() {
         return Constants.SWORD;
     }

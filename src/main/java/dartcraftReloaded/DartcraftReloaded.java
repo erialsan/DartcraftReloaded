@@ -45,7 +45,7 @@ public class DartcraftReloaded {
     public static CommonProxy proxy;
 
     public static final ItemArmor.ArmorMaterial forceArmorMaterial = EnumHelper.addArmorMaterial("FORCE", Constants.modId + ":force", 15, new int[]{1, 2, 3, 1}, 25, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4.0F);
-    public static final ItemTool.ToolMaterial forceToolMaterial = EnumHelper.addToolMaterial("FORCE", 3, 1561, 8.0F, 8.0F, 22);
+    public static final ItemTool.ToolMaterial forceToolMaterial = EnumHelper.addToolMaterial("FORCE", 3, 1561, 10.0F, 8.0F, 22);
 
     static {
         FluidRegistry.enableUniversalBucket();
@@ -59,7 +59,8 @@ public class DartcraftReloaded {
         PotionHandler.preInit(e);
         ModFluids.registerFluids();
         CompatHandler.preInit(e);
-
+        EntityHandler.registerEntities();
+        EntityHandler.registerEntityRenders();
     }
 
     @Mod.EventHandler

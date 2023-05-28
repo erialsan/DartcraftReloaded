@@ -5,6 +5,7 @@ import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.Modifier;
 import dartcraftReloaded.capablilities.UpgradeTome.IUpgradeTome;
+import dartcraftReloaded.config.ConfigHandler;
 import dartcraftReloaded.energy.DCREnergyStorage;
 import dartcraftReloaded.fluids.FluidForce;
 import dartcraftReloaded.handlers.CapabilityHandler;
@@ -60,8 +61,6 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
     public int maxProcessTime = 0;
 
     public static int MAX_POWER = 10000;
-    public static int RF_PER_TICK = 20;
-
     public int fluidContained;
 
     public int tickCount;
@@ -206,8 +205,8 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
                 }
                 processForceGems();
                 if (processTime >= 0) {
-                    if (energyStorage.getEnergyStored() >= RF_PER_TICK) {
-                        energyStorage.extractEnergy(RF_PER_TICK, false);
+                    if (energyStorage.getEnergyStored() >= ConfigHandler.infuserConsumption) {
+                        energyStorage.extractEnergy(ConfigHandler.infuserConsumption, false);
                         processTime++;
                     }
                     sync();

@@ -2,6 +2,7 @@ package dartcraftReloaded.events;
 
 import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.Constants;
+import dartcraftReloaded.lootTables.DCRLootTables;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
@@ -10,6 +11,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class lootTableLoadEvent {
+
 
     @SubscribeEvent
     public void onLootTableLoadEvent(LootTableLoadEvent event) {
