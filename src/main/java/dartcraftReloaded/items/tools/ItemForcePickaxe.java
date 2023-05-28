@@ -3,6 +3,7 @@ package dartcraftReloaded.items.tools;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.block.state.IBlockState;
@@ -18,10 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * Created by BURN447 on 5/13/2018.
- */
-public class ItemForcePickaxe extends ItemPickaxe {
+public class ItemForcePickaxe extends ItemPickaxe implements IModifiableTool {
 
 
     public ItemForcePickaxe() {
@@ -69,5 +67,10 @@ public class ItemForcePickaxe extends ItemPickaxe {
             speed *= (1 + 0.075 * cap.getLevel(Constants.SPEED));
         }
         return speed;
+    }
+
+    @Override
+    public long getTool() {
+        return Constants.PICKAXE;
     }
 }

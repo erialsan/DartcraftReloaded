@@ -1,24 +1,50 @@
-package dartcraftReloaded.potion.Effects;
+package dartcraftReloaded.potion;
 
 import dartcraftReloaded.handlers.PotionHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import javax.vecmath.Vector3d;
 import java.util.List;
 
-public class EffectMagnet extends PotionEffect {
-
-
-    public EffectMagnet(int duration) {
-        super(PotionHandler.potionMagnet, duration, 1, true, false);
-
+public class PotionMagnet extends Potion {
+    public PotionMagnet() {
+        super(false, 0);
+        this.setRegistryName("magnet");
+        this.setPotionName("Magnet");
     }
 
     @Override
-    public void performEffect(EntityLivingBase entity) {
+    public boolean isInstant() {
+        return false;
+    }
+
+    @Override
+    public boolean isBeneficial() {
+        return false;
+    }
+
+    @Override
+    public boolean hasStatusIcon() {
+        return true;
+    }
+
+    @Override
+    public boolean isReady(int duration, int amplifier) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldRender(PotionEffect effect) {
+        return false;
+    }
+
+
+    @Override
+    public void performEffect(EntityLivingBase entity, int amplifier) {
         //Inspired by Botania Code
 
         double x = entity.posX;

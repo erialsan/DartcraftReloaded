@@ -10,9 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 
-/**
- * Created by BURN447 on 6/23/2018.
- */
 public class BlockFluidForce extends BlockFluidClassic {
 
     public BlockFluidForce(){

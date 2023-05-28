@@ -6,6 +6,8 @@ import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.client.tabDartcraft;
 import dartcraftReloaded.proxy.CommonProxy;
+import dartcraftReloaded.tileEntity.TileEntityInfuser;
+import dartcraftReloaded.tileEntity.TileEntityInfuserRenderer;
 import dartcraftReloaded.world.DCRWorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
@@ -18,6 +20,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -29,10 +32,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static net.minecraftforge.fml.relauncher.Side.CLIENT;
-
-/**
- * Created by BURN447 on 2/4/2018.
- */
 
 @Mod(modid = Constants.modId, name = Constants.name, version = Constants.version, dependencies = "after: forestry")
 public class DartcraftReloaded {
@@ -91,6 +90,7 @@ public class DartcraftReloaded {
         public static void registerBlocks(RegistryEvent.Register<Block> event) {
             ModBlocks.register(event.getRegistry());
             ModBlocks.registerModels();
+            ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInfuser.class, new TileEntityInfuserRenderer());
         }
 
         @SideOnly(CLIENT)

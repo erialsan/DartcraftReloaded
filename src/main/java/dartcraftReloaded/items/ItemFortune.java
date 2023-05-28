@@ -20,9 +20,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by BURN447 on 6/2/2018.
- */
 public class ItemFortune extends ItemBase {
     private static final String[] fortunes = new String[186];
 
@@ -34,6 +31,7 @@ public class ItemFortune extends ItemBase {
     public ItemFortune() {
         super(Constants.FORTUNE);
         this.setCreativeTab(DartcraftReloaded.creativeTab);
+        setMaxStackSize(1);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class SoundMessage extends MessageBase<SoundMessage> {
             case 0:
                 Minecraft.getMinecraft().player.playSound(SoundHandler.SPARKLE, 1.0f, 1.0f);
             case 1:
-                break;
+                Minecraft.getMinecraft().player.playSound(SoundHandler.START, 1.0f, 1.0f);
         }
     }
 

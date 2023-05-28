@@ -3,6 +3,7 @@ package dartcraftReloaded.items.tools;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.block.Block;
@@ -28,10 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * Created by BURN447 on 5/13/2018.
- */
-public class ItemForceShovel extends ItemSpade {
+public class ItemForceShovel extends ItemSpade implements IModifiableTool {
 
 
     public ItemForceShovel() {
@@ -115,4 +113,8 @@ public class ItemForceShovel extends ItemSpade {
         return false;
     }
 
+    @Override
+    public long getTool() {
+        return Constants.SHOVEL;
+    }
 }

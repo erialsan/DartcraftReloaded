@@ -22,15 +22,13 @@ import scala.Int;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * Created by BURN447 on 6/11/2018.
- */
 public class ItemExperienceTome extends Item {
 
     public ItemExperienceTome(){
         this.setCreativeTab(DartcraftReloaded.creativeTab);
         this.setTranslationKey(Constants.EXPERIENCE_TOME);
         this.setRegistryName(Constants.EXPERIENCE_TOME);
+        setMaxStackSize(1);
     }
 
     @Override

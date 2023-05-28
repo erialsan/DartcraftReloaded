@@ -16,9 +16,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import static dartcraftReloaded.Constants.FORCE_LOG;
 
-/**
- * Created by BURN447 on 2/14/2018.
- */
 public class BlockForceLog extends BlockRotatedPillar {
 
     public BlockForceLog() {

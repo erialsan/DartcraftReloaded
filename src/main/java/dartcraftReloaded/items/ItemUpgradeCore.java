@@ -2,6 +2,7 @@ package dartcraftReloaded.items;
 
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.capablilities.ExperienceTome.ExperienceTomeProvider;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.client.util.ITooltipFlag;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemUpgradeCore extends ItemBase {
+public class ItemUpgradeCore extends ItemBase implements IModifiableTool {
 
 
     public ItemUpgradeCore() {
@@ -38,4 +39,8 @@ public class ItemUpgradeCore extends ItemBase {
         stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).addText(lores);
     }
 
+    @Override
+    public long getTool() {
+        return Constants.CORE;
+    }
 }

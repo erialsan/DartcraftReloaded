@@ -3,10 +3,6 @@ package dartcraftReloaded.capablilities.ExperienceTome;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.concurrent.Callable;
-
-/**
- * Created by BURN447 on 6/10/2018.
- */
 public class ExperienceTomeFactory implements Callable<IExperienceTome> {
     @Override
     public IExperienceTome call() throws Exception {

@@ -18,9 +18,6 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * Created by BURN447 on 2/23/2018.
- */
 public class ItemWoodenForceRod extends ItemBase {
 
     public ItemWoodenForceRod(){

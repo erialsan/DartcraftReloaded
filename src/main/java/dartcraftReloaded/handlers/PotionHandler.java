@@ -1,14 +1,11 @@
 package dartcraftReloaded.handlers;
 
-import dartcraftReloaded.potion.Potions.PotionBleeding;
-import dartcraftReloaded.potion.Potions.PotionMagnet;
+import dartcraftReloaded.potion.PotionBleeding;
+import dartcraftReloaded.potion.PotionMagnet;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-/**
- * Created by BURN447 on 6/13/2018.
- */
 public class PotionHandler {
 
     public static Potion potionBleeding;

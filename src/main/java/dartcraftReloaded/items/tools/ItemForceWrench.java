@@ -21,9 +21,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**
- * Created by BURN447 on 3/6/2018.
- */
 public class ItemForceWrench extends ItemBase {
 
     public ItemForceWrench(){

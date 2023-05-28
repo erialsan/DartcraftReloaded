@@ -7,10 +7,12 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class SoundHandler {
     public static SoundEvent SPARKLE;
+    public static SoundEvent START;
 
     public static void registerSounds()
     {
         SPARKLE = registerSound("sparkle");
+        START = registerSound("start");
     }
 
     private static SoundEvent registerSound(String name)

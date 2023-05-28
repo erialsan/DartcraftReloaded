@@ -9,10 +9,6 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-/**
- * Created by BURN447 on 6/10/2018.
- */
 public class ExperienceTomeProvider implements ICapabilitySerializable<NBTBase>, ICapabilityProvider {
 
     private EnumFacing facing = null;

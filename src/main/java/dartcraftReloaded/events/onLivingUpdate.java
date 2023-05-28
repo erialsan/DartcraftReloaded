@@ -14,9 +14,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/**
- * Created by BURN447 on 7/6/2018.
- */
 public class onLivingUpdate {
 
     @SubscribeEvent

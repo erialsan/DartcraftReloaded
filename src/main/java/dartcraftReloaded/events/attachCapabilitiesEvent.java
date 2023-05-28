@@ -7,9 +7,6 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/**
- * Created by BURN447 on 6/16/2018.
- */
 public class attachCapabilitiesEvent {
 
     @SubscribeEvent

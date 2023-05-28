@@ -12,10 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-/**
- * Created by BURN447 on 2/4/2018.
- */
 public class CommonProxy {
 
     public void registerItemRenderer(Item item, int meta, String id) {

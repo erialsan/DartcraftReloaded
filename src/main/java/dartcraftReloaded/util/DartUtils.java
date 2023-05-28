@@ -31,9 +31,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 
-/**
- * Created by BURN447 on 3/31/2018.
- */
 public class DartUtils {
 
     public static Logger logger;

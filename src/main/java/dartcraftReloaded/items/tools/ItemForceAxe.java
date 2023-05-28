@@ -3,6 +3,7 @@ package dartcraftReloaded.items.tools;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.util.DartUtils;
@@ -31,12 +32,8 @@ import java.util.Set;
 
 import static dartcraftReloaded.util.DartUtils.isLog;
 
-/**
- * Created by BURN447 on 5/13/2018.
- */
-public class ItemForceAxe extends ItemAxe {
 
-
+public class ItemForceAxe extends ItemAxe implements IModifiableTool {
 
     public ItemForceAxe() {
         super(DartcraftReloaded.forceToolMaterial, 8.0F, 8.0F);
@@ -88,6 +85,11 @@ public class ItemForceAxe extends ItemAxe {
 
         MinecraftForge.EVENT_BUS.register(new TreeChopTask(stack, pos, player, 10));
         return true;
+    }
+
+    @Override
+    public long getTool() {
+        return Constants.AXE;
     }
 
     public static class TreeChopTask{

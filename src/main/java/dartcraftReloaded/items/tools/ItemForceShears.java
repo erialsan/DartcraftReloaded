@@ -2,6 +2,7 @@ package dartcraftReloaded.items.tools;
 
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,10 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by BURN447 on 6/9/2018.
- */
-public class ItemForceShears extends ItemShears {
+public class ItemForceShears extends ItemShears implements IModifiableTool {
 
     public ItemForceShears(){
         this.setRegistryName(Constants.FORCE_SHEARS);
@@ -84,5 +82,10 @@ public class ItemForceShears extends ItemShears {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> lores, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, lores, flagIn);
         stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).addText(lores);
+    }
+
+    @Override
+    public long getTool() {
+        return Constants.SHEARS;
     }
 }

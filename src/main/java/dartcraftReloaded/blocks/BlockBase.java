@@ -15,9 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.oredict.OreDictionary;
 
-/**
- * Created by BURN447 on 2/4/2018.
- */
 public class BlockBase extends Block {
 
     protected String name;

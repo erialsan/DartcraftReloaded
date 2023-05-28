@@ -1,15 +1,8 @@
 package dartcraftReloaded.util;
 
-import dartcraftReloaded.potion.Effects.EffectBleeding;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 
-/**
- * Created by BURN447 on 6/16/2018.
- */
 public class MobUtil {
 
     public static void removeCreeperExplodeAI(EntityCreeper entity){
@@ -32,31 +25,4 @@ public class MobUtil {
         }
     }
 
-    public static void addBleedingEffect(ItemStack stack, EntityLivingBase target){
-
-    }
-
-    public static void addBleedingEffect(int level, EntityLivingBase target){
-        PotionEffect bleedingOne = new EffectBleeding(2);
-        PotionEffect bleedingTwo = new EffectBleeding(4);
-        PotionEffect bleedingThree = new EffectBleeding(5);
-        PotionEffect bleedingFour = new EffectBleeding(16);
-
-
-        if(level == 4){
-            target.addPotionEffect(bleedingFour);
-        }
-
-        else if(level == 3){
-            target.addPotionEffect(bleedingThree);
-        }
-
-        else if(level == 2){
-            target.addPotionEffect(bleedingTwo);
-        }
-
-        else if(level == 1){
-            target.addPotionEffect(bleedingOne);
-        }
-    }
 }

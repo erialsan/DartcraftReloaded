@@ -39,4 +39,16 @@ public class Modifier {
     public ItemStack getItem() {
         return item;
     }
+
+    public long getAllowedTools() {
+        return allowedTools;
+    }
+
+    public int getMaxLevels() {
+        return maxLevels;
+    }
+
+    public int getTier() {
+        return tier;
+    }
 }

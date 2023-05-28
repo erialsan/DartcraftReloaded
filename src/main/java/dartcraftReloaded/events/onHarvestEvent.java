@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
-
-/**
- * Created by BURN447 on 6/1/2018.
- */
 public class onHarvestEvent {
 
     @SubscribeEvent

@@ -19,10 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 import static dartcraftReloaded.Constants.FORCE_BRICK;
-
-/**
- * Created by BURN447 on 7/23/2018.
- */
 public class BlockForceBrick extends BlockBase {
 
     public static final PropertyEnum<EnumDyeColor> VARIANT = PropertyEnum.create("variant", EnumDyeColor.class);

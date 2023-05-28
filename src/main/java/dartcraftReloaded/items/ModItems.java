@@ -11,9 +11,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import static dartcraftReloaded.Constants.*;
 
-/**
- * Created by BURN447 on 2/4/2018.
- */
 public class ModItems {
 
     public static ItemBase gemForceGem = new ItemBase(GEM_FORCEGEM);
@@ -34,6 +31,7 @@ public class ModItems {
     public static ItemFortune fortune = new ItemFortune();
     public static ItemBase forceGear = new ItemBase(FORCE_GEAR);
     public static ItemBase snowCookie = new ItemBase(SNOW_COOKIE);
+    public static ItemBase emptyJar = new ItemBase(EMPTY_JAR);
     public static ItemForcePack forcePack = new ItemForcePack(Constants.FORCE_PACK+"1", 8);
     public static ItemForcePack forcePack2 = new ItemForcePack(Constants.FORCE_PACK+"2", 16);
     public static ItemForcePack forcePack3 = new ItemForcePack(Constants.FORCE_PACK+"3", 24);
@@ -104,7 +102,8 @@ public class ModItems {
                 upgradeCore,
                 tear,
                 arrowBundle,
-                forceBow
+                forceBow,
+                emptyJar
         );
     }
 
@@ -149,6 +148,7 @@ public class ModItems {
         tear.registerItemModel();
         arrowBundle.registerItemModel();
         forceBow.registerItemModel();
+        emptyJar.registerItemModel();
     }
 
     public static void registerOreDict() {

@@ -1,6 +1,8 @@
 package dartcraftReloaded.items;
 
+import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,10 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * Created by BURN447 on 3/4/2018.
- */
-public class ItemArmor extends net.minecraft.item.ItemArmor {
+public class ItemArmor extends net.minecraft.item.ItemArmor implements IModifiableTool {
 
     private String name;
 
@@ -54,5 +53,10 @@ public class ItemArmor extends net.minecraft.item.ItemArmor {
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
         return false;
+    }
+
+    @Override
+    public long getTool() {
+        return Constants.ARMOR;
     }
 }

@@ -3,6 +3,7 @@ package dartcraftReloaded.items.tools;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
 import com.google.common.collect.Multimap;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.block.Block;
@@ -26,10 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * Created by BURN447 on 5/13/2018.
- */
-public class ItemForceSword extends ItemSword {
+public class ItemForceSword extends ItemSword implements IModifiableTool {
 
 
     public ItemForceSword() {
@@ -116,4 +114,8 @@ public class ItemForceSword extends ItemSword {
         return false;
     }
 
+    @Override
+    public long getTool() {
+        return Constants.SWORD;
+    }
 }

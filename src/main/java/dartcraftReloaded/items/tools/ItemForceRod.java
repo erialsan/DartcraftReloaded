@@ -3,6 +3,7 @@ package dartcraftReloaded.items.tools;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.capablilities.ExperienceTome.IExperienceTome;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.handlers.PacketHandler;
@@ -39,11 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-
-/**
- * Created by BURN447 on 2/23/2018.
- */
-public class ItemForceRod extends ItemBase {
+public class ItemForceRod extends ItemBase implements IModifiableTool {
     public ItemForceRod(){
         super(Constants.FORCE_ROD);
         setHasSubtypes(true);
@@ -74,7 +71,11 @@ public class ItemForceRod extends ItemBase {
         }
         if (cap.hasModifier(Constants.SPEED)) {
             playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(1), cap.getLevel(Constants.SPEED) * 30, cap.getLevel(Constants.SPEED) * 2));
+            if (cap.getLevel(Constants.SPEED) / 2 > 0) {
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(3), 8, cap.getLevel(Constants.SPEED) / 2));
+            }
         }
+
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 
@@ -82,11 +83,9 @@ public class ItemForceRod extends ItemBase {
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack held = player.getHeldItem(hand);
         if (held.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.HEAT)) {
-            List<Entity> list = worldIn.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(new BlockPos(pos.getX(), pos.getY()+1, pos.getZ())));
-            for (Entity i : list) {
-                if (i instanceof EntityLiving) {
-                    i.setFire(held.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).getLevel(Constants.HEAT));
-                }
+            if (!worldIn.isRemote) {
+                worldIn.setBlockState(pos.offset(facing), Blocks.FIRE.getDefaultState(), 3);
+                return doAction(held, player, worldIn);
             }
         }
         if (!worldIn.isRemote) {
@@ -226,4 +225,8 @@ public class ItemForceRod extends ItemBase {
         stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).addText(lores);
     }
 
+    @Override
+    public long getTool() {
+        return Constants.ROD;
+    }
 }

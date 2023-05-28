@@ -1,10 +1,9 @@
-package dartcraftReloaded.potion.Potions;
+package dartcraftReloaded.potion;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 
-/**
- * Created by BURN447 on 6/14/2018.
- */
 public class PotionBleeding extends Potion {
 
     public PotionBleeding(){
@@ -30,6 +29,11 @@ public class PotionBleeding extends Potion {
 
     @Override
     public boolean isReady(int duration, int amplifier) {
-        return true;
+        return duration % 20 == 0;
+    }
+
+    @Override
+    public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier) {
+        entityLivingBaseIn.attackEntityFrom(DamageSource.GENERIC, amplifier);
     }
 }

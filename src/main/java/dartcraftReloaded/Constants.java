@@ -10,9 +10,6 @@ import java.util.HashMap;
 
 import static net.minecraft.util.text.TextFormatting.*;
 
-/**
- * Created by BURN447 on 3/18/2018.
- */
 public class Constants {
 
     // Blocks
@@ -52,6 +49,7 @@ public class Constants {
             FORTUNE = "fortune",
             FORCE_GEAR = "forceGear",
             SNOW_COOKIE = "snowCookie",
+            EMPTY_JAR = "emptyJar",
             FORCE_PACK = "forcePack",
             FORCE_BELT = "forceBelt",
             BOTTLED_WITHER = "bottledWither",
@@ -71,33 +69,40 @@ public class Constants {
             FORCE_BOW = "forceBow";
 
 
-    // Tools
+    // I LOVE BITMASKS
     public static final long
-            PICKAXE = 0,
-            AXE = 1,
-            SHOVEL = 2,
-            ROD = 4,
-            SHEARS = 8,
-            SWORD = 16,
-            ARMOR = 32,
-            CORE = 64,
-            BOW = 128;
+            PICKAXE = 1,
+            AXE = 2,
+            SHOVEL = 4,
+            ROD = 8,
+            SHEARS = 16,
+            SWORD = 32,
+            ARMOR = 64,
+            CORE = 128,
+            BOW = 256;
 
 
     public static HashMap<Integer, Modifier> MODIFIER_REGISTRY = new HashMap<>();
 
+    public static Modifier getByStack(ItemStack i) {
+        for (Modifier j : MODIFIER_REGISTRY.values()) {
+            if (j.getItem().getItem().equals(i.getItem()) && j.getItem().getItemDamage() == i.getItemDamage()) return j;
+        }
+        return null;
+    }
+
     // Modifiers
     // TODO: test luck on bow
     public static final Modifier
-            FORCE = new Modifier(0, 3, 0, "Force", YELLOW, new ItemStack(ModItems.nuggetForce), SWORD | AXE),
-            DAMAGE = new Modifier(1, 5, 0, "Damage", RED, new ItemStack(ModItems.claw), SWORD | AXE | CORE | BOW),
-            HEAT = new Modifier(2, 3, 1, "Heat", RED, new ItemStack(Items.BLAZE_ROD), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | CORE | BOW),
+            FORCE = new Modifier(0, 3, 0, "Force", YELLOW, new ItemStack(ModItems.nuggetForce), SWORD | AXE), //good
+            DAMAGE = new Modifier(1, 5, 0, "Damage", RED, new ItemStack(ModItems.claw), SWORD | AXE | CORE | BOW), //good
+            HEAT = new Modifier(2, 3, 1, "Heat", RED, new ItemStack(Items.BLAZE_ROD), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | CORE | BOW), //good
             SPEED = new Modifier(3, 5, 1, "Speed", WHITE, new ItemStack(Items.SUGAR), AXE | PICKAXE | SHOVEL | ROD | ARMOR | CORE | BOW),
             LUMBERJACK = new Modifier(4, 1, 1, "Lumberjack", GOLD, new ItemStack(ModBlocks.forceLog), AXE),
             LUCK = new Modifier(5, 5, 2, "Luck", GREEN, new ItemStack(ModItems.fortune), PICKAXE | AXE | SHOVEL | SWORD | ROD | BOW),
             GRINDING = new Modifier(6, 1, 2, "Grinding", DARK_GRAY, new ItemStack(Items.FLINT), PICKAXE),
             RAINBOW = new Modifier(7, 1, 2, "Rainbow", LIGHT_PURPLE, new ItemStack(Items.DYE, 1, 4), SHEARS),
-            HOLDING = new Modifier(8, 1, 2, "Holding", GRAY, new ItemStack(Items.AIR), ROD),
+            HOLDING = new Modifier(8, 1, 2, "Holding", GRAY, new ItemStack(ModItems.emptyJar), ROD),
             EXPERIENCE = new Modifier(9, 3, 2, "Experience", GREEN, new ItemStack(ModItems.soulWafer), PICKAXE | AXE | SHOVEL | SWORD | CORE),
             QUIVER = new Modifier(18, 4, 4, "Quiver", GRAY, new ItemStack(ModItems.arrowBundle), BOW);
 

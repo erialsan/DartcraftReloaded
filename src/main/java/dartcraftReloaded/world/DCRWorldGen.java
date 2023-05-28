@@ -12,9 +12,6 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 
-/**
- * Created by BURN447 on 3/30/2018.
- */
 public class DCRWorldGen implements IWorldGenerator {
 
     //World Generator

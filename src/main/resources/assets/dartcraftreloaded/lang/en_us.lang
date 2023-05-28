@@ -1,5 +1,6 @@
 #Sounds
 sparkle=Magic Sparkles
+start=Infuser Starts
 
 #Items
 item.ingotForce.name=Force Ingot
@@ -28,6 +29,7 @@ item.upgradeCore.name=Upgrade Core
 item.tear.name=Cold Tear
 item.arrowBundle.name=Arrow Bundle
 item.forceBow.name=Force Bow
+item.emptyJar.name=Force Flask
 
 #Armor
 item.forceHelmet.name=Force Cap

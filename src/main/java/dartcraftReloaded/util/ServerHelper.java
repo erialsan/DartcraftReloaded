@@ -3,9 +3,6 @@ package dartcraftReloaded.util;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-/**
- * Created by BURN447 on 6/11/2018.
- */
 public class ServerHelper {
 
     private ServerHelper(){}

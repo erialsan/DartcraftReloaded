@@ -7,14 +7,12 @@ import dartcraftReloaded.networking.InfuserMessage;
 import dartcraftReloaded.container.ContainerBlockInfuser;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import dartcraftReloaded.Constants;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -25,15 +23,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by BURN447 on 3/31/2018.
- */
 public class GUIInfuser extends GuiContainer {
 
     private TileEntityInfuser te;
     private GuiButton startButton = new GuiButton(0, 39, 101, 12, 12, "Start Button");
-    private ProgressBar infuserProgress;
-
     private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forceinfuser.png");
 
     public GUIInfuser(IInventory playerInv, TileEntityInfuser te) {
@@ -46,7 +39,6 @@ public class GUIInfuser extends GuiContainer {
 
         this.addButton(startButton);
 
-        this.infuserProgress = new ProgressBar(TEXTURE, ProgressBar.ProgressBarDirection.DOWN_TO_UP, 2, 20, 134, 93, 176, 0);
     }
 
     @Override
@@ -81,19 +73,50 @@ public class GUIInfuser extends GuiContainer {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
         this.mc.getTextureManager().bindTexture(TEXTURE);
-        int height = (int) ((double) te.energy / 10000D * 107);//152
+        int height = (int) ((double) te.energyStorage.getEnergyStored() / 10000D * 107);//152
         this.drawTexturedModalRect(152, 11+107-height, 176, 20+107-height, 12, height);
+
+
+        int progressHeight = (int) ((double) te.processTime * 20 / te.maxProcessTime);
+        this.drawTexturedModalRect(134, 93+20-progressHeight, 176, 20-progressHeight, 2, progressHeight);
+
+        if (te.getBookLevel() < 2) {
+            this.drawTexturedModalRect(104, 32, 176, 127, 16, 16);
+        }
+        if (te.getBookLevel() < 3) {
+            this.drawTexturedModalRect(116, 57, 176, 127, 16, 16);
+        }
+        if (te.getBookLevel() < 4) {
+            this.drawTexturedModalRect(104, 81, 176, 127, 16, 16);
+        }
+        if (te.getBookLevel() < 5) {
+            this.drawTexturedModalRect(80, 93, 176, 127, 16, 16);
+        }
+        if (te.getBookLevel() < 6) {
+            this.drawTexturedModalRect(56, 81, 176, 127, 16, 16);
+        }
+        if (te.getBookLevel() < 7) {
+            this.drawTexturedModalRect(44, 57, 176, 127, 16, 16);
+        }
+        if (te.getBookLevel() < 8) {
+            this.drawTexturedModalRect(56, 32, 176, 127, 16, 16);
+        }
+
+        if (te.processTime == -1 && te.validRecipe()) {
+            this.drawTexturedModalRect(39, 101, 178, 0, 13, 13);
+        }
 
         int actualMouseX = mouseX - ((this.width - this.xSize) / 2);
         int actualMouseY = mouseY - ((this.height - this.ySize) / 2);
-
-        this.infuserProgress.setMin(te.processTime).setMax(te.maxProcessTime);
-        this.infuserProgress.draw(this.mc);
         this.drawFluidBar();
+
+
 
         if(isPointInRegion(39, 101, 12, 12, mouseX, mouseY)){
             List<String> text = new ArrayList<>();
-            text.add(TextFormatting.GRAY + I18n.format("gui.blockInfuser.Start.tooltip"));
+            if (te.processTime == -1) {
+                text.add(TextFormatting.GRAY + I18n.format("gui.blockInfuser.Start.tooltip"));
+            }
             this.drawHoveringText(text, actualMouseX, actualMouseY);
         }
 
@@ -110,10 +133,11 @@ public class GUIInfuser extends GuiContainer {
 
         if(isPointInRegion(152, 11, 12, 106, mouseX, mouseY)){
             List<String> text = new ArrayList<>();
-            text.add(te.energy + " RF");
+            text.add(te.energyStorage.getEnergyStored() + " RF");
 
             this.drawHoveringText(text, actualMouseX, actualMouseY);
         }
+        startButton.enabled = (te.processTime == -1);
     }
 
     @Override
@@ -128,8 +152,9 @@ public class GUIInfuser extends GuiContainer {
     protected void actionPerformed(GuiButton button) throws IOException {
         //Start Infusion
         if(button.id == 0){
-            PacketHandler.sendToServer(new InfuserMessage(true));
-            te.canWork = true;
+            if (button.enabled) {
+                PacketHandler.sendToServer(new InfuserMessage(te.getPos()));
+            }
         }
     }
 

@@ -6,10 +6,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
-
-/**
- * Created by BURN447 on 6/16/2018.
- */
 public class BaneModifierStorage implements Capability.IStorage<IBaneModifier> {
     @Nullable
     @Override

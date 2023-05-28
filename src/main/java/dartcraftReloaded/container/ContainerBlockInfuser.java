@@ -3,6 +3,7 @@ package dartcraftReloaded.container;
 import dartcraftReloaded.container.Slot.SlotForceBook;
 import dartcraftReloaded.container.Slot.SlotForceGems;
 import dartcraftReloaded.container.Slot.SlotForceTools;
+import dartcraftReloaded.container.Slot.SlotModifier;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -15,34 +16,31 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-/**
- * Created by BURN447 on 3/31/2018.
- */
 public class ContainerBlockInfuser extends Container {
 
     TileEntityInfuser te;
-    private int energy, time;
+    private int energy, time, maxProcessTime;
 
     public ContainerBlockInfuser(IInventory playerInv, TileEntityInfuser te) {
 
         //Modifier Slots
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 0, 80, 20));
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 1, 104, 32));
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 2, 116, 57));
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 3, 104, 81));
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 4, 80, 93));
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 5, 56, 81));
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 6, 44, 57));
-        this.addSlotToContainer(new SlotItemHandler(te.handler, 7, 56, 32));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 0, 80, 20));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 1, 104, 32));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 2, 116, 57));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 3, 104, 81));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 4, 80, 93));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 5, 56, 81));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 6, 44, 57));
+        this.addSlotToContainer(new SlotModifier(te, te.handler, 7, 56, 32));
 
         //Tools Slot
-        this.addSlotToContainer(new SlotForceTools(te.handler, 8, 80, 57));
+        this.addSlotToContainer(new SlotForceTools(te, te.handler, 8, 80, 57));
 
         //Force Gem Slot
         this.addSlotToContainer(new SlotForceGems(te.handler, 9, 10, 35));
 
         //Book slot
-        this.addSlotToContainer(new SlotForceBook(te.handler, 10, 10, 10));
+        this.addSlotToContainer(new SlotForceBook(te, te.handler, 10, 10, 10));
 
         int xPos = 8;
         int yPos = 127;
@@ -119,41 +117,4 @@ public class ContainerBlockInfuser extends Container {
         return itemstack;
     }*/
 
-    public void setButtonPressed(boolean buttonPressed){
-        te.canWork = buttonPressed;
-    }
-
-    public void setFluidAmount(int amount){
-        te.fluidContained = amount;
-    }
-
-    public int getFluidAmount(){
-        return te.fluidContained;
-    }
-
-    public TileEntity getTE(){
-        return te;
-    }
-
-
-    @Override
-    public void updateProgressBar(int id, int data)
-    {
-        this.te.setField(id, data);
-    }
-
-    @Override
-    public void detectAndSendChanges()
-    {
-        super.detectAndSendChanges();
-
-        for (IContainerListener iContainerListener : this.listeners) {
-
-            if (this.time != this.te.getField(0)) iContainerListener.sendWindowProperty(this, 0, this.te.getField(0));
-            if (this.energy != this.te.getField(1)) iContainerListener.sendWindowProperty(this, 1, this.te.getField(1));
-        }
-
-        this.time = this.te.getField(0);
-        this.energy = this.te.getField(1);
-    }
 }

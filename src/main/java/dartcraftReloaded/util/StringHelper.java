@@ -4,9 +4,6 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.TreeMap;
 
-/**
- * Created by BURN447 on 6/11/2018.
- */
 public final class StringHelper {
 
     private StringHelper(){ }

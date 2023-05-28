@@ -19,9 +19,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 
-/**
- * Created by BURN447 on 6/11/2018.
- */
 public class ItemForcePack extends ItemBase {
     private int size;
     public ItemForcePack(String name, int size) {

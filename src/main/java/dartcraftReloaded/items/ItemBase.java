@@ -6,9 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-/**
- * Created by BURN447 on 2/4/2018.
- */
 public class ItemBase extends Item {
 
     protected String name;

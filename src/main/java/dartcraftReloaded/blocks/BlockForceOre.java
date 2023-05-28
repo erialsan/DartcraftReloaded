@@ -9,9 +9,6 @@ import java.util.Random;
 
 import static dartcraftReloaded.Constants.ORE_POWER;
 
-/**
- * Created by BURN447 on 2/4/2018.
- */
 public class BlockForceOre extends BlockBase {
 
     public BlockForceOre() {

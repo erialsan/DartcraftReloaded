@@ -6,10 +6,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
-
-/**
- * Created by BURN447 on 6/10/2018.
- */
 public class ExperienceTomeStorage implements Capability.IStorage<IExperienceTome> {
 
     @Nullable

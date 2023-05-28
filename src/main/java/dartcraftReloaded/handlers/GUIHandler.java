@@ -22,9 +22,6 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 import static dartcraftReloaded.items.ItemFortune.addMessage;
 
-/**
- * Created by BURN447 on 3/31/2018.
- */
 public class GUIHandler implements IGuiHandler {
 
     public static final int INFUSER = 0;

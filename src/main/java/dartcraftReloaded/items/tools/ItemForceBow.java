@@ -3,6 +3,7 @@ package dartcraftReloaded.items.tools;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemForceBow extends ItemBow {
+public class ItemForceBow extends ItemBow implements IModifiableTool {
     public ItemForceBow() {
         this.setMaxDamage(768);
         this.setCreativeTab(DartcraftReloaded.creativeTab);
@@ -173,4 +174,8 @@ public class ItemForceBow extends ItemBow {
         }
     }
 
+    @Override
+    public long getTool() {
+        return Constants.BOW;
+    }
 }

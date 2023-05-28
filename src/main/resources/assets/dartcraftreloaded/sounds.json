@@ -5,9 +5,19 @@
 		"subtitle": "sparkle",
 		"sounds": [
 		{
-		"name": "dartcraftreloaded:sparkle", "stream": true
+		"name": "dartcraftreloaded:sparkle", "stream": false
 		}
 		]
 		
+	},
+	"start":
+	{
+		"category": "player",
+		"subtitle": "start",
+		"sounds": [
+		{
+			"name": "dartcraftreloaded:start", "stream": false
+		}
+		]
 	}
 }

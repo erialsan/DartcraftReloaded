@@ -6,10 +6,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-
-/**
- * Created by BURN447 on 6/29/2018.
- */
 public class SlotForceGems extends SlotItemHandler {
 
     public SlotForceGems(IItemHandler handler, int index, int posX, int posY){

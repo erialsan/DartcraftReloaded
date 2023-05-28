@@ -22,9 +22,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-/**
- * Created by BURN447 on 2/19/2018.
- */
 public class ItemBaseFood extends ItemFood {
 
     protected String name;

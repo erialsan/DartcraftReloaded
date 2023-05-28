@@ -13,9 +13,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import static dartcraftReloaded.Constants.*;
-/**
- * Created by BURN447 on 2/4/2018.
- */
 public class ModBlocks {
 
     public static BlockForceOre orePower = new BlockForceOre();

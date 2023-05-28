@@ -3,9 +3,6 @@ package dartcraftReloaded.handlers;
 import dartcraftReloaded.events.*;
 import net.minecraftforge.common.MinecraftForge;
 
-/**
- * Created by BURN447 on 6/1/2018.
- */
 public class EventHandler {
 
     public static void init(){
@@ -17,9 +14,10 @@ public class EventHandler {
         MinecraftForge.EVENT_BUS.register(new livingDeathEvent());
         MinecraftForge.EVENT_BUS.register(new livingDropsEvent());
         MinecraftForge.EVENT_BUS.register(new lootTableLoadEvent());
-        MinecraftForge.EVENT_BUS.register(new livingHurtEvent());
+        MinecraftForge.EVENT_BUS.register(new livingAttackEvent());
         MinecraftForge.EVENT_BUS.register(new onLootingEvent());
         MinecraftForge.EVENT_BUS.register(new projectileImpactEvent());
+        MinecraftForge.EVENT_BUS.register(new livingHurtEvent());
 
     }
 

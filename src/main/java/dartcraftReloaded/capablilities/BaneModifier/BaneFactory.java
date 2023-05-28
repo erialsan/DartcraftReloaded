@@ -4,9 +4,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.concurrent.Callable;
 
-/**
- * Created by BURN447 on 6/16/2018.
- */
 public class BaneFactory implements Callable<IBaneModifier> {
     @Override
     public IBaneModifier call() throws Exception {

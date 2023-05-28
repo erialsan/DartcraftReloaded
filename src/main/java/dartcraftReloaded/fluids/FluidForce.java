@@ -10,9 +10,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-/**
- * Created by BURN447 on 6/22/2018.
- */
 public class FluidForce extends Fluid {
 
     private String name = "force";

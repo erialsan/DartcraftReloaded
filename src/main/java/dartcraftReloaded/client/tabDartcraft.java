@@ -5,9 +5,6 @@ import dartcraftReloaded.Constants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-/**
- * Created by BURN447 on 2/4/2018.
- */
 public class tabDartcraft extends CreativeTabs {
 
     public tabDartcraft(){
