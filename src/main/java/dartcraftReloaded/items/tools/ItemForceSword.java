@@ -3,6 +3,7 @@ package dartcraftReloaded.items.tools;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
 import com.google.common.collect.Multimap;
+import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
@@ -40,14 +41,41 @@ public class ItemForceSword extends ItemSword implements IModifiableTool {
     public void registerItemModel() {
         DartcraftReloaded.proxy.registerItemRenderer(this, 0, Constants.FORCE_SWORD);
     }
-
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
-        if ((double)state.getBlockHardness(worldIn, pos) != 0.0D)
-        {
-            stack.damageItem(2, entityLiving);
-        }
+    @Override
+    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+        damage(stack, attacker);
         return true;
     }
+
+    @Override
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
+        if ((double)state.getBlockHardness(worldIn, pos) != 0.0D) {
+            damage(stack, entityLiving);
+        }
+
+        return true;
+    }
+
+    private void damage(ItemStack stack, EntityLivingBase entity) {
+        IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+        if (cap.hasModifier(Constants.IMPERVIOUS)) {
+            stack.setItemDamage(0);
+            return;
+        }
+        if (cap.hasModifier(Constants.REPAIR)) {
+            if (Math.random() < .2*cap.getLevel(Constants.REPAIR)) {
+                stack.setItemDamage(Math.max(stack.getItemDamage() - 1, 0));
+                return;
+            }
+        }
+        if (cap.hasModifier(Constants.STURDY)) {
+            if (Math.random() > 1.0 / (1.0 + (double) cap.getLevel(Constants.STURDY))) {
+                return;
+            }
+        }
+        stack.damageItem(1, entity);
+    }
+
 
     public boolean canHarvestBlock(IBlockState blockIn)
     {

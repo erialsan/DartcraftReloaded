@@ -350,7 +350,9 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
                 time += 20*(m.getTier()+1);
             }
         }
-        return Math.min(time, 400);
+        double time2 = ConfigHandler.infuserTimeMultiplier * time;
+        if (ConfigHandler.infuserMaxTime == -1) return (int) time2;
+        return (int) Math.min(ConfigHandler.infuserTimeMultiplier * time, ConfigHandler.infuserMaxTime);
     }
 
     @Nullable

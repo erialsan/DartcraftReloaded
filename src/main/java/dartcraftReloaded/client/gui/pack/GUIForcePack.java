@@ -13,7 +13,6 @@ public class GUIForcePack extends GuiContainer {
     private ResourceLocation TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack1.png");
     public GUIForcePack(ContainerItemForcePack container) {
         super(container);
-        System.out.println(container.itemHandler.getSlots()+" "+container.slotCount+" asdf");
         if (container.slotCount == 8) {
             TEXTURE = new ResourceLocation(Constants.modId, "textures/gui/container/forcepack1.png");
             this.ySize = 136;

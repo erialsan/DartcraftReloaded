@@ -3,6 +3,9 @@ package dartcraftReloaded.items;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.handlers.GUIHandler;
 import dartcraftReloaded.container.BackpackCaps;
+import dartcraftReloaded.items.nonburnable.EntityNonBurnableItem;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -64,5 +67,24 @@ public class ItemForcePack extends ItemBase {
             player.openGui(DartcraftReloaded.instance, GUIHandler.PACK, world, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItemMainhand());
+    }
+
+    @Override
+    public boolean hasCustomEntity(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public Entity createEntity(World world, Entity location, ItemStack itemstack) {
+        EntityItem entity = new EntityNonBurnableItem(world, location.posX, location.posY, location.posZ, itemstack);
+        if (location instanceof EntityItem) {
+            NBTTagCompound tag = new NBTTagCompound();
+            location.writeToNBT(tag);
+            entity.setPickupDelay(tag.getShort("PickupDelay"));
+        }
+        entity.motionX = location.motionX;
+        entity.motionY = location.motionY;
+        entity.motionZ = location.motionZ;
+        return entity;
     }
 }

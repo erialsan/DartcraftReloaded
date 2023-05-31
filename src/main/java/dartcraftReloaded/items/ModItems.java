@@ -31,7 +31,12 @@ public class ModItems {
     public static ItemFortune fortune = new ItemFortune();
     public static ItemBase forceGear = new ItemBase(FORCE_GEAR);
     public static ItemBase snowCookie = new ItemBase(SNOW_COOKIE);
+    public static ItemFilledJar filledJar = new ItemFilledJar();
     public static ItemBase emptyJar = new ItemBase(EMPTY_JAR);
+    public static ItemBase flightToken = new ItemBase(FLIGHT_TOKEN);
+    public static ItemBase camoToken = new ItemBase(CAMO_TOKEN);
+    public static ItemBase sightToken = new ItemBase(SIGHT_TOKEN);
+    public static ItemBase repairToken = new ItemBase(REPAIR_TOKEN);
     public static ItemForcePack forcePack = new ItemForcePack(Constants.FORCE_PACK+"1", 8);
     public static ItemForcePack forcePack2 = new ItemForcePack(Constants.FORCE_PACK+"2", 16);
     public static ItemForcePack forcePack3 = new ItemForcePack(Constants.FORCE_PACK+"3", 24);
@@ -74,6 +79,7 @@ public class ModItems {
                 forceLegs,
                 forceBoots,
                 forceRod,
+                filledJar,
                 woodenForceRod,
                 forceWrench,
                 forcePickaxe,
@@ -82,8 +88,12 @@ public class ModItems {
                 forceShovel,
                 goldenPowerSource,
                 claw,
+                flightToken,
                 fortune,
                 forceShears,
+                camoToken,
+                repairToken,
+                sightToken,
                 experienceTome,
                 forceGear,
                 snowCookie,
@@ -119,8 +129,13 @@ public class ModItems {
         forceLegs.registerItemModel();
         forceBoots.registerItemModel();
         forceRod.registerItemModel();
+        flightToken.registerItemModel();
+        repairToken.registerItemModel();
+        camoToken.registerItemModel();
+        sightToken.registerItemModel();
         woodenForceRod.registerItemModel();
         forceWrench.registerItemModel();
+        filledJar.registerItemModel();
         forcePickaxe.registerItemModel();
         forceAxe.registerItemModel();
         forceSword.registerItemModel();

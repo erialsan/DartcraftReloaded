@@ -25,6 +25,15 @@ java {
     withJavadocJar()
 }
 
+val jar: Jar by tasks
+jar.apply {
+    manifest {
+        attributes(mapOf(
+            "FMLCorePlugin" to "dartcraftReloaded.asm.LoadingPlugin",
+            "FMLCorePluginContainsFMLMod" to "true"))
+    }
+}
+
 // Most RFG configuration lives here, see the JavaDoc for com.gtnewhorizons.retrofuturagradle.MinecraftExtension
 minecraft {
     mcVersion.set("1.12.2")
@@ -167,33 +176,6 @@ idea {
                     self.add(Gradle("4. Run Obfuscated Server").apply {
                         setProperty("taskNames", listOf("runObfServer"))
                     })
-                    /*
-                    These require extra configuration in IntelliJ, so are not enabled by default
-                    self.add(Application("Run Client (IJ Native, Deprecated)", project).apply {
-                      mainClass = "GradleStart"
-                      moduleName = project.name + ".ideVirtualMain"
-                      afterEvaluate {
-                        val runClient = tasks.runClient.get()
-                        workingDirectory = runClient.workingDir.absolutePath
-                        programParameters = runClient.calculateArgs(project).map { '"' + it + '"' }.joinToString(" ")
-                        jvmArgs = runClient.calculateJvmArgs(project).map { '"' + it + '"' }.joinToString(" ") +
-                          ' ' + runClient.systemProperties.map { "\"-D" + it.key + '=' + it.value.toString() + '"' }
-                          .joinToString(" ")
-                      }
-                    })
-                    self.add(Application("Run Server (IJ Native, Deprecated)", project).apply {
-                      mainClass = "GradleStartServer"
-                      moduleName = project.name + ".ideVirtualMain"
-                      afterEvaluate {
-                        val runServer = tasks.runServer.get()
-                        workingDirectory = runServer.workingDir.absolutePath
-                        programParameters = runServer.calculateArgs(project).map { '"' + it + '"' }.joinToString(" ")
-                        jvmArgs = runServer.calculateJvmArgs(project).map { '"' + it + '"' }.joinToString(" ") +
-                          ' ' + runServer.systemProperties.map { "\"-D" + it.key + '=' + it.value.toString() + '"' }
-                          .joinToString(" ")
-                      }
-                    })
-                    */
                 }
                 "compiler" {
                     val self = this.delegate as org.jetbrains.gradle.ext.IdeaCompilerConfiguration

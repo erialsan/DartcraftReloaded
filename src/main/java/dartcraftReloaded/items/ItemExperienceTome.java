@@ -33,7 +33,7 @@ public class ItemExperienceTome extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(getExperience(stack) + " / " + Integer.MAX_VALUE);
+        tooltip.add("EXP: "+getExperience(stack));
     }
 
     public void registerItemModel() {

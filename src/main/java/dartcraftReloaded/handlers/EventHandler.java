@@ -18,6 +18,9 @@ public class EventHandler {
         MinecraftForge.EVENT_BUS.register(new onLootingEvent());
         MinecraftForge.EVENT_BUS.register(new projectileImpactEvent());
         MinecraftForge.EVENT_BUS.register(new livingHurtEvent());
+        MinecraftForge.EVENT_BUS.register(new playerInteractEvent());
+
+        MinecraftForge.EVENT_BUS.register(new AsmHandler());
 
     }
 

@@ -25,10 +25,7 @@ public class EntityNonBurnableItem extends EntityItem {
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if(source.getDamageType().equals(DamageSource.OUT_OF_WORLD.damageType)) {
-            return true;
-        }
-        return false;
+        return source.getDamageType().equals(DamageSource.OUT_OF_WORLD.damageType);
     }
 
     public static class EventHandler {

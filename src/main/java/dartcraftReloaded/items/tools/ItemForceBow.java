@@ -109,7 +109,7 @@ public class ItemForceBow extends ItemBow implements IModifiableTool {
 
                 if ((double)f >= 0.1D)
                 {
-                    boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow && ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
+                    boolean flag1 = entityplayer.capabilities.isCreativeMode || cap.hasModifier(Constants.QUIVER) || (itemstack.getItem() instanceof ItemArrow && ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
 
                     if (!worldIn.isRemote)
                     {
@@ -118,31 +118,30 @@ public class ItemForceBow extends ItemBow implements IModifiableTool {
                         entityarrow = this.customizeArrow(entityarrow);
                         entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
-                        if (f == 1.0F)
+                        if (f >= 1.0F)
                         {
                             entityarrow.setIsCritical(true);
                         }
 
-                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack) + 2*cap.getLevel(Constants.DAMAGE);
 
                         if (j > 0)
                         {
                             entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
                         }
 
-                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-
+                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack) + cap.getLevel(Constants.FORCE);
                         if (k > 0)
                         {
                             entityarrow.setKnockbackStrength(k);
                         }
 
-                        if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
-                        {
-                            entityarrow.setFire(100);
+                        int fireTime = EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0 ? 100 : 0;
+                        if (fireTime > 0) {
+                            entityarrow.setFire(fireTime);
                         }
 
-                        stack.damageItem(1, entityplayer);
+                        damage(stack, entityplayer);
 
                         if (flag1 || entityplayer.capabilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
                         {
@@ -152,7 +151,7 @@ public class ItemForceBow extends ItemBow implements IModifiableTool {
                         worldIn.spawnEntity(entityarrow);
                     }
 
-                    worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                     if (!flag1 && !entityplayer.capabilities.isCreativeMode)
                     {
@@ -168,6 +167,28 @@ public class ItemForceBow extends ItemBow implements IModifiableTool {
                 }
             }
         }
+    }
+
+
+
+    private void damage(ItemStack stack, EntityLivingBase entity) {
+        IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+        if (cap.hasModifier(Constants.IMPERVIOUS)) {
+            stack.setItemDamage(0);
+            return;
+        }
+        if (cap.hasModifier(Constants.REPAIR)) {
+            if (Math.random() < .2*cap.getLevel(Constants.REPAIR)) {
+                stack.setItemDamage(Math.max(stack.getItemDamage() - 1, 0));
+                return;
+            }
+        }
+        if (cap.hasModifier(Constants.STURDY)) {
+            if (Math.random() > 1.0 / (1.0 + (double) cap.getLevel(Constants.STURDY))) {
+                return;
+            }
+        }
+        stack.damageItem(1, entity);
     }
 
     @Override

@@ -17,7 +17,7 @@ import dartcraftReloaded.networking.SoundMessage;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -25,8 +25,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
@@ -51,7 +53,7 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
     }
 
     private EnumActionResult doAction(ItemStack i, EntityPlayer p, World w) {
-        i.damageItem(1, p);
+        damage(i, p);
         PacketHandler.sendToClient(new SoundMessage(0), (EntityPlayerMP) p);
         return EnumActionResult.SUCCESS;
     }
@@ -67,12 +69,12 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         IModifiable cap = playerIn.getHeldItem(handIn).getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
         if (cap.hasModifier(Constants.LUCK)) {
-            playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(26), cap.getLevel(Constants.LUCK) * 30));
+            playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(26), cap.getLevel(Constants.LUCK) * 30 * 20));
         }
         if (cap.hasModifier(Constants.SPEED)) {
-            playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(1), cap.getLevel(Constants.SPEED) * 30, cap.getLevel(Constants.SPEED) * 2));
+            playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(1), cap.getLevel(Constants.SPEED) * 30 * 20, cap.getLevel(Constants.SPEED) * 2));
             if (cap.getLevel(Constants.SPEED) / 2 > 0) {
-                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(3), 8, cap.getLevel(Constants.SPEED) / 2));
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(3), cap.getLevel(Constants.SPEED) * 30 * 20, cap.getLevel(Constants.SPEED) / 2));
             }
         }
 
@@ -89,9 +91,11 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
             }
         }
         if (!worldIn.isRemote) {
+            BlockPos hitPos = pos.offset(facing);
+            List<Entity> list = worldIn.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitPos.getX() - .5, hitPos.getY() - .5, hitPos.getZ() - .5, hitPos.getX() + 1.5, hitPos.getY() + 1.5, hitPos.getZ() + 1.5));
+
             if (worldIn.getBlockState(pos.offset(facing)).getBlock().equals(Blocks.FIRE)) {
                 worldIn.setBlockToAir(pos.offset(facing));
-                List<Entity> list = worldIn.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ())));
                 boolean bw = false;
                 for (Entity i: list) {
                     if(i instanceof EntityItem) {
@@ -124,86 +128,109 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
                 return doAction(held, player, worldIn);
             }
             else {
-                List<Entity> list = worldIn.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(new BlockPos(pos.getX(), pos.getY()+1, pos.getZ())));
-                //If it is a subset of items, it will drop swap an item
                 for(Entity i: list) {
                     if (i instanceof EntityItem) {
-                        //Armor
-                        if (((EntityItem) i).getItem().getItem() == Items.BOOK) {
+                        ItemStack item = ((EntityItem) i).getItem();
+                        if (item.getItem() == Items.ENCHANTED_BOOK) {
+                            NBTTagCompound nbt = item.getTagCompound();
+                            if (nbt != null) {
+                                NBTTagList enchantments = ItemEnchantedBook.getEnchantments(item);
+                                if (enchantments.toString().contains("id:70s")) {
+                                    worldIn.removeEntity(i);
+                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.repairToken)));
+                                    return doAction(held, player, worldIn);
+                                }
+
+                            }
+                        } else if (item.getItem() == Items.POTIONITEM) {
+                            NBTTagCompound nbt = item.getTagCompound();
+                            if (nbt != null) {
+                                String potion = nbt.getString("Potion");
+                                if (potion.equals("minecraft:long_night_vision")) {
+                                    worldIn.removeEntity(i);
+                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.sightToken)));
+                                    return doAction(held, player, worldIn);
+                                } else if (potion.equals("minecraft:long_invisibility")) {
+                                    worldIn.removeEntity(i);
+                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.camoToken)));
+                                    return doAction(held, player, worldIn);
+                                }
+                            }
+                        } else if (item.getItem() == Items.BOOK) {
                             worldIn.removeEntity(i);
                             worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.upgradeTome)));
                             return doAction(held, player, worldIn);
-                        } else if (((EntityItem) i).getItem().getItem() == ModItems.experienceTome) {
-                            IExperienceTome cap = ((EntityItem) i).getItem().getCapability(CapabilityHandler.CAPABILITY_EXPTOME, null);
+                        } else if (item.getItem() == ModItems.experienceTome) {
+                            IExperienceTome cap = item.getCapability(CapabilityHandler.CAPABILITY_EXPTOME, null);
                             int num = cap.getExperienceValue() / 100;
                             worldIn.removeEntity(i);
                             worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.upgradeCore, num)));
                             return doAction(held, player, worldIn);
-                        } else if(((EntityItem) i).getItem().getItem() instanceof ItemArmor) {
-                            if (((ItemArmor) ((EntityItem) i).getItem().getItem()).armorType == EntityEquipmentSlot.CHEST) {
-                                if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
+                        } else if(item.getItem() instanceof ItemArmor) {
+                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.CHEST) {
+                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 6)));
                                     return doAction(held, player, worldIn);
 
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 6)));
                                     return doAction(held, player, worldIn);
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceChest, 1)));
                                     return doAction(held, player, worldIn);
                                 }
                             }
-                            if (((ItemArmor) ((EntityItem) i).getItem().getItem()).armorType == EntityEquipmentSlot.LEGS) {
-                                if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
+                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.LEGS) {
+                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 5)));
                                     return doAction(held, player, worldIn);
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 5)));
                                     return doAction(held, player, worldIn);
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceLegs, 1)));
                                     return doAction(held, player, worldIn);
                                 }
                             }
-                            if (((ItemArmor) ((EntityItem) i).getItem().getItem()).armorType == EntityEquipmentSlot.FEET) {
-                                if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
+                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.FEET) {
+                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 3)));
                                     return doAction(held, player, worldIn);
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 3)));
                                     return doAction(held, player, worldIn);
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceBoots, 1)));
                                     return doAction(held, player, worldIn);
                                 }
                             }
-                            if (((ItemArmor) ((EntityItem) i).getItem().getItem()).armorType == EntityEquipmentSlot.HEAD) {
-                                if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
+                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.HEAD) {
+                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 4)));
                                     return doAction(held, player, worldIn);
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 4)));
                                     return doAction(held, player, worldIn);
                                 }
-                                else if (((ItemArmor) ((EntityItem) i).getItem().getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
+                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
                                     worldIn.removeEntity(i);
                                     worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceHelmet, 1)));
                                     return doAction(held, player, worldIn);
@@ -216,6 +243,27 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
         }
 
         return EnumActionResult.PASS;
+    }
+
+
+    public static void damage(ItemStack stack, EntityLivingBase entity) {
+        IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+        if (cap.hasModifier(Constants.IMPERVIOUS)) {
+            stack.setItemDamage(0);
+            return;
+        }
+        if (cap.hasModifier(Constants.REPAIR)) {
+            if (Math.random() < .2*cap.getLevel(Constants.REPAIR)) {
+                stack.setItemDamage(Math.max(stack.getItemDamage() - 1, 0));
+                return;
+            }
+        }
+        if (cap.hasModifier(Constants.STURDY)) {
+            if (Math.random() > 1.0 / (1.0 + (double) cap.getLevel(Constants.STURDY))) {
+                return;
+            }
+        }
+        stack.damageItem(1, entity);
     }
 
     @SideOnly(Side.CLIENT)

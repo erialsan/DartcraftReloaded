@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -61,8 +62,16 @@ public class GUIInfuser extends GuiContainer {
         List<String> list = super.getItemToolTip(stack);
 
         for (Modifier modifier : Constants.MODIFIER_REGISTRY.values()) {
-            if (modifier.getItem().getItem().equals(stack.getItem()) && modifier.getItem().getItemDamage() == stack.getItemDamage()) {
-                list.add(modifier.getColor()+modifier.getName());
+            ItemStack item = modifier.getItem();
+            if (item.getItem().equals(stack.getItem()) && item.getItemDamage() == stack.getItemDamage()) {
+                if (item.getItem() == Items.POTIONITEM || item.getItem() == Items.ENCHANTED_BOOK) {
+                    if (item.getTagCompound() != null && stack.getTagCompound() != null && item.getTagCompound().equals(stack.getTagCompound())) {
+                        list.add(modifier.getColor()+modifier.getName());
+
+                    }
+                } else {
+                    list.add(modifier.getColor()+modifier.getName());
+                }
             }
         }
 

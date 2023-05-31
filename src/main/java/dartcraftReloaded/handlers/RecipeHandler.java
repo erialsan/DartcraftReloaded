@@ -20,6 +20,9 @@ public class RecipeHandler {
         }
         registerForceIngots(ConfigHandler.ingots2, 2);
         registerForceIngots(ConfigHandler.ingots3, 3);
+        if (Loader.isModLoaded("ic2")) {
+
+        }
     }
 
     private static int id = 0;

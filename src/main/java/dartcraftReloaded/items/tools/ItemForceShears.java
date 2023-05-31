@@ -2,12 +2,12 @@ package dartcraftReloaded.items.tools;
 
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
+import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.entity.EntityColdChicken;
 import dartcraftReloaded.entity.EntityColdCow;
 import dartcraftReloaded.handlers.CapabilityHandler;
-import dartcraftReloaded.items.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,6 +40,28 @@ public class ItemForceShears extends ItemShears implements IModifiableTool {
         this.setRegistryName(Constants.FORCE_SHEARS);
         this.setCreativeTab(DartcraftReloaded.creativeTab);
         this.setTranslationKey(Constants.FORCE_SHEARS);
+        setMaxDamage(768);
+    }
+
+
+    private void damage(ItemStack stack, EntityLivingBase entity) {
+        IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+        if (cap.hasModifier(Constants.IMPERVIOUS)) {
+            stack.setItemDamage(0);
+            return;
+        }
+        if (cap.hasModifier(Constants.REPAIR)) {
+            if (Math.random() < .2*cap.getLevel(Constants.REPAIR)) {
+                stack.setItemDamage(Math.max(stack.getItemDamage() - 1, 0));
+                return;
+            }
+        }
+        if (cap.hasModifier(Constants.STURDY)) {
+            if (Math.random() > 1.0 / (1.0 + (double) cap.getLevel(Constants.STURDY))) {
+                return;
+            }
+        }
+        stack.damageItem(1, entity);
     }
 
     @Override
@@ -58,6 +80,8 @@ public class ItemForceShears extends ItemShears implements IModifiableTool {
             player.world.spawnEntity(cow);
             cow.attackEntityFrom(DamageSource.ON_FIRE, 1);
             player.world.spawnEntity(new EntityItem(player.world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.LEATHER, (int) (2+Math.random()*2*itemstack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).getLevel(Constants.LUCK)))));
+            damage(itemstack, player);
+
         } else if(entity instanceof EntityChicken && !(entity instanceof EntityColdChicken) && !player.world.isRemote) {
             BlockPos pos = entity.getPosition();
             float yaw = entity.rotationYaw;
@@ -70,6 +94,7 @@ public class ItemForceShears extends ItemShears implements IModifiableTool {
             player.world.spawnEntity(chicken);
             chicken.attackEntityFrom(DamageSource.ON_FIRE, 1);
             player.world.spawnEntity(new EntityItem(player.world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.LEATHER, (int) (2+Math.random()*2*itemstack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).getLevel(Constants.LUCK)))));
+            damage(itemstack, player);
 
         } else if(itemstack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.RAINBOW)) {
             if (entity.world.isRemote) {
@@ -92,14 +117,34 @@ public class ItemForceShears extends ItemShears implements IModifiableTool {
 
                     Random rand = new Random();
                     dropItems(entity, drops, rand);
-                    itemstack.damageItem(1, entity);
+                    damage(itemstack, player);
                 }
                 return true;
             }
             return false;
         }
-        return super.itemInteractionForEntity(itemstack, player, entity, hand);
-    }
+        if (entity.world.isRemote) {
+            return false;
+        }
+        if (entity instanceof net.minecraftforge.common.IShearable) {
+            net.minecraftforge.common.IShearable target = (net.minecraftforge.common.IShearable)entity;
+            BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
+            if (target.isShearable(itemstack, entity.world, pos)) {
+                java.util.List<ItemStack> drops = target.onSheared(itemstack, entity.world, pos,
+                        net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.FORTUNE, itemstack));
+
+                java.util.Random rand = new java.util.Random();
+                for(ItemStack stack : drops) {
+                    net.minecraft.entity.item.EntityItem ent = entity.entityDropItem(stack, 1.0F);
+                    ent.motionY += rand.nextFloat() * 0.05F;
+                    ent.motionX += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+                    ent.motionZ += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+                }
+                damage(itemstack, player);
+            }
+            return true;
+        }
+        return false;    }
 
     private void dropItems(EntityLivingBase entity, List<ItemStack> drops, Random rand) {
         for (ItemStack stack : drops) {

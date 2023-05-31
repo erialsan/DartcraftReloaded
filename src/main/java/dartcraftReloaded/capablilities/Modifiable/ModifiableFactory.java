@@ -62,7 +62,13 @@ public class ModifiableFactory implements Callable<IModifiable> {
             public void addText(List<String> text) {
                 for (int i : modifiers.keySet()) {
                     Modifier m = Constants.MODIFIER_REGISTRY.get(i);
-                    if (modifiers.get(i) > 0) text.add(m.getColor()+m.getName()+" "+ StringHelper.toRoman(modifiers.get(i)));
+                    if (modifiers.get(i) > 0) {
+                        if (modifiers.get(i) > 1) {
+                            text.add(m.getColor()+m.getName()+" "+ StringHelper.toRoman(modifiers.get(i)));
+                        } else {
+                            text.add(m.getColor()+m.getName());
+                        }
+                    }
                 }
             }
 

@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ItemInertCore extends ItemBase {
@@ -22,9 +21,6 @@ public class ItemInertCore extends ItemBase {
         return true;
     }
 
-    @Nonnull
-
-    @Nullable
     @Override
     public Entity createEntity(World world, Entity location, ItemStack itemstack) {
         EntityItem entity = new EntityNonBurnableItem(world, location.posX, location.posY, location.posZ, itemstack);

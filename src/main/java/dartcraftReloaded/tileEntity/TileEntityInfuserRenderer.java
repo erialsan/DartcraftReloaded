@@ -23,7 +23,7 @@ public class TileEntityInfuserRenderer extends TileEntitySpecialRenderer<TileEnt
     public void render(TileEntityInfuser te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         if (te.handler.getStackInSlot(10).isEmpty()) return;
         GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x + 0.5F, (float)y + 0.6F, (float)z + 0.5F);
+        GlStateManager.translate((float)x + 0.5F, (float)y + 0.67F, (float)z + 0.5F);
         float f = (float)te.tickCount + partialTicks;
         GlStateManager.translate(0.0F, 0.1F + MathHelper.sin(f * 0.1F) * 0.01F, 0.0F);
 
