@@ -51,7 +51,6 @@ public class Constants {
             CLAW = "forceClaw",
             FORTUNE = "fortune",
             FORCE_GEAR = "forceGear",
-            SNOW_COOKIE = "snowCookie",
             EMPTY_JAR = "emptyJar",
             FLIGHT_TOKEN = "flightToken",
             CAMO_TOKEN = "camoToken",
@@ -111,10 +110,10 @@ public class Constants {
             HOLDING = new Modifier(7, 1, 2, "Holding", AQUA, new ItemStack(ModItems.emptyJar), ROD),
             EXPERIENCE = new Modifier(8, 3, 2, "Experience", GREEN, new ItemStack(ModItems.soulWafer), PICKAXE | AXE | SHOVEL | SWORD | BOW), //good
             TOUCH = new Modifier(9, 1, 2, "Touch", GREEN, new ItemStack(Blocks.WEB), PICKAXE | AXE | SHOVEL),
-            BANE = new Modifier(10, 1, 3, "Bane", DARK_RED, new ItemStack(Items.FERMENTED_SPIDER_EYE), SWORD | BOW),
-            STURDY = new Modifier(11, 5, 3, "Sturdy", AQUA, new ItemStack(Blocks.OBSIDIAN), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS),
-            SIGHT = new Modifier(12, 1, 3, "Sight", GREEN, new ItemStack(ModItems.sightToken), ARMOR | ROD),
-            CAMO = new Modifier(13, 1, 3, "Camo", WHITE, new ItemStack(ModItems.camoToken), ARMOR | ROD),
+            BANE = new Modifier(10, 1, 3, "Bane", DARK_RED, new ItemStack(Items.FERMENTED_SPIDER_EYE), SWORD | BOW), //good
+            STURDY = new Modifier(11, 5, 3, "Sturdy", AQUA, new ItemStack(Blocks.OBSIDIAN), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
+            SIGHT = new Modifier(12, 1, 3, "Sight", GREEN, new ItemStack(ModItems.sightToken), ARMOR | ROD), //good
+            CAMO = new Modifier(13, 1, 3, "Camo", WHITE, new ItemStack(ModItems.camoToken), ARMOR | ROD), //good
             WING = new Modifier(14, 1, 4, "Wing", WHITE, new ItemStack(Items.FEATHER), ARMOR | SWORD | ROD),
             BLEED = new Modifier(15, 3, 4, "Bleed", RED, new ItemStack(Items.ARROW), SWORD | BOW), //good
             DIRECT = new Modifier(16, 1, 4, "Direct", LIGHT_PURPLE, new ItemStack(ModItems.magnetGlove), PICKAXE | AXE | SHOVEL | BOW | SWORD), //good

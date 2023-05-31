@@ -1,4 +1,4 @@
-package dartcraftReloaded.blocks.torch;
+package dartcraftReloaded.blocks;
 
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.tileEntity.TileEntityTimeTorch;

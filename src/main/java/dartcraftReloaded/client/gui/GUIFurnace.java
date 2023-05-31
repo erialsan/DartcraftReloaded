@@ -1,4 +1,4 @@
-package dartcraftReloaded.client.gui.furnace;
+package dartcraftReloaded.client.gui;
 
 import dartcraftReloaded.container.ContainerBlockFurnace;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;

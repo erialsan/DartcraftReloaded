@@ -77,7 +77,12 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
                 playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(3), cap.getLevel(Constants.SPEED) * 30 * 20, cap.getLevel(Constants.SPEED) / 2));
             }
         }
-
+        if (cap.hasModifier(Constants.SIGHT)) {
+            playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 30*20));
+        }
+        if (cap.hasModifier(Constants.CAMO)) {
+            playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(14), 30*20));
+        }
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 

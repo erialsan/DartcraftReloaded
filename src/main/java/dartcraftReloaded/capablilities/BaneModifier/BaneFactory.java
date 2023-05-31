@@ -9,28 +9,28 @@ public class BaneFactory implements Callable<IBaneModifier> {
     public IBaneModifier call() throws Exception {
         return new IBaneModifier() {
 
-            boolean canTeleport = true;
+            boolean canDoAbility = true;
 
             @Override
-            public boolean canTeleport() {
-                return canTeleport;
+            public boolean canDoAbility() {
+                return canDoAbility;
             }
 
             @Override
-            public void setTeleportAbility(boolean canTeleport) {
-                this.canTeleport = canTeleport;
+            public void setAbility(boolean canTeleport) {
+                this.canDoAbility = canTeleport;
             }
 
             @Override
             public NBTTagCompound serializeNBT() {
                 NBTTagCompound nbt = new NBTTagCompound();
-                nbt.setBoolean("canTeleport", canTeleport);
+                nbt.setBoolean("canTeleport", canDoAbility);
                 return nbt;
             }
 
             @Override
             public void deserializeNBT(NBTTagCompound nbt) {
-                canTeleport = nbt.getBoolean("canTeleport");
+                canDoAbility = nbt.getBoolean("canTeleport");
             }
         };
     }

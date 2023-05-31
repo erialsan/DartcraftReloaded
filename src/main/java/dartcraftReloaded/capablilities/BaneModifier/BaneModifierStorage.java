@@ -12,7 +12,7 @@ public class BaneModifierStorage implements Capability.IStorage<IBaneModifier> {
     public NBTBase writeNBT(Capability<IBaneModifier> capability, IBaneModifier instance, EnumFacing side) {
         NBTTagCompound nbt = new NBTTagCompound();
         
-        nbt.setBoolean("canTeleport", instance.canTeleport());
+        nbt.setBoolean("canDoAbility", instance.canDoAbility());
         return nbt;
     }
 
@@ -21,7 +21,7 @@ public class BaneModifierStorage implements Capability.IStorage<IBaneModifier> {
         if(nbtIn instanceof NBTTagCompound){
             NBTTagCompound nbt = ((NBTTagCompound) nbtIn);
 
-            instance.setTeleportAbility(nbt.getBoolean("canTeleport"));
+            instance.setAbility(nbt.getBoolean("canDoAbility"));
         }
     }
 }

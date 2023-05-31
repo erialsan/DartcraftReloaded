@@ -4,7 +4,9 @@ import dartcraftReloaded.Constants;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.handlers.PotionHandler;
-import net.minecraft.entity.EntityLiving;
+import dartcraftReloaded.util.MobUtil;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -25,7 +27,25 @@ public class livingHurtEvent {
                 if (cap.hasModifier(Constants.BLEED)) {
                     event.getEntityLiving().addPotionEffect(new PotionEffect(PotionHandler.potionBleeding, 40*cap.getLevel(Constants.BLEED), cap.getLevel(Constants.BLEED)));
                 }
+                if (cap.hasModifier(Constants.BANE)) {
+                    if (event.getEntityLiving() instanceof EntityEnderman) {
+                        event.getEntityLiving().getCapability(CapabilityHandler.CAPABILITY_BANE, null).setAbility(false);
+                    } else if (event.getEntityLiving() instanceof EntityCreeper) {
+                        event.getEntityLiving().getCapability(CapabilityHandler.CAPABILITY_BANE, null).setAbility(false);
+                        MobUtil.removeCreeperExplodeAI((EntityCreeper) event.getEntityLiving());
+                        ((EntityCreeper) event.getEntityLiving()).setCreeperState(-1);
+                    }
+                }
             }
+        }
+        if (event.getEntityLiving() instanceof EntityPlayer) {
+            int sturdy = 0;
+            for (ItemStack i : ((EntityPlayer) event.getEntityLiving()).inventory.armorInventory) {
+                if (i.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+                    sturdy += i.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).getLevel(Constants.STURDY);
+                }
+            }
+            event.setAmount(event.getAmount() * (float) (1.0 - 0.04 * sturdy));
         }
     }
 }

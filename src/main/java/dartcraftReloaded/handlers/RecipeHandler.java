@@ -23,6 +23,7 @@ public class RecipeHandler {
         if (Loader.isModLoaded("ic2")) {
 
         }
+        GameRegistry.addSmelting(ModItems.filledJar, new ItemStack(ModItems.soulWafer), 5.0f);
     }
 
     private static int id = 0;

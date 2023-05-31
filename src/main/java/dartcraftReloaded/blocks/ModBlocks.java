@@ -1,7 +1,5 @@
 package dartcraftReloaded.blocks;
 
-import dartcraftReloaded.blocks.torch.BlockForceTorch;
-import dartcraftReloaded.blocks.torch.BlockTimetorch;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

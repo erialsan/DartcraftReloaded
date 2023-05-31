@@ -1,7 +1,11 @@
 package dartcraftReloaded.handlers;
 
 import dartcraftReloaded.Constants;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -54,7 +58,60 @@ public class AsmHandler {
 		}
 	}
 
+	public static float patchArmorVisibility(EntityPlayer player) {
+		int i = 0;
+		int j = 0;
 
+		for (ItemStack itemstack : player.inventory.armorInventory) {
+			if (!itemstack.isEmpty()) {
+				++i;
+				if (itemstack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+					if (itemstack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.CAMO)) j++;
+				}
+			}
+		}
+		if (j >= 4) {
+			i = 0;
+		}
+
+		return (float)i / (float)player.inventory.armorInventory.size();
+	}
+
+	public static void patchAttackTarget(EntityLiving attacker, EntityLivingBase target) {
+		int j = 0;
+		if (target instanceof EntityPlayer) {
+			for (ItemStack i : ((EntityPlayer) target).inventory.armorInventory) {
+				if (i.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+					if (i.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.CAMO)) j++;
+				}
+			}
+		}
+		if (j >= 4) {
+			return;
+		}
+		attacker.attackTarget = target;
+		net.minecraftforge.common.ForgeHooks.onLivingSetAttackTarget(attacker, target);
+	}
+
+	public static boolean patchTeleport(EntityEnderman enderman, double x, double y, double z) {
+		if (!enderman.getCapability(CapabilityHandler.CAPABILITY_BANE, null).canDoAbility()) return false;
+		net.minecraftforge.event.entity.living.EnderTeleportEvent event = new net.minecraftforge.event.entity.living.EnderTeleportEvent(enderman, x, y, z, 0);
+		if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
+		boolean flag = enderman.attemptTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+
+		if (flag) {
+			enderman.world.playSound(null, enderman.prevPosX, enderman.prevPosY, enderman.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, enderman.getSoundCategory(), 1.0F, 1.0F);
+			enderman.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
+		}
+
+		return flag;
+	}
+
+	public static void patchIgnite(EntityCreeper creeper) {
+		if (creeper.getCapability(CapabilityHandler.CAPABILITY_BANE, null).canDoAbility()) {
+			creeper.getDataManager().set(EntityCreeper.IGNITED, Boolean.TRUE);
+		}
+	}
 
 	static boolean catchingDrops = false;
 	static List<ItemStack> catchedDrops = new ArrayList<>();

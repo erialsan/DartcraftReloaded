@@ -1,10 +1,10 @@
 package dartcraftReloaded.handlers;
 
-import dartcraftReloaded.client.gui.belt.GUIForceBelt;
-import dartcraftReloaded.client.gui.fortune.GUIFortune;
-import dartcraftReloaded.client.gui.furnace.GUIFurnace;
-import dartcraftReloaded.client.gui.infuser.GUIInfuser;
-import dartcraftReloaded.client.gui.pack.GUIForcePack;
+import dartcraftReloaded.client.gui.GUIForceBelt;
+import dartcraftReloaded.client.gui.GUIFortune;
+import dartcraftReloaded.client.gui.GUIFurnace;
+import dartcraftReloaded.client.gui.GUIInfuser;
+import dartcraftReloaded.client.gui.GUIForcePack;
 import dartcraftReloaded.container.ContainerBlockFurnace;
 import dartcraftReloaded.container.ContainerBlockInfuser;
 import dartcraftReloaded.container.ContainerItemForceBelt;

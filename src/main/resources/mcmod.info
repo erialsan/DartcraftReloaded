@@ -2,14 +2,14 @@
 {
   "modid": "dartcraftreloaded",
   "name": "Dartcraft Reloaded",
-  "description": "A Reboot of the Original Dartcraft",
+  "description": "A Reboot of the Original Dartcraft. Slightly more modern, just as OP. Have fun >:)",
   "version": "6.1.0",
   "mcversion": "1.12.2",
   "url": "https://github.com/flyingperson23/DartcraftReloaded",
   "updateUrl": "",
   "authorList": ["BURN447", "flyingperson23"],
-  "credits": "Bluedart for the Original Mod and Rere__ for the support through development",
-  "logoFile": "",
+  "credits": "Bluedart for the original mod",
+  "logoFile": "logo.png",
   "screenshots": [],
   "dependencies": []
 }

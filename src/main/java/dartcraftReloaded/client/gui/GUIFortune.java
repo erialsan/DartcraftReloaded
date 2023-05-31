@@ -1,4 +1,4 @@
-package dartcraftReloaded.client.gui.fortune;
+package dartcraftReloaded.client.gui;
 
 import dartcraftReloaded.Constants;
 import net.minecraft.client.gui.GuiScreen;

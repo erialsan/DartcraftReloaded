@@ -11,8 +11,9 @@ public class enderTeleportEvent {
     public void onEnderTeleportEvent(EnderTeleportEvent event){
         if(event.getEntity() instanceof EntityEnderman){
             EntityEnderman enderman = ((EntityEnderman) event.getEntity());
-            if(!enderman.getCapability(CapabilityHandler.CAPABILITY_BANE, null).canTeleport()){
+            if(!enderman.getCapability(CapabilityHandler.CAPABILITY_BANE, null).canDoAbility()){
                 event.setCanceled(true);
+                System.out.println("Cancelled");
             }
         }
     }

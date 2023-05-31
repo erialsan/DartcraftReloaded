@@ -1,4 +1,4 @@
-package dartcraftReloaded.client.gui.pack;
+package dartcraftReloaded.client.gui;
 
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.container.ContainerItemForcePack;

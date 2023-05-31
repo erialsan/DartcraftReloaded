@@ -12,15 +12,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 public class BaneProvider implements ICapabilitySerializable<NBTBase>, ICapabilityProvider {
 
-    private EnumFacing facing = null;
 
     private IBaneModifier instance = null;
 
 
-    public BaneProvider(Capability<IBaneModifier> capability, EnumFacing facing){
+    public BaneProvider(Capability<IBaneModifier> capability){
         if(capability != null){
             CapabilityHandler.CAPABILITY_BANE = capability;
-            this.facing = facing;
             this.instance = CapabilityHandler.CAPABILITY_BANE.getDefaultInstance();
         }
     }
@@ -41,14 +39,12 @@ public class BaneProvider implements ICapabilitySerializable<NBTBase>, ICapabili
 
     @Override
     public NBTBase serializeNBT() {
-        NBTTagCompound nbt = new NBTTagCompound();
-
-        return nbt;
+        return CapabilityHandler.CAPABILITY_BANE.getStorage().writeNBT(CapabilityHandler.CAPABILITY_BANE, instance, null);
     }
 
     @Override
     public void deserializeNBT(NBTBase nbt) {
-
+        CapabilityHandler.CAPABILITY_BANE.getStorage().readNBT(CapabilityHandler.CAPABILITY_BANE, instance, null, nbt);
     }
 
     public Capability<IBaneModifier> getCapability(){

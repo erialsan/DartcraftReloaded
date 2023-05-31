@@ -414,16 +414,12 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
         if (m == null) return false;
         HashMap<Modifier, Integer> map = getRecipe();
         if (map.get(m) >= m.getMaxLevels()) return false;
-        ItemStack book = handler.getStackInSlot(10);
-        if (book.getItem() == ModItems.upgradeTome) {
-            IUpgradeTome cap = book.getCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
-            if (cap != null && cap.getLevel() >= m.getTier()) {
-                ItemStack tool = handler.getStackInSlot(8);
-                if (tool.getItem() instanceof IModifiableTool) {
-                    long code = ((IModifiableTool) tool.getItem()).getTool();
-                    return (code & m.getAllowedTools()) == code;
-                } else return tool.isEmpty();
-            }
+        if (getBookLevel() >= m.getTier()) {
+            ItemStack tool = handler.getStackInSlot(8);
+            if (tool.getItem() instanceof IModifiableTool) {
+                long code = ((IModifiableTool) tool.getItem()).getTool();
+                return (code & m.getAllowedTools()) == code;
+            } else return tool.isEmpty();
         }
         return false;
     }
@@ -438,12 +434,12 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
     }
 
     public int getBookLevel() {
-        if (handler.getStackInSlot(10).isEmpty()) return 1;
+        if (handler.getStackInSlot(10).isEmpty()) return 0;
         ItemStack stack = handler.getStackInSlot(10);
         if (stack.hasCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null)) {
             IUpgradeTome cap = stack.getCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
             if (cap != null) return cap.getLevel();
         }
-        return 1;
+        return 0;
     }
 }

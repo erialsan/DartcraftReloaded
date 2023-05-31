@@ -16,18 +16,19 @@ public class livingAttackEvent {
     @SubscribeEvent
     public void livingAttackEvent(LivingAttackEvent event){
         if (event.getEntity() instanceof EntityPlayer) {
-            int level = 0;
+            int heat = 0;
+            int sturdy = 0;
             for (ItemStack i : ((EntityPlayer) event.getEntity()).inventory.armorInventory) {
                 if (i.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
                     IModifiable j = i.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
                     if (j.hasModifier(Constants.HEAT)) {
-                        level += j.getLevel(Constants.HEAT);
+                        heat += j.getLevel(Constants.HEAT);
                     }
                 }
             }
-            if (level > 0) {
+            if (heat > 0) {
                 if (event.getSource().getTrueSource() != null) {
-                    event.getSource().getTrueSource().setFire(level * 2);
+                    event.getSource().getTrueSource().setFire(heat * 2);
                 }
             }
         }

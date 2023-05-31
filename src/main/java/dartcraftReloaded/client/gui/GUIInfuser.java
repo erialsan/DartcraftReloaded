@@ -1,4 +1,4 @@
-package dartcraftReloaded.client.gui.infuser;
+package dartcraftReloaded.client.gui;
 
 import dartcraftReloaded.capablilities.Modifiable.Modifier;
 import dartcraftReloaded.fluids.ModFluids;
@@ -67,7 +67,9 @@ public class GUIInfuser extends GuiContainer {
                 if (item.getItem() == Items.POTIONITEM || item.getItem() == Items.ENCHANTED_BOOK) {
                     if (item.getTagCompound() != null && stack.getTagCompound() != null && item.getTagCompound().equals(stack.getTagCompound())) {
                         list.add(modifier.getColor()+modifier.getName());
-
+                        if (te.getBookLevel() < modifier.getTier()) {
+                            list.add(modifier.getColor()+"Tier "+modifier.getTier());
+                        }
                     }
                 } else {
                     list.add(modifier.getColor()+modifier.getName());
@@ -124,7 +126,11 @@ public class GUIInfuser extends GuiContainer {
         if(isPointInRegion(39, 101, 12, 12, mouseX, mouseY)){
             List<String> text = new ArrayList<>();
             if (te.processTime == -1) {
-                text.add(TextFormatting.GRAY + I18n.format("gui.blockInfuser.Start.tooltip"));
+                if (te.validRecipe()) {
+                    text.add(TextFormatting.WHITE + I18n.format("gui.blockInfuser.Start.tooltip"));
+                } else {
+                    text.add(TextFormatting.GRAY + I18n.format("gui.blockInfuser.Start.tooltip"));
+                }
             }
             this.drawHoveringText(text, actualMouseX, actualMouseY);
         }

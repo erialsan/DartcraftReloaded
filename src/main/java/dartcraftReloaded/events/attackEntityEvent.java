@@ -19,6 +19,7 @@ public class attackEntityEvent {
         if(event.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = event.getEntityPlayer();
             if (player.getHeldItemMainhand().hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+
                 IModifiable cap = player.getHeldItemMainhand().getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
                 if (cap.hasModifier(Constants.FORCE)) {
                     int level = cap.getLevel(Constants.FORCE);

@@ -36,6 +36,6 @@ public class SlotModifier extends SlotItemHandler {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean isEnabled() {
-        return getSlotIndex() < te.getBookLevel();
+        return getSlotIndex() <= te.getBookLevel();
     }
 }

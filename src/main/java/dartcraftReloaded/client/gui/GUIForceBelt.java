@@ -1,4 +1,4 @@
-package dartcraftReloaded.client.gui.belt;
+package dartcraftReloaded.client.gui;
 
 import dartcraftReloaded.container.ContainerItemForceBelt;
 import dartcraftReloaded.Constants;

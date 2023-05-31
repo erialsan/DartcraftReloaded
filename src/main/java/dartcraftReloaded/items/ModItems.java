@@ -30,7 +30,6 @@ public class ModItems {
     public static ItemBase claw = new ItemBase(CLAW);
     public static ItemFortune fortune = new ItemFortune();
     public static ItemBase forceGear = new ItemBase(FORCE_GEAR);
-    public static ItemBase snowCookie = new ItemBase(SNOW_COOKIE);
     public static ItemFilledJar filledJar = new ItemFilledJar();
     public static ItemBase emptyJar = new ItemBase(EMPTY_JAR);
     public static ItemBase flightToken = new ItemBase(FLIGHT_TOKEN);
@@ -96,7 +95,6 @@ public class ModItems {
                 sightToken,
                 experienceTome,
                 forceGear,
-                snowCookie,
                 forceMitt,
                 magnetGlove,
                 forcePack,
@@ -146,7 +144,6 @@ public class ModItems {
         forceShears.registerItemModel();
         experienceTome.registerItemModel();
         forceGear.registerItemModel();
-        snowCookie.registerItemModel();
         forceMitt.registerItemModel();
         magnetGlove.registerItemModel();
         forcePack.registerItemModel();
