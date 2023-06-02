@@ -19,7 +19,7 @@ public class SlotForceBook extends SlotItemHandler {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return stack.getItem() == ModItems.upgradeTome;
+        return stack.getItem() == ModItems.upgradeTome && !getHasStack() && te.processTime == -1;
     }
 
     @Override
@@ -30,5 +30,10 @@ public class SlotForceBook extends SlotItemHandler {
     @Override
     public boolean canTakeStack(EntityPlayer playerIn) {
         return super.canTakeStack(playerIn) && te.processTime == -1;
+    }
+
+    @Override
+    public int getSlotStackLimit() {
+        return 1;
     }
 }

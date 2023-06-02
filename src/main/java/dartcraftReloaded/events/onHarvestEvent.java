@@ -4,11 +4,13 @@ import dartcraftReloaded.Constants;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.config.ConfigHandler;
 import dartcraftReloaded.handlers.CapabilityHandler;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.NonNullList;
@@ -33,38 +35,46 @@ public class onHarvestEvent {
             if (heldItem != ItemStack.EMPTY) {
                 if (heldItem.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
                     IModifiable cap = heldItem.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
-                    if (cap.hasModifier(Constants.HEAT)) {
-                        ListIterator<ItemStack> iter = event.getDrops().listIterator();
-                        while (iter.hasNext()) {
-                            ItemStack drop = iter.next();
-                            ItemStack smelted = FurnaceRecipes.instance().getSmeltingResult(drop);
-                            if (!smelted.isEmpty()) {
-                                smelted = smelted.copy();
-                                if(cap.hasModifier(Constants.LUCK) && ConfigHandler.luckHeatEnabled) {
-                                    smelted.setCount(smelted.getCount() * random.nextInt(cap.getLevel(Constants.LUCK) + 1) + 1);
-                                } else {
-                                    smelted.setCount(drop.getCount());
-                                }
-                                iter.set(smelted);
+                    if (cap.hasModifier(Constants.TOUCH)) {
+                        if (event.getState().getBlock().canSilkHarvest(event.getWorld(), event.getPos(), event.getState(), event.getHarvester())) {
+                            event.getDrops().clear();
+                            event.getDrops().add(getSilkTouchDrop(event.getState()));
+                        }
+                    } else {
+                        if (cap.hasModifier(Constants.HEAT)) {
+                            ListIterator<ItemStack> iter = event.getDrops().listIterator();
+                            while (iter.hasNext()) {
+                                ItemStack drop = iter.next();
+                                ItemStack smelted = FurnaceRecipes.instance().getSmeltingResult(drop);
+                                if (!smelted.isEmpty()) {
+                                    smelted = smelted.copy();
+                                    if(cap.hasModifier(Constants.LUCK) && ConfigHandler.luckHeatEnabled) {
+                                        smelted.setCount(smelted.getCount() * random.nextInt(cap.getLevel(Constants.LUCK) + 1) + 1);
+                                    } else {
+                                        smelted.setCount(drop.getCount());
+                                    }
+                                    iter.set(smelted);
 
-                                float xp = FurnaceRecipes.instance().getSmeltingExperience(smelted);
-                                if (xp < 1 && Math.random() < xp) {
-                                    xp += 1F;
-                                }
-                                if (xp >= 1F) {
-                                    event.getState().getBlock().dropXpOnBlockBreak(event.getWorld(), event.getPos(), (int) xp);
+                                    float xp = FurnaceRecipes.instance().getSmeltingExperience(smelted);
+                                    if (xp < 1 && Math.random() < xp) {
+                                        xp += 1F;
+                                    }
+                                    if (xp >= 1F) {
+                                        event.getState().getBlock().dropXpOnBlockBreak(event.getWorld(), event.getPos(), (int) xp);
+                                    }
                                 }
                             }
-                        }
-                    } else if (cap.hasModifier(Constants.LUCK)) {
-                        IBlockState i = event.getState();
-                        event.getDrops().clear();
-                        NonNullList<ItemStack> j = NonNullList.create();
-                        i.getBlock().getDrops(j, event.getWorld(), event.getPos(), i, event.getFortuneLevel() + cap.getLevel(Constants.LUCK));
-                        for (ItemStack k : j) {
-                            event.getDrops().add(k);
+                        } else if (cap.hasModifier(Constants.LUCK)) {
+                            IBlockState i = event.getState();
+                            event.getDrops().clear();
+                            NonNullList<ItemStack> j = NonNullList.create();
+                            i.getBlock().getDrops(j, event.getWorld(), event.getPos(), i, event.getFortuneLevel() + cap.getLevel(Constants.LUCK));
+                            for (ItemStack k : j) {
+                                event.getDrops().add(k);
+                            }
                         }
                     }
+
                     if (cap.hasModifier(Constants.EXPERIENCE)) {
                         IBlockState state = event.getState();
                         World world = event.getWorld();
@@ -78,5 +88,17 @@ public class onHarvestEvent {
                 }
             }
         }
+    }
+
+
+    private ItemStack getSilkTouchDrop(IBlockState state) {
+        Block block = state.getBlock();
+        Item item = Item.getItemFromBlock(block);
+        int i = 0;
+        if (item.getHasSubtypes()) {
+            i = block.getMetaFromState(state);
+        }
+
+        return new ItemStack(item, 1, i);
     }
 }

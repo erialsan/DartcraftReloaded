@@ -22,6 +22,7 @@ public class onLivingUpdate {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             int speedLevel = 0;
             int luckLevel = 0;
+            int regen = 0;
             boolean sight = false;
             boolean camo = false;
             for (ItemStack i : player.inventory.armorInventory) {
@@ -33,18 +34,27 @@ public class onLivingUpdate {
                     if (cap.hasModifier(Constants.LUCK)) {
                         luckLevel += cap.getLevel(Constants.LUCK);
                     }
+                    if (cap.hasModifier(Constants.HEALING)) {
+                        regen += cap.getLevel(Constants.HEALING);
+                    }
                     if (cap.hasModifier(Constants.SIGHT)) sight = true;
                     if (cap.hasModifier(Constants.CAMO)) camo = true;
                 }
             }
             if (speedLevel > 0) {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionById(1), 8, speedLevel));
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(1), 8, speedLevel - 1));
                 if (speedLevel / 4 > 0) {
-                    player.addPotionEffect(new PotionEffect(Potion.getPotionById(3), 8, speedLevel / 4));
+                    player.addPotionEffect(new PotionEffect(Potion.getPotionById(3), 8, (speedLevel / 4) - 1));
                 }
             }
             if (luckLevel > 0) {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionById(26), 8, luckLevel));
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(26), 8, luckLevel - 1));
+            }
+            if (regen / 2 > 0) {
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(10), 8, (regen / 2) - 1));
+                if (regen / 4 > 0) {
+                    player.addPotionEffect(new PotionEffect(Potion.getPotionById(11), 8, (regen / 4) - 1));
+                }
             }
             if (sight) {
                 player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 8));

@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 
 public class UpgradeTomeFactory implements Callable<IUpgradeTome> {
     @Override
-    public IUpgradeTome call() throws Exception {
+    public IUpgradeTome call() {
         return new IUpgradeTome() {
 
             private int level = 1;
@@ -20,6 +20,8 @@ public class UpgradeTomeFactory implements Callable<IUpgradeTome> {
             @Override
             public void setLevel(int level) {
                 this.level = level;
+                if (this.level < 1) this.level = 1;
+                if (this.level > 7) this.level = 7;
             }
 
             @Override

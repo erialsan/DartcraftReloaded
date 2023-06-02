@@ -1,17 +1,19 @@
 package dartcraftReloaded.items;
 
+import dartcraftReloaded.entity.EntityBottle;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.stats.StatList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -31,28 +33,34 @@ public class ItemFilledJar extends ItemBase {
         return false;
     }
 
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SPLASH_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        if (!worldIn.isRemote && handIn == EnumHand.MAIN_HAND) {
+            EntityBottle bottle = new EntityBottle(worldIn, playerIn, itemstack.copy());
+            bottle.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
+            worldIn.spawnEntity(bottle);
+            playerIn.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        }
 
-    private boolean hasAnimal(NBTTagCompound tagCompound) {
+        return new ActionResult(EnumActionResult.SUCCESS, itemstack);
+    }
+
+    private static boolean hasAnimal(NBTTagCompound tagCompound) {
         return tagCompound != null && tagCompound.hasKey(NBT_ANIMAL, Constants.NBT.TAG_COMPOUND);
     }
 
-    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        ItemStack stack = playerIn.getHeldItemMainhand();
-        if (stack.getItem() != ModItems.filledJar) return EnumActionResult.PASS;
-        if (!hasAnimal(stack.getTagCompound())) return EnumActionResult.FAIL;
+    public static void spawn(ItemStack stack, World worldIn, BlockPos pos, EnumFacing side) {
+        if (stack.getItem() != ModItems.filledJar) return;
+        if (!hasAnimal(stack.getTagCompound())) return;
         NBTTagCompound stackTags = stack.getTagCompound();
         NBTTagCompound entityTags = stackTags.getCompoundTag(NBT_ANIMAL);
         if (!entityTags.hasKey("id", Constants.NBT.TAG_STRING)) {
             stackTags.removeTag(NBT_ANIMAL);
-            return EnumActionResult.FAIL;
+            return;
         }
 
-        if (worldIn.isRemote) return EnumActionResult.SUCCESS;
-
-        if (!playerIn.canPlayerEdit(pos.offset(side), side, stack)) {
-            return EnumActionResult.FAIL;
-        }
-
+        if (worldIn.isRemote) return;
         IBlockState iblockstate = worldIn.getBlockState(pos);
         pos = pos.offset(side);
         double d0 = 0.0D;
@@ -61,8 +69,8 @@ public class ItemFilledJar extends ItemBase {
             d0 = 0.5D;
         }
 
-        entityTags.setTag("Pos", this.newDoubleNBTList(pos.getX() + 0.5D, pos.getY() + d0, pos.getZ() + 0.5D));
-        entityTags.setTag("Motion", this.newDoubleNBTList(0, 0, 0));
+        entityTags.setTag("Pos", newDoubleNBTList(pos.getX() + 0.5D, pos.getY() + d0, pos.getZ() + 0.5D));
+        entityTags.setTag("Motion", newDoubleNBTList(0, 0, 0));
         entityTags.setFloat("FallDistance", 0);
         entityTags.setInteger("Dimension", worldIn.provider.getDimension());
 
@@ -70,15 +78,10 @@ public class ItemFilledJar extends ItemBase {
 
         if (entity != null) {
             worldIn.spawnEntity(entity);
-            playerIn.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
         }
-
-        playerIn.inventory.markDirty();
-
-        return EnumActionResult.SUCCESS;
     }
 
-    private NBTTagList newDoubleNBTList(double... numbers) {
+    private static NBTTagList newDoubleNBTList(double... numbers) {
         NBTTagList nbttaglist = new NBTTagList();
 
         for (double d0 : numbers) {

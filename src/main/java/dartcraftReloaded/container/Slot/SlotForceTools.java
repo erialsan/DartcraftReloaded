@@ -17,7 +17,7 @@ public class SlotForceTools extends SlotItemHandler {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return te.isStackValid(stack);
+        return te.isStackValid(stack) && !getHasStack();
     }
 
     @Override
@@ -28,5 +28,10 @@ public class SlotForceTools extends SlotItemHandler {
     @Override
     public boolean canTakeStack(EntityPlayer playerIn) {
         return super.canTakeStack(playerIn) && te.processTime == -1;
+    }
+
+    @Override
+    public int getSlotStackLimit() {
+        return 1;
     }
 }

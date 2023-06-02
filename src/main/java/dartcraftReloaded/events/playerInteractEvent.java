@@ -16,7 +16,7 @@ public class playerInteractEvent {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent.EntityInteract event) {
-        if (event.getEntityPlayer() != null & event.getTarget().isNonBoss() && !(event.getTarget() instanceof EntityPlayer)) {
+        if (!event.getWorld().isRemote && event.getEntityPlayer() != null & event.getTarget().isNonBoss() && !(event.getTarget() instanceof EntityPlayer)) {
             ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
             if (stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
                 if (stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.HOLDING)) {

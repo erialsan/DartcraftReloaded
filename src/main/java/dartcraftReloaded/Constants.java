@@ -107,9 +107,9 @@ public class Constants {
             LUMBERJACK = new Modifier(4, 1, 1, "Lumberjack", GOLD, new ItemStack(ModBlocks.forceLog), AXE), //good
             LUCK = new Modifier(5, 5, 2, "Luck", GREEN, new ItemStack(ModItems.fortune), PICKAXE | AXE | SHOVEL | SWORD | ROD | BOW | SHEARS | ARMOR), //good
             RAINBOW = new Modifier(6, 1, 2, "Rainbow", LIGHT_PURPLE, new ItemStack(Items.DYE, 1, 4), SHEARS), //good
-            HOLDING = new Modifier(7, 1, 2, "Holding", AQUA, new ItemStack(ModItems.emptyJar), ROD),
+            HOLDING = new Modifier(7, 1, 2, "Holding", AQUA, new ItemStack(ModItems.emptyJar), ROD), //good
             EXPERIENCE = new Modifier(8, 3, 2, "Experience", GREEN, new ItemStack(ModItems.soulWafer), PICKAXE | AXE | SHOVEL | SWORD | BOW), //good
-            TOUCH = new Modifier(9, 1, 2, "Touch", GREEN, new ItemStack(Blocks.WEB), PICKAXE | AXE | SHOVEL),
+            TOUCH = new Modifier(9, 1, 2, "Touch", GREEN, new ItemStack(Blocks.WEB), PICKAXE | AXE | SHOVEL), //good
             BANE = new Modifier(10, 1, 3, "Bane", DARK_RED, new ItemStack(Items.FERMENTED_SPIDER_EYE), SWORD | BOW), //good
             STURDY = new Modifier(11, 5, 3, "Sturdy", AQUA, new ItemStack(Blocks.OBSIDIAN), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
             SIGHT = new Modifier(12, 1, 3, "Sight", GREEN, new ItemStack(ModItems.sightToken), ARMOR | ROD), //good
@@ -119,9 +119,9 @@ public class Constants {
             DIRECT = new Modifier(16, 1, 4, "Direct", LIGHT_PURPLE, new ItemStack(ModItems.magnetGlove), PICKAXE | AXE | SHOVEL | BOW | SWORD), //good
             ENDER = new Modifier(17, 1, 5, "Ender", AQUA, new ItemStack(Items.ENDER_PEARL), SWORD | ROD),
             REPAIR = new Modifier(18, 3, 5, "Repair", LIGHT_PURPLE, new ItemStack(ModItems.repairToken), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
-            LIGHT = new Modifier(19, 5, 5, "Light", GOLD, new ItemStack(Blocks.GLOWSTONE), SWORD | BOW | ROD),
+            LIGHT = new Modifier(19, 5, 5, "Light", YELLOW, new ItemStack(Blocks.GLOWSTONE), SWORD | BOW | ROD), //good
             QUIVER = new Modifier(20, 1, 6, "Quiver", AQUA, new ItemStack(ModItems.arrowBundle), BOW), //good
-            HEALING = new Modifier(21, 2, 6, "Healing", LIGHT_PURPLE, new ItemStack(ModItems.inertCore), ARMOR | ROD),
+            HEALING = new Modifier(21, 2, 6, "Healing", LIGHT_PURPLE, new ItemStack(ModItems.inertCore), ARMOR | ROD), //good
             FLIGHT = new Modifier(22, 1, 7, "Flight", LIGHT_PURPLE, new ItemStack(ModItems.flightToken), ARMOR),
             IMPERVIOUS = new Modifier(23, 1, 7, "Impervious", WHITE, new ItemStack(Items.NETHER_STAR), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS); //good
 

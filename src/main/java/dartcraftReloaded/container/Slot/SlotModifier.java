@@ -20,7 +20,7 @@ public class SlotModifier extends SlotItemHandler {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return te.isModifierValid(stack);
+        return te.isModifierValid(stack) && !getHasStack() && te.processTime == -1;
     }
 
     @Override
@@ -37,5 +37,10 @@ public class SlotModifier extends SlotItemHandler {
     @SideOnly(Side.CLIENT)
     public boolean isEnabled() {
         return getSlotIndex() <= te.getBookLevel();
+    }
+
+    @Override
+    public int getSlotStackLimit() {
+        return 1;
     }
 }

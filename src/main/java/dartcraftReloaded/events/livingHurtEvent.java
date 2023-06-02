@@ -36,6 +36,11 @@ public class livingHurtEvent {
                         ((EntityCreeper) event.getEntityLiving()).setCreeperState(-1);
                     }
                 }
+                if (cap.hasModifier(Constants.LIGHT)) {
+                    if (event.getEntityLiving().isEntityUndead()) {
+                        event.setAmount(event.getAmount() + cap.getLevel(Constants.LIGHT) * 5F);
+                    }
+                }
             }
         }
         if (event.getEntityLiving() instanceof EntityPlayer) {

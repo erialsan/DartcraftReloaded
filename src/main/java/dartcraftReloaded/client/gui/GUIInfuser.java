@@ -67,12 +67,12 @@ public class GUIInfuser extends GuiContainer {
                 if (item.getItem() == Items.POTIONITEM || item.getItem() == Items.ENCHANTED_BOOK) {
                     if (item.getTagCompound() != null && stack.getTagCompound() != null && item.getTagCompound().equals(stack.getTagCompound())) {
                         list.add(modifier.getColor()+modifier.getName());
-                        if (te.getBookLevel() < modifier.getTier()) {
-                            list.add(modifier.getColor()+"Tier "+modifier.getTier());
-                        }
                     }
                 } else {
                     list.add(modifier.getColor()+modifier.getName());
+                }
+                if (te.getBookLevel() < modifier.getTier()) {
+                    list.add(modifier.getColor()+"Tier "+modifier.getTier());
                 }
             }
         }
@@ -91,25 +91,25 @@ public class GUIInfuser extends GuiContainer {
         int progressHeight = (int) ((double) te.processTime * 20 / te.maxProcessTime);
         this.drawTexturedModalRect(134, 93+20-progressHeight, 176, 20-progressHeight, 2, progressHeight);
 
-        if (te.getBookLevel() < 2) {
+        if (te.getBookLevel() < 1) {
             this.drawTexturedModalRect(104, 32, 176, 127, 16, 16);
         }
-        if (te.getBookLevel() < 3) {
+        if (te.getBookLevel() < 2) {
             this.drawTexturedModalRect(116, 57, 176, 127, 16, 16);
         }
-        if (te.getBookLevel() < 4) {
+        if (te.getBookLevel() < 3) {
             this.drawTexturedModalRect(104, 81, 176, 127, 16, 16);
         }
-        if (te.getBookLevel() < 5) {
+        if (te.getBookLevel() < 4) {
             this.drawTexturedModalRect(80, 93, 176, 127, 16, 16);
         }
-        if (te.getBookLevel() < 6) {
+        if (te.getBookLevel() < 5) {
             this.drawTexturedModalRect(56, 81, 176, 127, 16, 16);
         }
-        if (te.getBookLevel() < 7) {
+        if (te.getBookLevel() < 6) {
             this.drawTexturedModalRect(44, 57, 176, 127, 16, 16);
         }
-        if (te.getBookLevel() < 8) {
+        if (te.getBookLevel() < 7) {
             this.drawTexturedModalRect(56, 32, 176, 127, 16, 16);
         }
 

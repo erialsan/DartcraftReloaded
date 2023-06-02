@@ -14,6 +14,7 @@ import dartcraftReloaded.items.nonburnable.ItemInertCore;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.networking.SoundMessage;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -67,21 +68,43 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        if (worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         IModifiable cap = playerIn.getHeldItem(handIn).getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+        boolean flag = false;
         if (cap.hasModifier(Constants.LUCK)) {
             playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(26), cap.getLevel(Constants.LUCK) * 30 * 20));
+            flag = true;
         }
         if (cap.hasModifier(Constants.SPEED)) {
             playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(1), cap.getLevel(Constants.SPEED) * 30 * 20, cap.getLevel(Constants.SPEED) * 2));
             if (cap.getLevel(Constants.SPEED) / 2 > 0) {
                 playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(3), cap.getLevel(Constants.SPEED) * 30 * 20, cap.getLevel(Constants.SPEED) / 2));
             }
+            flag = true;
         }
         if (cap.hasModifier(Constants.SIGHT)) {
             playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 30*20));
+            flag = true;
         }
         if (cap.hasModifier(Constants.CAMO)) {
             playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(14), 30*20));
+            flag = true;
+        }
+        if (cap.hasModifier(Constants.HEALING)) {
+            if (cap.getLevel(Constants.HEALING) == 1) {
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(10), 5*20, 1));
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(22), 2*60*20));
+            } else {
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(22), 2*60*20, 3));
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(10), 30*20, 1));
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(12), 5*60*20));
+                playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(11), 5*60*20));
+            }
+            flag = true;
+        }
+        if (flag) {
+            playerIn.getCooldownTracker().setCooldown(this, 80);
+            doAction(playerIn.getHeldItemMainhand(), playerIn, worldIn);
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
@@ -89,6 +112,21 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack held = player.getHeldItem(hand);
+        if (!worldIn.isRemote && held.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.LIGHT)) {
+            BlockPos blockClicked = pos;
+            EnumFacing sideClicked = facing;
+            if (facing == EnumFacing.DOWN) {
+                sideClicked = EnumFacing.UP;
+                blockClicked.add(0, -2, 0);
+            }
+            if (worldIn.getBlockState(blockClicked).isTopSolid() && worldIn.mayPlace(Blocks.TORCH, blockClicked.offset(sideClicked), false, sideClicked, player)) {
+                IBlockState state = worldIn.getBlockState(blockClicked.offset(sideClicked));
+                worldIn.setBlockState(blockClicked.offset(sideClicked), Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideClicked));
+                worldIn.notifyBlockUpdate(blockClicked.offset(sideClicked), state, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideClicked), 3);
+                worldIn.notifyLightSet(blockClicked.offset(sideClicked));
+                return doAction(held, player, worldIn);
+            }
+        }
         if (held.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.HEAT)) {
             if (!worldIn.isRemote) {
                 worldIn.setBlockState(pos.offset(facing), Blocks.FIRE.getDefaultState(), 3);
