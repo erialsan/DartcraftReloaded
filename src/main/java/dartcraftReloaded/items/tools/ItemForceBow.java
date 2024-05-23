@@ -104,7 +104,7 @@ public class ItemForceBow extends ItemBow implements IModifiableTool {
 
                 float f = getArrowVelocity(i);
                 if (cap.hasModifier(Constants.SPEED)) {
-                    f *= 1 + 0.25 * cap.getLevel(Constants.SPEED);
+                    f *= cap.getLevel(Constants.SPEED);
                 }
 
                 if ((double)f >= 0.1D)

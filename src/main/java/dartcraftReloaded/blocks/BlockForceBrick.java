@@ -26,8 +26,8 @@ public class BlockForceBrick extends BlockBase {
 
     public BlockForceBrick(){
         super(Material.ROCK, FORCE_BRICK);
-        this.setHardness(50.0F);
-        this.setResistance(200.0F);
+        this.setHardness(2);
+        this.setResistance(50);
         this.setHarvestLevel("pickaxe", 3);
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumDyeColor.YELLOW));
     }

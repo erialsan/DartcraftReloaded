@@ -29,6 +29,7 @@ public class CapabilityHandler {
 
     public static final ResourceLocation BANE_CAP = new ResourceLocation(Constants.modId, "baneMod");
 
+
     @CapabilityInject(IExperienceTome.class)
     public static Capability<IExperienceTome> CAPABILITY_EXPTOME = null;
 
@@ -47,7 +48,7 @@ public class CapabilityHandler {
     @CapabilityInject(IItemTE.class)
     public static Capability<IItemTE> CAPABILITY_TE = null;
 
-    public static void register(){
+    public static void register() {
         CapabilityManager.INSTANCE.register(IExperienceTome.class, new ExperienceTomeStorage(), new ExperienceTomeFactory());
         CapabilityManager.INSTANCE.register(IBaneModifier.class, new BaneModifierStorage(), new BaneFactory());
         CapabilityManager.INSTANCE.register(IMagnet.class, new MagnetStorage(), new MagnetFactory());
@@ -56,5 +57,6 @@ public class CapabilityHandler {
         CapabilityManager.INSTANCE.register(IItemTE.class, new ItemTEStorage(), new ItemTEFactory());
 
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
+
     }
 }

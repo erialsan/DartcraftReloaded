@@ -113,7 +113,8 @@ public class ItemForceAxe extends ItemAxe implements IModifiableTool {
         float speed = super.getDestroySpeed(stack, state);
         IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
         if (cap.hasModifier(Constants.SPEED)) {
-            speed *= (1 + 0.075 * cap.getLevel(Constants.SPEED));
+            //speed *= (1 + 0.075 * cap.getLevel(Constants.SPEED));
+            speed *= cap.getLevel(Constants.SPEED);
         }
         return speed;
     }

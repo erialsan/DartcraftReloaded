@@ -1,8 +1,10 @@
 package dartcraftReloaded.handlers;
 
 import dartcraftReloaded.Constants;
+import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -75,6 +77,19 @@ public class AsmHandler {
 		}
 
 		return (float)i / (float)player.inventory.armorInventory.size();
+	}
+
+	public static float patchCooldown(EntityPlayer player) {
+		int speedLevel = -1;
+		ItemStack stack = player.getHeldItemMainhand();
+		if (stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+			IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+			if (cap.hasModifier(Constants.SPEED)) speedLevel = cap.getLevel(Constants.SPEED);
+		}
+		if (speedLevel > -1) {
+			return (float)(1.0D / (player.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue() * speedLevel * 1.5) * 20.0D);
+		}
+		return (float)(1.0D / player.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue() * 20.0D);
 	}
 
 	public static void patchAttackTarget(EntityLiving attacker, EntityLivingBase target) {

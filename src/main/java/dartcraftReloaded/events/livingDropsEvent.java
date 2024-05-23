@@ -1,6 +1,7 @@
 package dartcraftReloaded.events;
 
 import dartcraftReloaded.Constants;
+import dartcraftReloaded.capablilities.Magnet.IMagnet;
 import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.handlers.AsmHandler;
 import dartcraftReloaded.handlers.CapabilityHandler;

@@ -5,7 +5,6 @@ import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
-import dartcraftReloaded.tileEntity.TileEntityTimeTorch;
 import dartcraftReloaded.Constants;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,7 +23,6 @@ public class CommonProxy {
     public void registerTileEntities() {
         GameRegistry.registerTileEntity(TileEntityInfuser.class, Constants.modId + ":blockInfuser");
         GameRegistry.registerTileEntity(TileEntityForceFurnace.class, Constants.modId + ":blockFurnace");
-        GameRegistry.registerTileEntity(TileEntityTimeTorch.class, Constants.modId + ":torchTime");
     }
 
     public void registerSmeltingRecipes() {

@@ -85,10 +85,14 @@ public class ClassTransformer implements IClassTransformer {
 		logger.log(Level.DEBUG, "Found EntityPlayer Class: " + classNode.name);
 
 		MethodNode getArmorVisibility = null;
+		MethodNode cooldown = null;
 
 		for (MethodNode mn : classNode.methods) {
 			if (mn.name.equals(MCPNames.method("func_82243_bO"))) {
 				getArmorVisibility = mn;
+			}
+			if (mn.name.equals(MCPNames.method("func_184818_cX"))) {
+				cooldown = mn;
 			}
 		}
 
@@ -104,6 +108,16 @@ public class ClassTransformer implements IClassTransformer {
 				toInsert.add(new MethodInsnNode(INVOKESTATIC, asmHandler, "patchArmorVisibility", "(Lnet/minecraft/entity/player/EntityPlayer;)F", false));
 				getArmorVisibility.instructions.insertBefore(ain, toInsert);
 			}
+		}
+
+		if (cooldown != null) {
+			AbstractInsnNode ain = cooldown.instructions.get(0);
+			logger.log(Level.DEBUG, " - Found getCooldownPeriod");
+			InsnList toInsert = new InsnList();
+			toInsert.add(new VarInsnNode(ALOAD, 0));
+			toInsert.add(new MethodInsnNode(INVOKESTATIC, asmHandler, "patchCooldown", "(Lnet/minecraft/entity/player/EntityPlayer;)F", false));
+			toInsert.add(new InsnNode(FRETURN));
+			cooldown.instructions.insertBefore(ain, toInsert);
 		}
 
 		CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);

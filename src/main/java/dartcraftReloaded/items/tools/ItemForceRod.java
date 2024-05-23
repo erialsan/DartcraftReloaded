@@ -14,6 +14,7 @@ import dartcraftReloaded.items.nonburnable.ItemInertCore;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.networking.SoundMessage;
+import dartcraftReloaded.util.DartUtils;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,26 +25,34 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.network.NetHandlerPlayServer;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.List;
 
 public class ItemForceRod extends ItemBase implements IModifiableTool {
+
+
+
     public ItemForceRod(){
         super(Constants.FORCE_ROD);
         setHasSubtypes(true);
@@ -67,10 +76,25 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
             return null;
     }
 
+
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
         IModifiable cap = playerIn.getHeldItem(handIn).getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
         boolean flag = false;
+        if (playerIn.isSneaking() && cap.hasModifier(Constants.ENDER)) {
+            RayTraceResult hit = DartUtils.enderTrace(worldIn, playerIn, 8*cap.getLevel(Constants.ENDER));
+            if (hit != null && hit.typeOfHit == RayTraceResult.Type.BLOCK) {
+                BlockPos tppos = hit.getBlockPos();
+                if (tppos != null && worldIn.getBlockState(tppos.up()).getBlock() == Blocks.AIR && worldIn.getBlockState(tppos.up(2)).getBlock() == Blocks.AIR) {
+                    worldIn.playSound(null, playerIn.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.6F, 1.0F);
+                    flag = true;
+                    DartUtils.teleport(playerIn, tppos);
+                }
+            }
+
+        }
         if (cap.hasModifier(Constants.LUCK)) {
             playerIn.addPotionEffect(new PotionEffect(Potion.getPotionById(26), cap.getLevel(Constants.LUCK) * 30 * 20));
             flag = true;
@@ -203,12 +227,12 @@ public class ItemForceRod extends ItemBase implements IModifiableTool {
                             worldIn.removeEntity(i);
                             worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.upgradeTome)));
                             return doAction(held, player, worldIn);
-                        } else if (item.getItem() == ModItems.experienceTome) {
-                            IExperienceTome cap = item.getCapability(CapabilityHandler.CAPABILITY_EXPTOME, null);
-                            int num = cap.getExperienceValue() / 100;
-                            worldIn.removeEntity(i);
-                            worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.upgradeCore, num)));
-                            return doAction(held, player, worldIn);
+                        //} else if (item.getItem() == ModItems.experienceTome) {
+                        //    IExperienceTome cap = item.getCapability(CapabilityHandler.CAPABILITY_EXPTOME, null);
+                        //    int num = cap.getExperienceValue() / 100;
+                        //    worldIn.removeEntity(i);
+                        //    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.upgradeCore, num)));
+                        //    return doAction(held, player, worldIn);
                         } else if(item.getItem() instanceof ItemArmor) {
                             if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.CHEST) {
                                 if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {

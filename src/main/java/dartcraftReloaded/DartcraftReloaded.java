@@ -45,8 +45,8 @@ public class DartcraftReloaded {
     @SidedProxy(serverSide = "dartcraftReloaded.proxy.CommonProxy", clientSide = "dartcraftReloaded.proxy.ClientProxy")
     public static CommonProxy proxy;
 
-    public static final ItemArmor.ArmorMaterial forceArmorMaterial = EnumHelper.addArmorMaterial("FORCE", Constants.modId + ":force", 15, new int[]{3, 6, 8, 3}, 25, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F);
-    public static final ItemTool.ToolMaterial forceToolMaterial = EnumHelper.addToolMaterial("FORCE", 3, 1561, 10.0F, 8.0F, 22);
+    public static final ItemArmor.ArmorMaterial forceArmorMaterial = EnumHelper.addArmorMaterial("FORCEA", Constants.modId + ":force", 15, new int[]{3, 6, 8, 3}, 25, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F);
+    public static final ItemTool.ToolMaterial forceToolMaterial = EnumHelper.addToolMaterial("FORCET", 3, 1561, 10.0F, 8.0F, 22);
 
     static {
         FluidRegistry.enableUniversalBucket();

@@ -39,7 +39,7 @@ public class BlockForceFurnace extends BlockContainer
         super(Material.ROCK);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.isBurning = isBurning;
-        this.setHardness(4.0F);
+        this.setHardness(3);
         this.blockResistance = 18.0F;
         this.setRegistryName(name);
         this.setTranslationKey(name);

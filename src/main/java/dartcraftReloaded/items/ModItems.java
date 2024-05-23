@@ -27,7 +27,7 @@ public class ModItems {
     public static ItemWoodenForceRod woodenForceRod = new ItemWoodenForceRod();
     public static ItemForceWrench forceWrench = new ItemForceWrench();
     public static ItemBase goldenPowerSource = new ItemBase(GOLDEN_POWER_SOURCE);
-    public static ItemBase claw = new ItemBase(CLAW);
+    public static ItemBase claw = new ItemBase(CLAW, "Drops from bats");
     public static ItemFortune fortune = new ItemFortune();
     public static ItemBase forceGear = new ItemBase(FORCE_GEAR);
     public static ItemFilledJar filledJar = new ItemFilledJar();
@@ -36,18 +36,18 @@ public class ModItems {
     public static ItemBase camoToken = new ItemBase(CAMO_TOKEN);
     public static ItemBase sightToken = new ItemBase(SIGHT_TOKEN);
     public static ItemBase repairToken = new ItemBase(REPAIR_TOKEN);
-    public static ItemForcePack forcePack = new ItemForcePack(Constants.FORCE_PACK+"1", 8);
-    public static ItemForcePack forcePack2 = new ItemForcePack(Constants.FORCE_PACK+"2", 16);
-    public static ItemForcePack forcePack3 = new ItemForcePack(Constants.FORCE_PACK+"3", 24);
-    public static ItemForcePack forcePack4 = new ItemForcePack(Constants.FORCE_PACK+"4", 32);
-    public static ItemForcePack forcePack5 = new ItemForcePack(Constants.FORCE_PACK+"5", 40);
+    //public static ItemForcePack forcePack = new ItemForcePack(Constants.FORCE_PACK+"1", 8);
+    //public static ItemForcePack forcePack2 = new ItemForcePack(Constants.FORCE_PACK+"2", 16);
+    //public static ItemForcePack forcePack3 = new ItemForcePack(Constants.FORCE_PACK+"3", 24);
+    //public static ItemForcePack forcePack4 = new ItemForcePack(Constants.FORCE_PACK+"4", 32);
+    //public static ItemForcePack forcePack5 = new ItemForcePack(Constants.FORCE_PACK+"5", 40);
 
-    public static ItemForceBelt forceBelt = new ItemForceBelt();
+    //public static ItemForceBelt forceBelt = new ItemForceBelt();
     public static ItemBottledWither bottledWither = new ItemBottledWither();
     public static ItemInertCore inertCore = new ItemInertCore(INERT_CORE);
     public static ItemTE itemTE = new ItemTE();
-    public static ItemUpgradeCore upgradeCore = new ItemUpgradeCore();
-    public static ItemBase tear = new ItemBase(TEAR);
+    //public static ItemUpgradeCore upgradeCore = new ItemUpgradeCore();
+    public static ItemBase tear = new ItemBase(TEAR, "Drops from cold animals");
     public static ItemBase arrowBundle = new ItemBase(ARROW_BUNDLE);
     public static ItemForceBow forceBow = new ItemForceBow();
 
@@ -57,7 +57,6 @@ public class ModItems {
     public static ItemForceSword forceSword = new ItemForceSword();
     public static ItemForceShovel forceShovel = new ItemForceShovel();
     public static ItemForceShears forceShears = new ItemForceShears();
-    public static ItemForceMitt forceMitt = new ItemForceMitt();
     public static ItemMagnetGlove magnetGlove = new ItemMagnetGlove();
 
     //Experience Tome
@@ -95,19 +94,11 @@ public class ModItems {
                 sightToken,
                 experienceTome,
                 forceGear,
-                forceMitt,
                 magnetGlove,
-                forcePack,
-                forcePack2,
-                forcePack3,
-                forcePack4,
-                forcePack5,
-                forceBelt,
                 bottledWither,
                 inertCore,
                 upgradeTome,
                 itemTE,
-                upgradeCore,
                 tear,
                 arrowBundle,
                 forceBow,
@@ -144,19 +135,11 @@ public class ModItems {
         forceShears.registerItemModel();
         experienceTome.registerItemModel();
         forceGear.registerItemModel();
-        forceMitt.registerItemModel();
         magnetGlove.registerItemModel();
-        forcePack.registerItemModel();
-        forcePack2.registerItemModel();
-        forcePack3.registerItemModel();
-        forcePack4.registerItemModel();
-        forcePack5.registerItemModel();
-        forceBelt.registerItemModel();
         bottledWither.registerItemModel();
         inertCore.registerItemModel();
         upgradeTome.registerItemModel();
         itemTE.registerItemModel();
-        upgradeCore.registerItemModel();
         tear.registerItemModel();
         arrowBundle.registerItemModel();
         forceBow.registerItemModel();

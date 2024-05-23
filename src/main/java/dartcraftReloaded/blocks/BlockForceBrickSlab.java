@@ -30,8 +30,8 @@ public class BlockForceBrickSlab extends BlockSlab {
         IBlockState iblockstate = this.blockState.getBaseState();
         iblockstate = iblockstate.withProperty(HALF, EnumBlockHalf.BOTTOM);
         this.setDefaultState(iblockstate.withProperty(VARIANT, EnumDyeColor.YELLOW));
-        this.setHardness(50.0F);
-        this.setResistance(200.0F);
+        this.setHardness(2);
+        this.setResistance(50);
         this.setHarvestLevel("pickaxe", 3);
         this.setSoundType(SoundType.STONE);
         setCreativeTab(DartcraftReloaded.creativeTab);

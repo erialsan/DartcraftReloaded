@@ -36,7 +36,6 @@ public class ModBlocks {
     }
     //Torches
     public static BlockForceTorch forceTorch = new BlockForceTorch();
-    public static BlockTimetorch timetorch = new BlockTimetorch();
 
     public static void register(IForgeRegistry<Block> registry) {
         registry.registerAll(
@@ -51,8 +50,7 @@ public class ModBlocks {
                 litForceFurnace,
                 forceBrick,
                 forceBrickSlab,
-                forceTorch,
-                timetorch
+                forceTorch
         );
 
         registry.registerAll(forceBrickStairs);
@@ -68,8 +66,7 @@ public class ModBlocks {
                 infuser.createItemBlock(),
                 forceFurnace.createItemBlock(),
                 forcePlanks.createItemBlock(),
-                forceTorch.createItemBlock(),
-                timetorch.createItemBlock()
+                forceTorch.createItemBlock()
         );
 
         for (int i = 0; i < 16; i++) {
@@ -91,7 +88,6 @@ public class ModBlocks {
         litForceFurnace.registerItemModel(Item.getItemFromBlock(litForceFurnace));
         forceBrick.registerItemModel(Item.getItemFromBlock(forceBrick));
         forceTorch.registerItemModel(Item.getItemFromBlock(forceTorch));
-        timetorch.registerItemModel(Item.getItemFromBlock(timetorch));
         forceBrickSlab.registerItemModel(Item.getItemFromBlock(forceBrickSlab));
         for (int i = 0; i < 16; i++) {
             forceBrickStairs[i].registerItemModel(Item.getItemFromBlock(forceBrickStairs[i]), "forceBrickStair."+EnumDyeColor.values()[i].getTranslationKey());

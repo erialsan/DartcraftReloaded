@@ -6,6 +6,7 @@ import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -91,10 +92,14 @@ public class ItemForcePickaxe extends ItemPickaxe implements IModifiableTool {
 
     @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state) {
-        float speed = super.getDestroySpeed(stack, state);
+
+        Material material = state.getMaterial();
+        float speed = material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
+
+        //float speed = super.getDestroySpeed(stack, state);
         IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
         if (cap.hasModifier(Constants.SPEED)) {
-            speed += 1 + cap.getLevel(Constants.SPEED)*cap.getLevel(Constants.SPEED);
+            speed *= cap.getLevel(Constants.SPEED);
         }
         return speed;
     }

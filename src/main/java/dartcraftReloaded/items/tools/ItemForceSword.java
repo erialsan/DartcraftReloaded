@@ -7,6 +7,7 @@ import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
+import dartcraftReloaded.util.DartUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,12 +15,19 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,6 +44,27 @@ public class ItemForceSword extends ItemSword implements IModifiableTool {
         this.setRegistryName(Constants.FORCE_SWORD);
         this.setTranslationKey(Constants.FORCE_SWORD);
         this.setCreativeTab(DartcraftReloaded.creativeTab);
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        if (worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+        IModifiable cap = playerIn.getHeldItem(handIn).getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+        if (playerIn.isSneaking() && cap.hasModifier(Constants.ENDER)) {
+            RayTraceResult hit = DartUtils.enderTrace(worldIn, playerIn, 8 * cap.getLevel(Constants.ENDER));
+            if (hit != null && hit.typeOfHit == RayTraceResult.Type.BLOCK) {
+                BlockPos tppos = hit.getBlockPos();
+                if (tppos != null && worldIn.getBlockState(tppos.up()).getBlock() == Blocks.AIR && worldIn.getBlockState(tppos.up(2)).getBlock() == Blocks.AIR) {
+                    worldIn.playSound(null, playerIn.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 0.6F, 1.0F);
+                    playerIn.getCooldownTracker().setCooldown(this, 80);
+                    DartUtils.teleport(playerIn, tppos);
+                    damage(playerIn.getHeldItem(handIn), playerIn);
+                    return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+                }
+            }
+
+        }
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
     public void registerItemModel() {
@@ -65,7 +94,6 @@ public class ItemForceSword extends ItemSword implements IModifiableTool {
         if (cap.hasModifier(Constants.REPAIR)) {
             if (Math.random() < .2*cap.getLevel(Constants.REPAIR)) {
                 stack.setItemDamage(Math.max(stack.getItemDamage() - 1, 0));
-                return;
             }
         }
         if (cap.hasModifier(Constants.STURDY)) {

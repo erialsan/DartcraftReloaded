@@ -28,8 +28,7 @@ public class Constants {
             FORCE_FURNACE = "forceFurnace",
             LIT_FORCE_FURNACE = "litForceFurnace",
             FORCE_PLANKS = "forcePlanks",
-            FORCE_TORCH = "forceTorch",
-            TIME_TORCH = "timeTorch";
+            FORCE_TORCH = "forceTorch";
 
     // Items
     public static final String
@@ -103,7 +102,7 @@ public class Constants {
             FORCE = new Modifier(0, 3, 0, "Force", YELLOW, new ItemStack(ModItems.nuggetForce), SWORD | BOW), //good
             DAMAGE = new Modifier(1, 5, 0, "Damage", RED, new ItemStack(ModItems.claw), SWORD | BOW), //good
             HEAT = new Modifier(2, 3, 1, "Heat", RED, new ItemStack(Items.BLAZE_ROD), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW), //good
-            SPEED = new Modifier(3, 5, 1, "Speed", WHITE, new ItemStack(Items.SUGAR), AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW), //good
+            SPEED = new Modifier(3, 5, 1, "Speed", WHITE, new ItemStack(Items.SUGAR), AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SWORD), //good
             LUMBERJACK = new Modifier(4, 1, 1, "Lumberjack", GOLD, new ItemStack(ModBlocks.forceLog), AXE), //good
             LUCK = new Modifier(5, 5, 2, "Luck", GREEN, new ItemStack(ModItems.fortune), PICKAXE | AXE | SHOVEL | SWORD | ROD | BOW | SHEARS | ARMOR), //good
             RAINBOW = new Modifier(6, 1, 2, "Rainbow", LIGHT_PURPLE, new ItemStack(Items.DYE, 1, 4), SHEARS), //good
@@ -114,15 +113,15 @@ public class Constants {
             STURDY = new Modifier(11, 5, 3, "Sturdy", AQUA, new ItemStack(Blocks.OBSIDIAN), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
             SIGHT = new Modifier(12, 1, 3, "Sight", GREEN, new ItemStack(ModItems.sightToken), ARMOR | ROD), //good
             CAMO = new Modifier(13, 1, 3, "Camo", WHITE, new ItemStack(ModItems.camoToken), ARMOR | ROD), //good
-            WING = new Modifier(14, 1, 4, "Wing", WHITE, new ItemStack(Items.FEATHER), ARMOR | SWORD | ROD),
+            //WING = new Modifier(14, 1, 4, "Wing", WHITE, new ItemStack(Items.FEATHER), ARMOR | SWORD | ROD),
             BLEED = new Modifier(15, 3, 4, "Bleed", RED, new ItemStack(Items.ARROW), SWORD | BOW), //good
             DIRECT = new Modifier(16, 1, 4, "Direct", LIGHT_PURPLE, new ItemStack(ModItems.magnetGlove), PICKAXE | AXE | SHOVEL | BOW | SWORD), //good
-            ENDER = new Modifier(17, 1, 5, "Ender", AQUA, new ItemStack(Items.ENDER_PEARL), SWORD | ROD),
+            ENDER = new Modifier(17, 8, 5, "Ender", AQUA, new ItemStack(Items.ENDER_PEARL), SWORD | ROD), //good
             REPAIR = new Modifier(18, 3, 5, "Repair", LIGHT_PURPLE, new ItemStack(ModItems.repairToken), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
             LIGHT = new Modifier(19, 5, 5, "Light", YELLOW, new ItemStack(Blocks.GLOWSTONE), SWORD | BOW | ROD), //good
             QUIVER = new Modifier(20, 1, 6, "Quiver", AQUA, new ItemStack(ModItems.arrowBundle), BOW), //good
             HEALING = new Modifier(21, 2, 6, "Healing", LIGHT_PURPLE, new ItemStack(ModItems.inertCore), ARMOR | ROD), //good
-            FLIGHT = new Modifier(22, 1, 7, "Flight", LIGHT_PURPLE, new ItemStack(ModItems.flightToken), ARMOR),
+            //FLIGHT = new Modifier(22, 1, 7, "Flight", LIGHT_PURPLE, new ItemStack(ModItems.flightToken), ARMOR),
             IMPERVIOUS = new Modifier(23, 1, 7, "Impervious", WHITE, new ItemStack(Items.NETHER_STAR), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS); //good
 
     public static final String modId = "dartcraftreloaded";

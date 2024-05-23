@@ -14,12 +14,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
+import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.FakePlayer;
@@ -27,9 +33,11 @@ import net.minecraftforge.event.ForgeEventFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.Stack;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
+import java.lang.reflect.Method;
+import java.util.*;
 
 public class DartUtils {
 
@@ -219,6 +227,125 @@ public class DartUtils {
 
     public static ResourceLocation getResource(String res) {
         return new ResourceLocation(RESOURCE, res);
+    }
+
+    // credit to dimdoors team
+    public static RayTraceResult enderTrace(World worldIn, EntityPlayer player, double range) {
+        Vec3d playerLookVector = player.getLookVec();
+        Vec3d tempVector = player.getPositionEyes(1.0F); //this is what constantly gets shifted in the while-loop later, and it starts at the eyes
+        Vec3d endVector = tempVector.add(playerLookVector.scale(range));
+        if (!Double.isNaN(tempVector.x) && !Double.isNaN(tempVector.y) && !Double.isNaN(tempVector.z)) {
+            if (!Double.isNaN(endVector.x) && !Double.isNaN(endVector.y) && !Double.isNaN(endVector.z)) {
+                int endX = MathHelper.floor(endVector.x);
+                int endY = MathHelper.floor(endVector.y);
+                int endZ = MathHelper.floor(endVector.z);
+                int playerX = MathHelper.floor(tempVector.x);
+                int playerY = MathHelper.floor(tempVector.y);
+                int playerZ = MathHelper.floor(tempVector.z);
+                BlockPos blockpos = new BlockPos(playerX, playerY, playerZ);
+                IBlockState state = worldIn.getBlockState(blockpos);
+                Block block = state.getBlock();
+                if (block.canCollideCheck(state, false)) {
+                    RayTraceResult result = state.collisionRayTrace(worldIn, blockpos, tempVector, endVector);
+                    //if (Objects.nonNull(result)) return result;
+                }
+                int counter = 200; //TODO: should this really be a hardcoded value?
+                while (counter-- >= 0) {
+                    if (Double.isNaN(tempVector.x) || Double.isNaN(tempVector.y) || Double.isNaN(tempVector.z) ||
+                            (playerX == endX && playerY == endY && playerZ == endZ)) return null;
+                    boolean xFlag = true;
+                    boolean yFlag = true;
+                    boolean zFlag = true;
+                    double x1 = 999.0D;
+                    double y1 = 999.0D;
+                    double z1 = 999.0D;
+                    if (endX > playerX) x1 = (double) playerX + 1.0D;
+                    else if (endX < playerX) x1 = playerX;
+                    else xFlag = false;
+                    if (endY > playerY) y1 = (double) playerY + 1.0D;
+                    else if (endY < playerY) y1 = playerY;
+                    else yFlag = false;
+                    if (endZ > playerZ) z1 = (double) playerZ + 1.0D;
+                    else if (endZ < playerZ) z1 = playerZ;
+                    else zFlag = false;
+                    double x2 = endVector.x - tempVector.x;
+                    double y2 = endVector.y - tempVector.y;
+                    double z2 = endVector.z - tempVector.z;
+                    double x3 = 999.0D;
+                    double y3 = 999.0D;
+                    double z3 = 999.0D;
+                    if (xFlag) x3 = (x1 - tempVector.x) / x2;
+                    if (yFlag) y3 = (y1 - tempVector.y) / y2;
+                    if (zFlag) z3 = (z1 - tempVector.z) / z2;
+                    if (x3 == -0.0D) x3 = -1.0E-4D;
+                    if (y3 == -0.0D) y3 = -1.0E-4D;
+                    if (z3 == -0.0D) z3 = -1.0E-4D;
+                    EnumFacing enumfacing;
+                    if (x3 < y3 && x3 < z3) {
+                        enumfacing = endX > playerX ? EnumFacing.WEST : EnumFacing.EAST;
+                        tempVector = new Vec3d(x1, tempVector.y + y2 * x3, tempVector.z + z2 * x3);
+                    } else if (y3 < z3) {
+                        enumfacing = endY > playerY ? EnumFacing.DOWN : EnumFacing.UP;
+                        tempVector = new Vec3d(tempVector.x + x2 * y3, y1, tempVector.z + z2 * y3);
+                    } else {
+                        enumfacing = endZ > playerZ ? EnumFacing.NORTH : EnumFacing.SOUTH;
+                        tempVector = new Vec3d(tempVector.x + x2 * z3, tempVector.y + y2 * z3, z1);
+                    }
+                    playerX = MathHelper.floor(tempVector.x) - (enumfacing == EnumFacing.EAST ? 1 : 0);
+                    playerY = MathHelper.floor(tempVector.y) - (enumfacing == EnumFacing.UP ? 1 : 0);
+                    playerZ = MathHelper.floor(tempVector.z) - (enumfacing == EnumFacing.SOUTH ? 1 : 0);
+                    blockpos = new BlockPos(playerX, playerY, playerZ);
+                    IBlockState state1 = worldIn.getBlockState(blockpos);
+                    Block block1 = state1.getBlock();
+                    if (block1.canCollideCheck(state1, false)) {
+                        RayTraceResult result = state1.collisionRayTrace(worldIn, blockpos, tempVector, endVector);
+                        if (Objects.nonNull(result)) return result;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private static MethodHandle getHandle(
+            Lookup lookup, Class<?> clazz, String name, String srgName, Class<?>... args)
+            throws ReflectiveOperationException {
+        Method method;
+        try {
+            method = clazz.getDeclaredMethod(srgName, args);
+        } catch(Exception ignored) {
+            method = clazz.getDeclaredMethod(name, args);
+        }
+        method.setAccessible(true);
+        return lookup.unreflect(method);
+    }
+
+    private static final MethodHandle captureCurrentPosition;
+    private static void captureCurrentPosition(NetHandlerPlayServer connection) {
+        try {
+            captureCurrentPosition.invoke(connection);
+        } catch(Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
+    static {
+        try {
+            Lookup lookup = MethodHandles.lookup();
+            captureCurrentPosition = getHandle(lookup, NetHandlerPlayServer.class,"captureCurrentPosition","func_184342_d");
+        } catch(Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void teleport(EntityPlayer playerIn, BlockPos tppos) {
+        if (playerIn instanceof EntityPlayerMP) {
+            EntityPlayerMP player = (EntityPlayerMP) playerIn;
+            player.connection.setPlayerLocation(tppos.getX(), tppos.getY(), tppos.getZ(), playerIn.cameraYaw, playerIn.cameraPitch, EnumSet.noneOf(SPacketPlayerPosLook.EnumFlags.class));
+            // Fix for https://bugs.mojang.com/browse/MC-98153. See this comment: https://bugs.mojang.com/browse/MC-98153#comment-411524
+            captureCurrentPosition(player.connection);
+        } else {
+            playerIn.setLocationAndAngles(tppos.getX(), tppos.getY(), tppos.getZ(), playerIn.cameraYaw, playerIn.cameraPitch);
+        }
     }
 
 }
