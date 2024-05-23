@@ -11,15 +11,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config(modid = Constants.modId)
 public class ConfigHandler {
 
-    @Config.Comment("Enable Time Torch. Default: true")
-    public static boolean timetorchEnabled = true;
-
-    @Config.Comment("Print in Log when Time Torch is placed and by who. Default: false")
-    public static boolean timeTorchLogging = false;
-
-    @Config.Comment("A time torch will tick every TE this many extra times every game tick. Default: 5")
-    public static int accelerationAmount = 5;
-
     @Config.Comment("These materials make force ingots 1:1. Default: ingotIron, ingotBronze")
     public static String[] ingots2 = {"ingotIron", "ingotBronze"};
 

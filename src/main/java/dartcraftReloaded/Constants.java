@@ -77,15 +77,15 @@ public class Constants {
 
     // I LOVE BITMASKS
     public static final long
-            PICKAXE = 1,
-            AXE = 2,
-            SHOVEL = 4,
-            ROD = 8,
-            SHEARS = 16,
-            SWORD = 32,
-            ARMOR = 64,
-            CORE = 128,
-            BOW = 256;
+            PICKAXE = 1 << 0,
+            AXE = 1 << 1,
+            SHOVEL = 1 << 2,
+            ROD = 1 << 3,
+            SHEARS = 1 << 4,
+            SWORD = 1 << 5,
+            ARMOR = 1 << 6,
+            CORE = 1 << 7,
+            BOW = 1 << 8;
 
 
     public static HashMap<Integer, Modifier> MODIFIER_REGISTRY = new HashMap<>();
@@ -126,5 +126,5 @@ public class Constants {
 
     public static final String modId = "dartcraftreloaded";
     public static final String name = "Dartcraft Reloaded";
-    public static final String version = "6.1.0";
+    public static final String version = "7.0";
 }
