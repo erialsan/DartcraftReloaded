@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " F ",
+    "FFF",
     "F F",
-    " F "  ],
+    "F F"],
   "key": {
     "F": [
       {
@@ -13,7 +13,8 @@
     ]
   },
   "result": {
-    "item": "dartcraftreloaded:forceGear",
+    "item": "dartcraftreloaded:forceLegs",
     "data": 0
   }
 }
+

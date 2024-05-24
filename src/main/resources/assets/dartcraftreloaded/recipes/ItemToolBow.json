@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  F",
-    " S ",
-    "N  "  ],
+    " FS",
+    "F S",
+    " FS"  ],
   "key": {
     "F": [
       {
@@ -11,22 +11,16 @@
         "data": 0
       }
     ],
-    "N": [
-      {
-        "item": "dartcraftreloaded:nuggetForce",
-        "data": 0
-      }
-    ],
     "S": [
       {
-        "item": "minecraft:stick",
+        "item": "minecraft:string",
         "data": 0
       }
     ]
   },
-
   "result": {
-    "item": "dartcraftreloaded:woodenForceRod",
+    "item": "dartcraftreloaded:forceBow",
     "data": 0
   }
 }
+

@@ -16,7 +16,6 @@ public class ModItems {
     public static ItemBase gemForceGem = new ItemBase(GEM_FORCEGEM);
     public static ItemBase ingotForce = new ItemBase(INGOT_FORCE);
     public static ItemBase nuggetForce = new ItemBase(NUGGET_FORCE);
-    public static ItemBase stickForce = new ItemBase(STICK_FORCE);
     public static ItemBaseFood cookieFortune = new ItemBaseFood(COOKIE_FORTUNE, 2, 0.1f, false);
     public static ItemBaseFood soulWafer = new ItemBaseFood(SOUL_WAFER, 2, 1, false);
     public static ItemArmor forceHelmet = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.HEAD, FORCE_HELMET);
@@ -24,29 +23,17 @@ public class ModItems {
     public static ItemArmor forceLegs = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.LEGS, FORCE_LEGS);
     public static ItemArmor forceBoots = new ItemArmor(DartcraftReloaded.forceArmorMaterial, EntityEquipmentSlot.FEET, FORCE_BOOTS);
     public static ItemForceRod forceRod = new ItemForceRod();
-    public static ItemWoodenForceRod woodenForceRod = new ItemWoodenForceRod();
-    public static ItemForceWrench forceWrench = new ItemForceWrench();
     public static ItemBase goldenPowerSource = new ItemBase(GOLDEN_POWER_SOURCE);
     public static ItemBase claw = new ItemBase(CLAW, "Drops from bats");
     public static ItemFortune fortune = new ItemFortune();
-    public static ItemBase forceGear = new ItemBase(FORCE_GEAR);
     public static ItemFilledJar filledJar = new ItemFilledJar();
-    public static ItemBase emptyJar = new ItemBase(EMPTY_JAR);
     public static ItemBase flightToken = new ItemBase(FLIGHT_TOKEN);
     public static ItemBase camoToken = new ItemBase(CAMO_TOKEN);
     public static ItemBase sightToken = new ItemBase(SIGHT_TOKEN);
     public static ItemBase repairToken = new ItemBase(REPAIR_TOKEN);
-    //public static ItemForcePack forcePack = new ItemForcePack(Constants.FORCE_PACK+"1", 8);
-    //public static ItemForcePack forcePack2 = new ItemForcePack(Constants.FORCE_PACK+"2", 16);
-    //public static ItemForcePack forcePack3 = new ItemForcePack(Constants.FORCE_PACK+"3", 24);
-    //public static ItemForcePack forcePack4 = new ItemForcePack(Constants.FORCE_PACK+"4", 32);
-    //public static ItemForcePack forcePack5 = new ItemForcePack(Constants.FORCE_PACK+"5", 40);
-
-    //public static ItemForceBelt forceBelt = new ItemForceBelt();
     public static ItemBottledWither bottledWither = new ItemBottledWither();
     public static ItemInertCore inertCore = new ItemInertCore(INERT_CORE);
     public static ItemTE itemTE = new ItemTE();
-    //public static ItemUpgradeCore upgradeCore = new ItemUpgradeCore();
     public static ItemBase tear = new ItemBase(TEAR, "Drops from cold animals");
     public static ItemBase arrowBundle = new ItemBase(ARROW_BUNDLE);
     public static ItemForceBow forceBow = new ItemForceBow();
@@ -57,11 +44,10 @@ public class ModItems {
     public static ItemForceSword forceSword = new ItemForceSword();
     public static ItemForceShovel forceShovel = new ItemForceShovel();
     public static ItemForceShears forceShears = new ItemForceShears();
-    public static ItemMagnetGlove magnetGlove = new ItemMagnetGlove();
+    public static ItemBase magnetGlove = new ItemBase(MAGNET_GLOVE);
 
-    //Experience Tome
+    //Tomes
     public static ItemExperienceTome experienceTome = new ItemExperienceTome();
-
     public static ItemUpgradeTome upgradeTome = new ItemUpgradeTome();
 
     public static void register(IForgeRegistry<Item> registry) {
@@ -69,7 +55,6 @@ public class ModItems {
                 gemForceGem,
                 ingotForce,
                 nuggetForce,
-                stickForce,
                 cookieFortune,
                 soulWafer,
                 forceHelmet,
@@ -78,8 +63,6 @@ public class ModItems {
                 forceBoots,
                 forceRod,
                 filledJar,
-                woodenForceRod,
-                forceWrench,
                 forcePickaxe,
                 forceAxe,
                 forceSword,
@@ -93,7 +76,6 @@ public class ModItems {
                 repairToken,
                 sightToken,
                 experienceTome,
-                forceGear,
                 magnetGlove,
                 bottledWither,
                 inertCore,
@@ -101,8 +83,7 @@ public class ModItems {
                 itemTE,
                 tear,
                 arrowBundle,
-                forceBow,
-                emptyJar
+                forceBow
         );
     }
 
@@ -110,7 +91,6 @@ public class ModItems {
         gemForceGem.registerItemModel();
         ingotForce.registerItemModel();
         nuggetForce.registerItemModel();
-        stickForce.registerItemModel();
         cookieFortune.registerItemModel();
         soulWafer.registerItemModel();
         forceHelmet.registerItemModel();
@@ -122,8 +102,6 @@ public class ModItems {
         repairToken.registerItemModel();
         camoToken.registerItemModel();
         sightToken.registerItemModel();
-        woodenForceRod.registerItemModel();
-        forceWrench.registerItemModel();
         filledJar.registerItemModel();
         forcePickaxe.registerItemModel();
         forceAxe.registerItemModel();
@@ -134,7 +112,6 @@ public class ModItems {
         fortune.registerItemModel();
         forceShears.registerItemModel();
         experienceTome.registerItemModel();
-        forceGear.registerItemModel();
         magnetGlove.registerItemModel();
         bottledWither.registerItemModel();
         inertCore.registerItemModel();
@@ -143,14 +120,12 @@ public class ModItems {
         tear.registerItemModel();
         arrowBundle.registerItemModel();
         forceBow.registerItemModel();
-        emptyJar.registerItemModel();
     }
 
     public static void registerOreDict() {
         OreDictionary.registerOre("gemForceGem", gemForceGem);
         OreDictionary.registerOre("ingotForce", ingotForce);
         OreDictionary.registerOre("nuggetForce", nuggetForce);
-        OreDictionary.registerOre("gearForce", forceGear);
         OreDictionary.registerOre("tear", tear);
     }
 }

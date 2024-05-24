@@ -17,6 +17,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -32,18 +33,16 @@ public class ItemTE extends ItemBase {
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         if (worldIn.isRemote) {
             IItemTE cap = stack.getCapability(CapabilityHandler.CAPABILITY_TE, null);
-            if (cap != null) {
-                stack.setStackDisplayName("Packaged "+cap.getBlockName());
+            if (cap != null && !cap.getBlockName().equals("null")) {
+                stack.setStackDisplayName(TextFormatting.AQUA+"Packaged "+cap.getBlockName());
+            } else {
+                stack.setStackDisplayName("Empty Package");
             }
         }
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        IItemTE cap = stack.getCapability(CapabilityHandler.CAPABILITY_TE, null);
-        if (cap != null) {
-            stack.setStackDisplayName("Packaged "+cap.getBlockName());
-        }
         tooltip.add("Right-click to place");
     }
 

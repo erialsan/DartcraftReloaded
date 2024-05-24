@@ -11,23 +11,14 @@ entity.bottle.name=Thrown Force Flask
 item.ingotForce.name=Force Ingot
 item.gemForceGem.name=Force Gem
 item.nuggetForce.name=Force Nugget
-item.stickForce.name=Force Stick
 item.cookieFortune.name=Fortune Cookie
 item.soulWafer.name=Soul Wafer
 item.goldenPowerSource.name=Golden Power Source
 item.fortune.name=Fortune
 item.experienceTome.name=Experience Tome
 item.forceClaw.name=Claw
-item.forceGear.name=Force Gear
-item.forcePack1.name=Force Pack I
-item.forcePack2.name=Force Pack II
-item.forcePack3.name=Force Pack III
-item.forcePack4.name=Force Pack IV
-item.forcePack5.name=Force Pack V
-item.forceBelt.name=Force Belt
 item.bottledWither.name=Bottled Wither
-item.flightToken.name=Flight Token
-item.filledJar.name=Bottled Entity
+item.filledJar.name=Empty Bottle
 item.inertCore.name=Inert Core
 item.upgradeTome.name=Upgrade Tome
 item.itemTE.name=Empty Package
@@ -48,12 +39,9 @@ item.forcePickaxe.name=Force Pickaxe
 item.forceAxe.name=Force Axe
 item.forceSword.name=Force Sword
 item.forceShovel.name=Force Shovel
-item.forceWrench.name=Force Wrench
 item.forceRod.name=Force Rod
-item.woodenForceRod.name=Wooden Force Rod
 item.forceShears.name=Force Shears
 item.magnetGlove.name=Magnet
-item.forceMitt.name=Force Mitts
 
 #Blocks
 tile.orePower.name=Power Ore
@@ -79,7 +67,6 @@ tile.forceBrick.purple.name=Purple Force Brick
 tile.forceBrick.red.name=Red Force Brick
 tile.forceBrick.white.name=White Force Brick
 tile.forceBrick.yellow.name=Yellow Force Brick
-tile.timeTorch.name=§bTime Torch
 tile.forceTorch.name=Force Torch
 tile.forceBrickStair.black.name=Black Force Brick Stair
 tile.forceBrickStair.red.name=Red Force Brick Stair
@@ -115,10 +102,6 @@ tile.forceBrickSlab.orange.name=Orange Force Brick Slab
 tile.forceBrickSlab.white.name=White Force Brick Slab
 #Misc.
 itemGroup.dartcraftreloaded=Dartcraft Reloaded
-
-#Text
-dartcraftReloaded.guideEmpty=This is Broken. Report to Github Please.
-
 
 #Fluid
 fluid.force=Liquid Force

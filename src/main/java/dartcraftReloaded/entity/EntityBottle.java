@@ -5,6 +5,7 @@ import dartcraftReloaded.items.ItemFilledJar;
 import dartcraftReloaded.items.ModItems;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -56,9 +57,6 @@ public class EntityBottle extends EntityThrowable {
             }
 
             this.setDead();
-        }
-        if (world != null && SoundHandler.SPARKLE != null) {
-            //world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundHandler.SPARKLE, SoundCategory.PLAYERS, 1.0f, 1.0f, false);
         }
     }
 

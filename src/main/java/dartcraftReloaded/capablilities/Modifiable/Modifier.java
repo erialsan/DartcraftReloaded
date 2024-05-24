@@ -5,7 +5,9 @@ import dartcraftReloaded.config.ConfigHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Modifier {
     private final int id;

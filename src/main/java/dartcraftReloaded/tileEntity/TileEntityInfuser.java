@@ -221,17 +221,81 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
 
     }
 
+    public static int getPoints(Modifier m) {
+        switch(m.getTier()) {
+            case 0:
+                return 1;
+            case 1:
+                return 4;
+            case 2:
+                return 16;
+            case 3:
+                return 32;
+            case 4:
+                return 32;
+            case 5:
+                return 64;
+            case 6:
+                return 64;
+            case 7:
+                return 128;
+        }
+        return 0;
+    }
+
+    public static int getThreshold(int level) {
+        switch(level) {
+            case 1:
+                return 48;
+            case 2:
+                return 64;
+            case 3:
+                return 96;
+            case 4:
+                return 128;
+            case 5:
+                return 160;
+            case 6:
+                return 192;
+            case 7:
+                return 256;
+        }
+        return Integer.MAX_VALUE;
+    }
+
     private void processItem() {
         HashMap<Modifier, Integer> recipe = getRecipe();
         ItemStack tool = handler.getStackInSlot(8);
         IModifiable cap = tool.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
         if (cap == null) return;
-        for (Map.Entry<Modifier, Integer> entry : recipe.entrySet()) {
-            cap.setModifier(entry.getKey().getId(), entry.getValue());
+        int points = 0;
+        IUpgradeTome tome = null;
+        ItemStack stack = handler.getStackInSlot(10);
+        if (stack.hasCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null)) {
+            tome = stack.getCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
         }
+        for (Map.Entry<Modifier, Integer> entry : recipe.entrySet()) {
+            if (entry.getValue() > 0) {
+                points += getPoints(entry.getKey());
+            }
+            cap.setModifier(entry.getKey().getId(), entry.getValue());
+            if (tome != null) {
+                if (!tome.getSeenModifiers().contains(entry.getKey().getId())) {
+                    if (entry.getValue() > 0) {
+                        points += 25;
+                        tome.addSeenModifier(entry.getKey().getId());
+                    }
+                }
+            }
+        }
+        if (tome != null) {
+            tome.setUpgradePoints(tome.getUpgradePoints() + points);
+        }
+
         for (int i = 0; i < 8; i++) {
             handler.setStackInSlot(i, ItemStack.EMPTY);
         }
+
         world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundHandler.SPARKLE, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
@@ -347,7 +411,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
         for (int i = 0; i < 8; i++) {
             Modifier m = Constants.getByStack(handler.getStackInSlot(i));
             if (m != null) {
-                time += 20*(m.getTier()+1);
+                time += 20*(m.getTier());
             }
         }
         double time2 = ConfigHandler.infuserTimeMultiplier * time;

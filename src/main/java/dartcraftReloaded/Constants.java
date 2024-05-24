@@ -19,7 +19,6 @@ public class Constants {
     public static final String
             FORCE_BRICK = "forceBrick",
             FORCE_BRICK_SLAB = "forceBrickSlab",
-            FORCE_BRICK_STAIR = "forceBrickStair",
             FORCE_LOG = "forceLog",
             FORCE_SAPLING = "forceSapling",
             ORE_POWER = "orePower",
@@ -35,7 +34,6 @@ public class Constants {
             GEM_FORCEGEM = "gemForceGem",
             INGOT_FORCE = "ingotForce",
             NUGGET_FORCE = "nuggetForce",
-            STICK_FORCE = "stickForce",
             COOKIE_FORTUNE = "cookieFortune",
             SOUL_WAFER = "soulWafer",
             FORCE_HELMET = "forceHelmet",
@@ -43,20 +41,14 @@ public class Constants {
             FORCE_LEGS = "forceLegs",
             FORCE_BOOTS = "forceBoots",
             FORCE_ROD = "forceRod",
-            WOODEN_FORCE_ROD = "woodenForceRod",
             UPGRADE_TOME = "upgradeTome",
-            FORCE_WRENCH = "forceWrench",
             GOLDEN_POWER_SOURCE = "goldenPowerSource",
             CLAW = "forceClaw",
             FORTUNE = "fortune",
-            FORCE_GEAR = "forceGear",
-            EMPTY_JAR = "emptyJar",
             FLIGHT_TOKEN = "flightToken",
             CAMO_TOKEN = "camoToken",
             SIGHT_TOKEN = "sightToken",
             REPAIR_TOKEN = "repairToken",
-            FORCE_PACK = "forcePack",
-            FORCE_BELT = "forceBelt",
             BOTTLED_WITHER = "bottledWither",
             INERT_CORE = "inertCore",
             FORCE_PICKAXE = "forcePickaxe",
@@ -64,11 +56,9 @@ public class Constants {
             FORCE_SHOVEL = "forceShovel",
             FORCE_SHEARS = "forceShears",
             FORCE_SWORD = "forceSword",
-            FORCE_MITT = "forceMitt",
             MAGNET_GLOVE = "magnetGlove",
             EXPERIENCE_TOME = "experienceTome",
             ITEM_TE = "itemTE",
-            UPGRADE_CORE = "upgradeCore",
             TEAR = "tear",
             ARROW_BUNDLE = "arrowBundle",
             FORCE_BOW = "forceBow",
@@ -84,7 +74,6 @@ public class Constants {
             SHEARS = 1 << 4,
             SWORD = 1 << 5,
             ARMOR = 1 << 6,
-            CORE = 1 << 7,
             BOW = 1 << 8;
 
 
@@ -99,30 +88,28 @@ public class Constants {
 
     // Modifiers
     public static final Modifier
-            FORCE = new Modifier(0, 3, 0, "Force", YELLOW, new ItemStack(ModItems.nuggetForce), SWORD | BOW), //good
-            DAMAGE = new Modifier(1, 5, 0, "Damage", RED, new ItemStack(ModItems.claw), SWORD | BOW), //good
-            HEAT = new Modifier(2, 3, 1, "Heat", RED, new ItemStack(Items.BLAZE_ROD), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW), //good
-            SPEED = new Modifier(3, 5, 1, "Speed", WHITE, new ItemStack(Items.SUGAR), AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SWORD), //good
-            LUMBERJACK = new Modifier(4, 1, 1, "Lumberjack", GOLD, new ItemStack(ModBlocks.forceLog), AXE), //good
-            LUCK = new Modifier(5, 5, 2, "Luck", GREEN, new ItemStack(ModItems.fortune), PICKAXE | AXE | SHOVEL | SWORD | ROD | BOW | SHEARS | ARMOR), //good
-            RAINBOW = new Modifier(6, 1, 2, "Rainbow", LIGHT_PURPLE, new ItemStack(Items.DYE, 1, 4), SHEARS), //good
-            HOLDING = new Modifier(7, 1, 2, "Holding", AQUA, new ItemStack(ModItems.emptyJar), ROD), //good
-            EXPERIENCE = new Modifier(8, 3, 2, "Experience", GREEN, new ItemStack(ModItems.soulWafer), PICKAXE | AXE | SHOVEL | SWORD | BOW), //good
-            TOUCH = new Modifier(9, 1, 2, "Touch", GREEN, new ItemStack(Blocks.WEB), PICKAXE | AXE | SHOVEL), //good
-            BANE = new Modifier(10, 1, 3, "Bane", DARK_RED, new ItemStack(Items.FERMENTED_SPIDER_EYE), SWORD | BOW), //good
-            STURDY = new Modifier(11, 5, 3, "Sturdy", AQUA, new ItemStack(Blocks.OBSIDIAN), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
-            SIGHT = new Modifier(12, 1, 3, "Sight", GREEN, new ItemStack(ModItems.sightToken), ARMOR | ROD), //good
-            CAMO = new Modifier(13, 1, 3, "Camo", WHITE, new ItemStack(ModItems.camoToken), ARMOR | ROD), //good
-            //WING = new Modifier(14, 1, 4, "Wing", WHITE, new ItemStack(Items.FEATHER), ARMOR | SWORD | ROD),
-            BLEED = new Modifier(15, 3, 4, "Bleed", RED, new ItemStack(Items.ARROW), SWORD | BOW), //good
-            DIRECT = new Modifier(16, 1, 4, "Direct", LIGHT_PURPLE, new ItemStack(ModItems.magnetGlove), PICKAXE | AXE | SHOVEL | BOW | SWORD), //good
-            ENDER = new Modifier(17, 8, 5, "Ender", AQUA, new ItemStack(Items.ENDER_PEARL), SWORD | ROD), //good
-            REPAIR = new Modifier(18, 3, 5, "Repair", LIGHT_PURPLE, new ItemStack(ModItems.repairToken), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
-            LIGHT = new Modifier(19, 5, 5, "Light", YELLOW, new ItemStack(Blocks.GLOWSTONE), SWORD | BOW | ROD), //good
-            QUIVER = new Modifier(20, 1, 6, "Quiver", AQUA, new ItemStack(ModItems.arrowBundle), BOW), //good
-            HEALING = new Modifier(21, 2, 6, "Healing", LIGHT_PURPLE, new ItemStack(ModItems.inertCore), ARMOR | ROD), //good
-            //FLIGHT = new Modifier(22, 1, 7, "Flight", LIGHT_PURPLE, new ItemStack(ModItems.flightToken), ARMOR),
-            IMPERVIOUS = new Modifier(23, 1, 7, "Impervious", WHITE, new ItemStack(Items.NETHER_STAR), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS); //good
+            FORCE = new Modifier(0, 3, 1, "Force", YELLOW, new ItemStack(ModItems.nuggetForce), SWORD | BOW), //good
+            DAMAGE = new Modifier(1, 5, 1, "Damage", RED, new ItemStack(ModItems.claw), SWORD | BOW), //good
+            HEAT = new Modifier(2, 3, 2, "Heat", RED, new ItemStack(Items.BLAZE_ROD), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW), //good
+            SPEED = new Modifier(3, 5, 2, "Speed", WHITE, new ItemStack(Items.SUGAR), AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SWORD), //good
+            LUMBERJACK = new Modifier(4, 1, 2, "Lumberjack", GOLD, new ItemStack(ModBlocks.forceLog), AXE), //good
+            LUCK = new Modifier(5, 5, 3, "Luck", GREEN, new ItemStack(ModItems.fortune), PICKAXE | AXE | SHOVEL | SWORD | ROD | BOW | SHEARS | ARMOR), //good
+            RAINBOW = new Modifier(6, 1, 3, "Rainbow", LIGHT_PURPLE, new ItemStack(Items.DYE, 1, 4), SHEARS), //good
+            EXPERIENCE = new Modifier(7, 3, 3, "Experience", GREEN, new ItemStack(ModItems.soulWafer), PICKAXE | AXE | SHOVEL | SWORD | BOW), //good
+            TOUCH = new Modifier(8, 1, 3, "Touch", GREEN, new ItemStack(Blocks.WEB), PICKAXE | AXE | SHOVEL), //good
+            HOLDING = new Modifier(9, 1, 4, "Holding", AQUA, new ItemStack(Items.GLASS_BOTTLE), ROD), //good
+            STURDY = new Modifier(10, 5, 4, "Sturdy", AQUA, new ItemStack(Blocks.OBSIDIAN), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
+            SIGHT = new Modifier(11, 1, 4, "Sight", GREEN, new ItemStack(ModItems.sightToken), ARMOR | ROD), //good
+            CAMO = new Modifier(12, 1, 4, "Camo", WHITE, new ItemStack(ModItems.camoToken), ARMOR | ROD), //good
+            BLEED = new Modifier(13, 3, 5, "Bleed", RED, new ItemStack(Items.ARROW), SWORD | BOW), //good
+            DIRECT = new Modifier(14, 1, 5, "Direct", LIGHT_PURPLE, new ItemStack(ModItems.magnetGlove), PICKAXE | AXE | SHOVEL | BOW | SWORD), //good
+            BANE = new Modifier(15, 1, 5, "Bane", DARK_RED, new ItemStack(Items.FERMENTED_SPIDER_EYE), SWORD | BOW), //good
+            LIGHT = new Modifier(16, 5, 5, "Light", YELLOW, new ItemStack(Blocks.GLOWSTONE), SWORD | BOW | ROD), //good
+            HEALING = new Modifier(17, 2, 6, "Healing", LIGHT_PURPLE, new ItemStack(ModItems.inertCore), ARMOR | ROD), //good
+            ENDER = new Modifier(18, 8, 6, "Ender", AQUA, new ItemStack(Items.ENDER_PEARL), SWORD | ROD), //good
+            REPAIR = new Modifier(19, 3, 7, "Repair", LIGHT_PURPLE, new ItemStack(ModItems.repairToken), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
+            QUIVER = new Modifier(20, 1, 7, "Quiver", AQUA, new ItemStack(ModItems.arrowBundle), BOW), //good
+            IMPERVIOUS = new Modifier(21, 1, 8, "Impervious", WHITE, new ItemStack(Items.NETHER_STAR), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS); //good
 
     public static final String modId = "dartcraftreloaded";
     public static final String name = "Dartcraft Reloaded";

@@ -4,6 +4,7 @@ import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.capablilities.UpgradeTome.UpgradeTomeProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.capablilities.UpgradeTome.IUpgradeTome;
+import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import dartcraftReloaded.util.DartUtils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,8 +36,15 @@ public class ItemUpgradeTome extends Item {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         IUpgradeTome cap = stack.getCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
         if (cap != null) {
-            tooltip.add(TextFormatting.BLUE+"Level "+cap.getLevel());
-            tooltip.add(TextFormatting.WHITE+String.valueOf(cap.getUpgradePoints())+TextFormatting.BLUE+" Upgrade Points");
+            tooltip.add(TextFormatting.BLUE+"Tier "+cap.getLevel());
+            if (cap.getLevel() < 8) {
+                tooltip.add(TextFormatting.WHITE+String.valueOf(cap.getUpgradePoints())+TextFormatting.BLUE+" Force Points");
+                tooltip.add(TextFormatting.BLUE+"Next Tier: "+TextFormatting.WHITE+(TileEntityInfuser.getThreshold(cap.getLevel()) - cap.getUpgradePoints()));
+            }
+            else {
+                tooltip.add(TextFormatting.BLUE+"Mastered!");
+            }
+
         }
     }
 
@@ -57,11 +65,12 @@ public class ItemUpgradeTome extends Item {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         IUpgradeTome cap = stack.getCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
-
-        if (player.isSneaking()) {
-            cap.setLevel(Math.max(1, cap.getLevel() - 1));
-        } else {
-            cap.setLevel(Math.min(8, cap.getLevel() + 1));
+        if (player.isCreative()) {
+            if (player.isSneaking()) {
+                cap.setLevel(Math.max(1, cap.getLevel() - 1));
+            } else {
+                cap.setLevel(Math.min(8, cap.getLevel() + 1));
+            }
         }
         return new ActionResult<>(EnumActionResult.FAIL, stack);
     }

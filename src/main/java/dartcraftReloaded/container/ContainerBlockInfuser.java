@@ -60,108 +60,152 @@ public class ContainerBlockInfuser extends Container {
         return !playerIn.isSpectator();
     }
 
-    @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        return handleShiftClick(this, playerIn, index);
-    }
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
 
-    public static ItemStack handleShiftClick(Container container, EntityPlayer player, int slotIndex) {
-        List<Slot> slots = container.inventorySlots;
-        Slot sourceSlot = slots.get(slotIndex);
-        ItemStack inputStack = sourceSlot.getStack();
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
 
-        boolean sourceIsPlayer = sourceSlot.inventory == player.inventory;
-
-        ItemStack copy = inputStack.copy();
-
-        if (sourceIsPlayer) {
-            if (!mergeStack(player.inventory, false, sourceSlot, slots, false)) {
-                return ItemStack.EMPTY;
-            } else {
-                return copy;
+            if (index < 11)
+            {
+                if (!this.mergeItemStack(itemstack1, 11, this.inventorySlots.size(), true))
+                {
+                    return ItemStack.EMPTY;
+                }
             }
-        } else {
-            boolean isMachineOutput = !sourceSlot.isItemValid(inputStack);
-            if (!mergeStack(player.inventory, true, sourceSlot, slots, !isMachineOutput)) {
+            else if (!this.mergeItemStack(itemstack1, 0, 11, false))
+            {
                 return ItemStack.EMPTY;
-            } else {
-                return copy;
+            }
+
+            if (itemstack1.isEmpty())
+            {
+                slot.putStack(ItemStack.EMPTY);
+            }
+            else
+            {
+                slot.onSlotChanged();
             }
         }
+
+        return itemstack;
     }
-    private static boolean mergeStack(InventoryPlayer playerInv, boolean mergeIntoPlayer, Slot sourceSlot, List<Slot> slots, boolean reverse) {
-        ItemStack sourceStack = sourceSlot.getStack();
 
-        int originalSize = sourceStack.getCount();
+    @Override
+    protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
+    {
+        boolean flag = false;
+        int i = startIndex;
 
-        int len = slots.size();
-        int idx;
+        if (reverseDirection)
+        {
+            i = endIndex - 1;
+        }
 
-        if (sourceStack.isStackable()) {
-            idx = reverse ? len - 1 : 0;
+        if (stack.isStackable())
+        {
+            while (!stack.isEmpty())
+            {
+                if (reverseDirection)
+                {
+                    if (i < startIndex)
+                    {
+                        break;
+                    }
+                }
+                else if (i >= endIndex)
+                {
+                    break;
+                }
 
-            while (sourceStack.getCount() > 0 && (reverse ? idx >= 0 : idx < len)) {
-                Slot targetSlot = slots.get(idx);
-                if ((targetSlot.inventory == playerInv) == mergeIntoPlayer) {
-                    ItemStack target = targetSlot.getStack();
-                    if (ItemStack.areItemStacksEqual(sourceStack, target)) {
-                        int targetMax = Math.min(targetSlot.getSlotStackLimit(), target.getMaxStackSize());
-                        int toTransfer = Math.min(sourceStack.getCount(), targetMax - target.getCount());
-                        if (toTransfer > 0) {
-                            target.setCount(target.getCount() + toTransfer);
-                            sourceStack.setCount(sourceStack.getCount() - toTransfer);
-                            targetSlot.onSlotChanged();
+                Slot slot = this.inventorySlots.get(i);
+                if (slot.isEnabled()) {
+                    ItemStack itemstack = slot.getStack();
+
+                    if (!itemstack.isEmpty() && itemstack.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == itemstack.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, itemstack)) {
+                        int j = itemstack.getCount() + stack.getCount();
+                        int maxSize = Math.min(slot.getSlotStackLimit(), stack.getMaxStackSize());
+
+                        if (j <= maxSize) {
+                            stack.setCount(0);
+                            itemstack.setCount(j);
+                            slot.onSlotChanged();
+                            flag = true;
+                        } else if (itemstack.getCount() < maxSize) {
+                            stack.shrink(maxSize - itemstack.getCount());
+                            itemstack.setCount(maxSize);
+                            slot.onSlotChanged();
+                            flag = true;
                         }
                     }
                 }
-
-                if (reverse) {
-                    idx--;
-                } else {
-                    idx++;
+                if (reverseDirection)
+                {
+                    --i;
+                }
+                else
+                {
+                    ++i;
                 }
             }
-            if (sourceStack.isEmpty()) {
-                sourceSlot.putStack(ItemStack.EMPTY);
-                return true;
-            }
         }
 
-        // 2nd pass: try to put anything remaining into a free slot
-        idx = reverse ? len - 1 : 0;
-        while (reverse ? idx >= 0 : idx < len) {
-            Slot targetSlot = slots.get(idx);
-            if ((targetSlot.inventory == playerInv) == mergeIntoPlayer
-                    && !targetSlot.getHasStack() && targetSlot.isItemValid(sourceStack)) {
-                if (mergeIntoPlayer) {
-                    targetSlot.putStack(sourceStack);
-                    sourceSlot.putStack(ItemStack.EMPTY);
-                } else {
-                    ItemStack stack = sourceStack.copy();
-                    stack.setCount(1);
-                    targetSlot.putStack(stack);
-                    sourceStack.shrink(1);
-                    sourceSlot.putStack(sourceStack);
-                    sourceSlot.onSlotChanged();
-                    targetSlot.onSlotChanged();
+        if (!stack.isEmpty())
+        {
+            if (reverseDirection)
+            {
+                i = endIndex - 1;
+            }
+            else
+            {
+                i = startIndex;
+            }
+
+            while (true)
+            {
+                if (reverseDirection)
+                {
+                    if (i < startIndex)
+                    {
+                        break;
+                    }
+                }
+                else if (i >= endIndex)
+                {
+                    break;
                 }
 
-                return true;
-            }
+                Slot slot1 = this.inventorySlots.get(i);
+                if (slot1.isEnabled()) {
+                    ItemStack itemstack1 = slot1.getStack();
 
-            if (reverse) {
-                idx--;
-            } else {
-                idx++;
+                    if (itemstack1.isEmpty() && slot1.isItemValid(stack)) {
+                        if (stack.getCount() > slot1.getSlotStackLimit()) {
+                            slot1.putStack(stack.splitStack(slot1.getSlotStackLimit()));
+                        } else {
+                            slot1.putStack(stack.splitStack(stack.getCount()));
+                        }
+
+                        slot1.onSlotChanged();
+                        flag = true;
+                        break;
+                    }
+                }
+                if (reverseDirection)
+                {
+                    --i;
+                }
+                else
+                {
+                    ++i;
+                }
             }
         }
 
-        // we had success in merging only a partial stack
-        if (sourceStack.getCount() != originalSize) {
-            sourceSlot.onSlotChanged();
-            return true;
-        }
-        return false;
+        return flag;
     }
 
 }

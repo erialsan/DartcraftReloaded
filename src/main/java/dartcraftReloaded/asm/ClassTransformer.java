@@ -62,7 +62,7 @@ public class ClassTransformer implements IClassTransformer {
 
 		if (ignite != null) {
 			AbstractInsnNode ain = ignite.instructions.get(0);
-			logger.log(Level.DEBUG, " - Found ignite");
+			logger.log(Level.DEBUG, "Found ignite");
 
 			InsnList toInsert = new InsnList();
 			toInsert.add(new VarInsnNode(ALOAD, 0));
@@ -98,7 +98,7 @@ public class ClassTransformer implements IClassTransformer {
 
 		if (getArmorVisibility != null) {
 			AbstractInsnNode ain = null;
-			logger.log(Level.DEBUG, " - Found getArmorVisibility");
+			logger.log(Level.DEBUG, "Found getArmorVisibility");
 			for (int i = 0; i < getArmorVisibility.instructions.size(); i++) {
 				if (getArmorVisibility.instructions.get(i).getOpcode() == FRETURN) ain = getArmorVisibility.instructions.get(i);
 			}
@@ -112,7 +112,7 @@ public class ClassTransformer implements IClassTransformer {
 
 		if (cooldown != null) {
 			AbstractInsnNode ain = cooldown.instructions.get(0);
-			logger.log(Level.DEBUG, " - Found getCooldownPeriod");
+			logger.log(Level.DEBUG, "Found getCooldownPeriod");
 			InsnList toInsert = new InsnList();
 			toInsert.add(new VarInsnNode(ALOAD, 0));
 			toInsert.add(new MethodInsnNode(INVOKESTATIC, asmHandler, "patchCooldown", "(Lnet/minecraft/entity/player/EntityPlayer;)F", false));
@@ -143,7 +143,7 @@ public class ClassTransformer implements IClassTransformer {
 
 		if (method != null) {
 			AbstractInsnNode ain = method.instructions.get(0);
-			logger.log(Level.DEBUG, " - Found teleport");
+			logger.log(Level.DEBUG, "Found teleport");
 			InsnList toInsert = new InsnList();
 			toInsert.add(new VarInsnNode(ALOAD, 0));
 			toInsert.add(new VarInsnNode(DLOAD, 1));
@@ -177,7 +177,7 @@ public class ClassTransformer implements IClassTransformer {
 
 		if (method != null) {
 			AbstractInsnNode ain = method.instructions.get(0);
-			logger.log(Level.DEBUG, " - Found setAttackTarget");
+			logger.log(Level.DEBUG, "Found setAttackTarget");
 			InsnList toInsert = new InsnList();
 			toInsert.add(new VarInsnNode(ALOAD, 0));
 			toInsert.add(new VarInsnNode(ALOAD, 1));
@@ -208,7 +208,7 @@ public class ClassTransformer implements IClassTransformer {
 		}
 
 		if (tryHarvestBlock != null) {
-			logger.log(Level.DEBUG, " - Found tryHarvestBlock");
+			logger.log(Level.DEBUG, "Found tryHarvestBlock");
 
 			InsnList startInsert = new InsnList();
 			startInsert.add(new VarInsnNode(ALOAD, 0));

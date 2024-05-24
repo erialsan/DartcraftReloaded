@@ -1,6 +1,7 @@
 package dartcraftReloaded.capablilities.Modifiable;
 
 import dartcraftReloaded.handlers.CapabilityHandler;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -9,11 +10,13 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.List;
 
 public class ModifiableProvider implements ICapabilitySerializable<NBTBase>, ICapabilityProvider {
     private IModifiable instance = null;
 
-    public ModifiableProvider(Capability<IModifiable> capability, EnumFacing facing){
+    public ModifiableProvider(){
         this.instance = CapabilityHandler.CAPABILITY_MODIFIABLE.getDefaultInstance();
     }
 

@@ -1,8 +1,16 @@
 package dartcraftReloaded.util;
 
+import com.google.common.collect.Lists;
+import dartcraftReloaded.capablilities.Modifiable.IModifiable;
+import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
+import dartcraftReloaded.capablilities.Modifiable.Modifier;
+import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.handlers.PacketHandler;
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.blocks.BlockForceLog;
+import dartcraftReloaded.items.ModItems;
+import dartcraftReloaded.items.tools.ItemForceAxe;
+import gnu.trove.set.hash.THashSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +21,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
@@ -28,8 +37,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,6 +50,8 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Method;
 import java.util.*;
+
+import static dartcraftReloaded.Constants.*;
 
 public class DartUtils {
 
@@ -58,6 +72,94 @@ public class DartUtils {
         }
 
         EnchantmentHelper.setEnchantments(enchantMap, stack);
+    }
+
+    public static class TreeChopTask{
+        public final World world;
+        public final EntityPlayer player;
+        public final ItemStack tool;
+        public final int blocksPerTick;
+
+        public Queue<BlockPos> blocks = Lists.newLinkedList();
+        public Set<BlockPos> visited = new THashSet<>();
+
+        public TreeChopTask(ItemStack tool, BlockPos start, EntityPlayer player, int blocksPerTick) {
+            this.world = player.getEntityWorld();
+            this.player = player;
+            this.tool = tool;
+            this.blocksPerTick = blocksPerTick;
+
+            this.blocks.add(start);
+        }
+
+        @SubscribeEvent
+        public void chop(TickEvent.WorldTickEvent event) {
+            if(event.side.isClient()) {
+                finish();
+                return;
+            }
+            // only if same dimension
+            if(event.world.provider.getDimension() != world.provider.getDimension()) {
+                return;
+            }
+
+            // setup
+            int left = blocksPerTick;
+
+            // continue running
+            BlockPos pos;
+            while(left > 0) {
+                // completely done or can't do our job anymore?!
+                if(blocks.isEmpty()) {
+                    finish();
+                    return;
+                }
+
+                pos = blocks.remove();
+                if(!visited.add(pos)) {
+                    continue;
+                }
+
+                // can we harvest the block and is effective?
+                if(!isLog(world, pos)) {
+                    continue;
+                }
+
+                // save its neighbours
+                for(EnumFacing facing : new EnumFacing[] { EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST }) {
+                    BlockPos pos2 = pos.offset(facing);
+                    if(!visited.contains(pos2)) {
+                        blocks.add(pos2);
+                    }
+                }
+
+                // also add the layer above.. stupid acacia trees
+                for(int x = 0; x < 3; x++) {
+                    for(int z = 0; z < 3; z++) {
+                        BlockPos pos2 = pos.add(-1 + x, 1, -1 + z);
+                        if(!visited.contains(pos2)) {
+                            blocks.add(pos2);
+                        }
+                    }
+                }
+
+                // break it, wooo!
+                DartUtils.breakExtraBlock(tool, world, player, pos, pos);
+                left--;
+            }
+        }
+
+        private void finish() {
+            // goodbye cruel world
+            MinecraftForge.EVENT_BUS.unregister(this);
+        }
+    }
+
+    public static void fellTree(ItemStack stack, BlockPos pos, EntityPlayer player){
+        if(player.getEntityWorld().isRemote)
+            return;
+
+        MinecraftForge.EVENT_BUS.register(new TreeChopTask(stack, pos, player, 10));
     }
 
     //Credit to Slimeknights for this code until I can logic through it on my own
@@ -348,4 +450,69 @@ public class DartUtils {
         }
     }
 
+    public static List<ItemStack> getToolsForModifier(Modifier mod) {
+        ArrayList<ItemStack> list = new ArrayList<>();
+        if ((mod.getAllowedTools() & ARMOR) == ARMOR) {
+            list.add(new ItemStack(ModItems.forceHelmet, 1));
+            list.add(new ItemStack(ModItems.forceChest, 1));
+            list.add(new ItemStack(ModItems.forceLegs, 1));
+            list.add(new ItemStack(ModItems.forceBoots, 1));
+        }
+        if ((mod.getAllowedTools() & PICKAXE) == PICKAXE) {
+            list.add(new ItemStack(ModItems.forcePickaxe, 1));
+        }
+        if ((mod.getAllowedTools() & AXE) == AXE) {
+            list.add(new ItemStack(ModItems.forceAxe, 1));
+        }
+        if ((mod.getAllowedTools() & SHOVEL) == SHOVEL) {
+            list.add(new ItemStack(ModItems.forceShovel, 1));
+        }
+        if ((mod.getAllowedTools() & ROD) == ROD) {
+            list.add(new ItemStack(ModItems.forceRod, 1));
+        }
+        if ((mod.getAllowedTools() & SHEARS) == SHEARS) {
+            list.add(new ItemStack(ModItems.forceShears, 1));
+        }
+        if ((mod.getAllowedTools() & SWORD) == SWORD) {
+            list.add(new ItemStack(ModItems.forceSword, 1));
+        }
+        if ((mod.getAllowedTools() & BOW) == BOW) {
+            list.add(new ItemStack(ModItems.forceBow, 1));
+        }
+        for (ItemStack stack : list) {
+            if (stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+                stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).setModifier(mod.getId(), mod.getMaxLevels());
+            }
+        }
+        return list;
+    }
+
+    public static List<String> getToolNames(Modifier mod) {
+        ArrayList<String> names =  new ArrayList<>();
+        if ((mod.getAllowedTools() & ARMOR) == ARMOR) {
+            names.add("Armor");
+        }
+        if ((mod.getAllowedTools() & PICKAXE) == PICKAXE) {
+            names.add("Pickaxe");
+        }
+        if ((mod.getAllowedTools() & AXE) == AXE) {
+            names.add("Axe");
+        }
+        if ((mod.getAllowedTools() & SHOVEL) == SHOVEL) {
+            names.add("Shovel");
+        }
+        if ((mod.getAllowedTools() & ROD) == ROD) {
+            names.add("Rod");
+        }
+        if ((mod.getAllowedTools() & SHEARS) == SHEARS) {
+            names.add("Shears");
+        }
+        if ((mod.getAllowedTools() & SWORD) == SWORD) {
+            names.add("Sword");
+        }
+        if ((mod.getAllowedTools() & BOW) == BOW) {
+            names.add("Bow");
+        }
+        return names;
+    }
 }

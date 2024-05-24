@@ -17,7 +17,7 @@ public class CompatForestry {
         Fluid force = ModFluids.fluidForce;
         if (force != null) {
             RecipeManagers.carpenterManager.addRecipe(10, new FluidStack(force, 1000), ItemStack.EMPTY, new ItemStack(ModItems.inertCore), "STS", "CDC", "STS", 'S', Blocks.SOUL_SAND, 'T', ModItems.tear, 'C', ModItems.claw, 'D', Items.DIAMOND);
-            RecipeManagers.squeezerManager.addRecipe(5, new ItemStack(ModItems.gemForceGem), new FluidStack(force, 1500));
+            RecipeManagers.squeezerManager.addRecipe(5, new ItemStack(ModItems.gemForceGem), new FluidStack(force, 1000));
             RecipeManagers.squeezerManager.addRecipe(5, new ItemStack(ModBlocks.forceLog), new FluidStack(force, 100));
             registerForceIngots(ConfigHandler.ingots2, 2);
             registerForceIngots(ConfigHandler.ingots3, 3);
@@ -28,7 +28,7 @@ public class CompatForestry {
         for (String s : ores) {
             if (OreDictionary.doesOreNameExist(s)) {
                 for (ItemStack i : OreDictionary.getOres(s)) {
-                    RecipeManagers.carpenterManager.addRecipe(5, new FluidStack(ModFluids.fluidForce, 750), ItemStack.EMPTY, new ItemStack(ModItems.ingotForce, num), "II", "  ", 'I', i);
+                    RecipeManagers.carpenterManager.addRecipe(5, new FluidStack(ModFluids.fluidForce, 500), ItemStack.EMPTY, new ItemStack(ModItems.ingotForce, num), "II", "  ", 'I', i);
                 }
             }
         }

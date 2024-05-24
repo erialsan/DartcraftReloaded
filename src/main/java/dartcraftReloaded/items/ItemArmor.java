@@ -6,6 +6,7 @@ import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
+import dartcraftReloaded.util.DartUtils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +20,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ItemArmor extends net.minecraft.item.ItemArmor implements IModifiableTool {
@@ -71,14 +75,14 @@ public class ItemArmor extends net.minecraft.item.ItemArmor implements IModifiab
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-        if(!stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null))
-            return new ModifiableProvider(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
-        else
-            return null;
+        if(!stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
+            return new ModifiableProvider();
+        } else return null;
     }
 
     @Override
     public long getTool() {
         return Constants.ARMOR;
     }
+    
 }

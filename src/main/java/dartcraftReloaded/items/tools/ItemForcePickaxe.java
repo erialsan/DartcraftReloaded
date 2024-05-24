@@ -2,11 +2,11 @@ package dartcraftReloaded.items.tools;
 
 import dartcraftReloaded.Constants;
 import dartcraftReloaded.DartcraftReloaded;
-import dartcraftReloaded.capablilities.Modifiable.IModifiable;
 import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.ModifiableProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
-import net.minecraft.block.material.Material;
+import dartcraftReloaded.handlers.InfusedActionHandler;
+import dartcraftReloaded.util.DartUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,45 +32,24 @@ public class ItemForcePickaxe extends ItemPickaxe implements IModifiableTool {
         this.setCreativeTab(DartcraftReloaded.creativeTab);
     }
 
+
     public void registerItemModel() {
         DartcraftReloaded.proxy.registerItemRenderer(this, 0, Constants.FORCE_PICKAXE);
     }
 
-
-
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        damage(stack, attacker);
+        InfusedActionHandler.damage(stack, attacker);
         return true;
     }
 
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving) {
         if ((double)state.getBlockHardness(worldIn, pos) != 0.0D) {
-            damage(stack, entityLiving);
+            InfusedActionHandler.damage(stack, entityLiving);
         }
 
         return true;
-    }
-
-    private void damage(ItemStack stack, EntityLivingBase entity) {
-        IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
-        if (cap.hasModifier(Constants.IMPERVIOUS)) {
-            stack.setItemDamage(0);
-            return;
-        }
-        if (cap.hasModifier(Constants.REPAIR)) {
-            if (Math.random() < .2*cap.getLevel(Constants.REPAIR)) {
-                stack.setItemDamage(Math.max(stack.getItemDamage() - 1, 0));
-                return;
-            }
-        }
-        if (cap.hasModifier(Constants.STURDY)) {
-            if (Math.random() > 1.0 / (1.0 + (double) cap.getLevel(Constants.STURDY))) {
-                return;
-            }
-        }
-        stack.damageItem(1, entity);
     }
 
 
@@ -78,7 +57,7 @@ public class ItemForcePickaxe extends ItemPickaxe implements IModifiableTool {
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
         if(!stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null))
-            return new ModifiableProvider(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
+            return new ModifiableProvider();
         else
             return null;
     }
@@ -92,16 +71,7 @@ public class ItemForcePickaxe extends ItemPickaxe implements IModifiableTool {
 
     @Override
     public float getDestroySpeed(ItemStack stack, IBlockState state) {
-
-        Material material = state.getMaterial();
-        float speed = material != Material.IRON && material != Material.ANVIL && material != Material.ROCK ? super.getDestroySpeed(stack, state) : this.efficiency;
-
-        //float speed = super.getDestroySpeed(stack, state);
-        IModifiable cap = stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null);
-        if (cap.hasModifier(Constants.SPEED)) {
-            speed *= cap.getLevel(Constants.SPEED);
-        }
-        return speed;
+        return InfusedActionHandler.pickDestroySpeed(stack, state, super.getDestroySpeed(stack, state), this.efficiency);
     }
 
     @Override

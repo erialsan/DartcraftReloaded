@@ -2,25 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "F F",
-    " G ",
-    " F "  ],
+    "FFF",
+    "FFF"],
   "key": {
     "F": [
       {
         "item": "dartcraftreloaded:ingotForce",
         "data": 0
       }
-    ],
-    "G": [
-      {
-        "item": "dartcraftreloaded:forceGear",
-        "data": 0
-      }
     ]
   },
-
   "result": {
-    "item": "dartcraftreloaded:forceWrench",
+    "item": "dartcraftreloaded:forceChest",
     "data": 0
   }
 }
+

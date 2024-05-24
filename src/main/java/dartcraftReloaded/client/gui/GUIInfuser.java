@@ -71,9 +71,7 @@ public class GUIInfuser extends GuiContainer {
                 } else {
                     list.add(modifier.getColor()+modifier.getName());
                 }
-                if (te.getBookLevel() < modifier.getTier()) {
-                    list.add(modifier.getColor()+"Tier "+modifier.getTier());
-                }
+                list.add(modifier.getColor()+"Tier "+modifier.getTier());
             }
         }
 
@@ -92,24 +90,27 @@ public class GUIInfuser extends GuiContainer {
         this.drawTexturedModalRect(134, 93+20-progressHeight, 176, 20-progressHeight, 2, progressHeight);
 
         if (te.getBookLevel() < 1) {
-            this.drawTexturedModalRect(104, 32, 176, 127, 16, 16);
+            this.drawTexturedModalRect(80, 20, 176, 127, 16, 16);
         }
         if (te.getBookLevel() < 2) {
-            this.drawTexturedModalRect(116, 57, 176, 127, 16, 16);
+            this.drawTexturedModalRect(104, 32, 176, 127, 16, 16);
         }
         if (te.getBookLevel() < 3) {
-            this.drawTexturedModalRect(104, 81, 176, 127, 16, 16);
+            this.drawTexturedModalRect(116, 57, 176, 127, 16, 16);
         }
         if (te.getBookLevel() < 4) {
-            this.drawTexturedModalRect(80, 93, 176, 127, 16, 16);
+            this.drawTexturedModalRect(104, 81, 176, 127, 16, 16);
         }
         if (te.getBookLevel() < 5) {
-            this.drawTexturedModalRect(56, 81, 176, 127, 16, 16);
+            this.drawTexturedModalRect(80, 93, 176, 127, 16, 16);
         }
         if (te.getBookLevel() < 6) {
-            this.drawTexturedModalRect(44, 57, 176, 127, 16, 16);
+            this.drawTexturedModalRect(56, 81, 176, 127, 16, 16);
         }
         if (te.getBookLevel() < 7) {
+            this.drawTexturedModalRect(44, 57, 176, 127, 16, 16);
+        }
+        if (te.getBookLevel() < 8) {
             this.drawTexturedModalRect(56, 32, 176, 127, 16, 16);
         }
 

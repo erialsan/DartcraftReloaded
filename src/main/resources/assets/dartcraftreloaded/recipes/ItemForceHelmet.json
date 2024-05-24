@@ -1,25 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "FF",
-    "FS",
-    " S"  ],
+    "FFF",
+    "F F",
+    "   "],
   "key": {
     "F": [
       {
         "item": "dartcraftreloaded:ingotForce",
         "data": 0
       }
-    ],
-    "S": [
-      {
-        "item": "minecraft:stick",
-        "data": 0
-      }
     ]
   },
   "result": {
-    "item": "dartcraftreloaded:forceAxe",
+    "item": "dartcraftreloaded:forceHelmet",
     "data": 0
   }
 }

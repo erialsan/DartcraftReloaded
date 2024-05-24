@@ -1,15 +1,10 @@
 package dartcraftReloaded.handlers;
 
-import dartcraftReloaded.client.gui.GUIForceBelt;
 import dartcraftReloaded.client.gui.GUIFortune;
 import dartcraftReloaded.client.gui.GUIFurnace;
 import dartcraftReloaded.client.gui.GUIInfuser;
-import dartcraftReloaded.client.gui.GUIForcePack;
 import dartcraftReloaded.container.ContainerBlockFurnace;
 import dartcraftReloaded.container.ContainerBlockInfuser;
-import dartcraftReloaded.container.ContainerItemForceBelt;
-import dartcraftReloaded.container.ContainerItemForcePack;
-import dartcraftReloaded.items.ItemForcePack;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import net.minecraft.client.resources.I18n;
@@ -26,8 +21,6 @@ public class GUIHandler implements IGuiHandler {
 
     public static final int INFUSER = 0;
     public static final int FURNACE = 1;
-    public static final int PACK = 2;
-    public static final int BELT = 3;
     public static final int FORTUNE = 4;
 
 
@@ -38,14 +31,6 @@ public class GUIHandler implements IGuiHandler {
         }
         else if(ID == FURNACE) {
             return new GUIFurnace(player.inventory, (TileEntityForceFurnace)world.getTileEntity(new BlockPos(x, y, z)));
-        }
-        else if (ID == PACK) {
-            if (player.getHeldItemMainhand().getItem() instanceof ItemForcePack) {
-                return new GUIForcePack(new ContainerItemForcePack(player.getHeldItemMainhand(), player.inventory, -2));
-            } else return null;
-        }
-        else if(ID == BELT) {
-            return new GUIForceBelt(player.inventory, player.getHeldItemMainhand());
         }
         else if (ID == FORTUNE) {
             NBTTagCompound nbt;
@@ -73,10 +58,6 @@ public class GUIHandler implements IGuiHandler {
             return new ContainerBlockInfuser(player.inventory, (TileEntityInfuser) world.getTileEntity(new BlockPos(x, y, z)));
         } else if (ID == FURNACE) {
             return new ContainerBlockFurnace(player.inventory, (TileEntityForceFurnace) world.getTileEntity(new BlockPos(x, y, z)));
-        } else if (ID == PACK) {
-            return new ContainerItemForcePack(player.getHeldItemMainhand(), player.inventory, -2);
-        } else if (ID == BELT) {
-            return new ContainerItemForceBelt(player.inventory, player.getHeldItemMainhand());
         }
         return null;
     }
