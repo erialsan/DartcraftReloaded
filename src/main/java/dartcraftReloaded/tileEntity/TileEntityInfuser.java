@@ -9,14 +9,10 @@ import dartcraftReloaded.config.ConfigHandler;
 import dartcraftReloaded.energy.DCREnergyStorage;
 import dartcraftReloaded.fluids.FluidForce;
 import dartcraftReloaded.handlers.CapabilityHandler;
-import dartcraftReloaded.handlers.PacketHandler;
 import dartcraftReloaded.handlers.SoundHandler;
 import dartcraftReloaded.items.ModItems;
-import dartcraftReloaded.networking.SoundMessage;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -42,7 +38,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

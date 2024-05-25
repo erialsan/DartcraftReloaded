@@ -13,7 +13,7 @@ public class ItemBottledWither extends ItemBase {
 
 
     public ItemBottledWither() {
-        super(Constants.BOTTLED_WITHER);
+        super(Constants.BOTTLED_WITHER, "Right-Click to release Wither");
     }
 
     @Override

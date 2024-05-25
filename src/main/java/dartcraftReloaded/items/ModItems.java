@@ -27,10 +27,6 @@ public class ModItems {
     public static ItemBase claw = new ItemBase(CLAW, "Drops from bats");
     public static ItemFortune fortune = new ItemFortune();
     public static ItemFilledJar filledJar = new ItemFilledJar();
-    public static ItemBase flightToken = new ItemBase(FLIGHT_TOKEN);
-    public static ItemBase camoToken = new ItemBase(CAMO_TOKEN);
-    public static ItemBase sightToken = new ItemBase(SIGHT_TOKEN);
-    public static ItemBase repairToken = new ItemBase(REPAIR_TOKEN);
     public static ItemBottledWither bottledWither = new ItemBottledWither();
     public static ItemInertCore inertCore = new ItemInertCore(INERT_CORE);
     public static ItemTE itemTE = new ItemTE();
@@ -69,12 +65,8 @@ public class ModItems {
                 forceShovel,
                 goldenPowerSource,
                 claw,
-                flightToken,
                 fortune,
                 forceShears,
-                camoToken,
-                repairToken,
-                sightToken,
                 experienceTome,
                 magnetGlove,
                 bottledWither,
@@ -98,10 +90,6 @@ public class ModItems {
         forceLegs.registerItemModel();
         forceBoots.registerItemModel();
         forceRod.registerItemModel();
-        flightToken.registerItemModel();
-        repairToken.registerItemModel();
-        camoToken.registerItemModel();
-        sightToken.registerItemModel();
         filledJar.registerItemModel();
         forcePickaxe.registerItemModel();
         forceAxe.registerItemModel();

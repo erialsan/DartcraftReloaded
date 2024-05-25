@@ -3,9 +3,12 @@ package dartcraftReloaded;
 import dartcraftReloaded.blocks.ModBlocks;
 import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.capablilities.Modifiable.Modifier;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -80,10 +83,29 @@ public class Constants {
     public static HashMap<Integer, Modifier> MODIFIER_REGISTRY = new HashMap<>();
 
     public static Modifier getByStack(ItemStack i) {
+        if (i == null) return null;
         for (Modifier j : MODIFIER_REGISTRY.values()) {
-            if (j.getItem().getItem().equals(i.getItem()) && j.getItem().getItemDamage() == i.getItemDamage()) return j;
+            if (j.getItem().getItem().equals(i.getItem()) && j.getItem().getItemDamage() == i.getItemDamage()) {
+                if (i.getTagCompound() != null && j.getItem().getTagCompound() != null) {
+                    if (i.getTagCompound().equals(j.getItem().getTagCompound())) return j;
+                } else return j;
+            }
         }
         return null;
+    }
+
+    private static final ItemStack potionNightVision = new ItemStack(Items.POTIONITEM);
+    private static final ItemStack potionInvisibility = new ItemStack(Items.POTIONITEM);
+
+    static {
+        NBTTagCompound nightVision = new NBTTagCompound();
+        nightVision.setString("Potion", "minecraft:long_night_vision");
+
+        NBTTagCompound invisibility = new NBTTagCompound();
+        invisibility.setString("Potion", "minecraft:long_invisibility");
+
+        potionNightVision.setTagCompound(nightVision);
+        potionInvisibility.setTagCompound(invisibility);
     }
 
     // Modifiers
@@ -99,15 +121,15 @@ public class Constants {
             TOUCH = new Modifier(8, 1, 3, "Touch", GREEN, new ItemStack(Blocks.WEB), PICKAXE | AXE | SHOVEL), //good
             HOLDING = new Modifier(9, 1, 4, "Holding", AQUA, new ItemStack(Items.GLASS_BOTTLE), ROD), //good
             STURDY = new Modifier(10, 5, 4, "Sturdy", AQUA, new ItemStack(Blocks.OBSIDIAN), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
-            SIGHT = new Modifier(11, 1, 4, "Sight", GREEN, new ItemStack(ModItems.sightToken), ARMOR | ROD), //good
-            CAMO = new Modifier(12, 1, 4, "Camo", WHITE, new ItemStack(ModItems.camoToken), ARMOR | ROD), //good
+            SIGHT = new Modifier(11, 1, 4, "Sight", GREEN, potionNightVision, ARMOR | ROD), //good
+            CAMO = new Modifier(12, 1, 4, "Camo", WHITE, potionInvisibility, ARMOR | ROD), //good
             BLEED = new Modifier(13, 3, 5, "Bleed", RED, new ItemStack(Items.ARROW), SWORD | BOW), //good
             DIRECT = new Modifier(14, 1, 5, "Direct", LIGHT_PURPLE, new ItemStack(ModItems.magnetGlove), PICKAXE | AXE | SHOVEL | BOW | SWORD), //good
             BANE = new Modifier(15, 1, 5, "Bane", DARK_RED, new ItemStack(Items.FERMENTED_SPIDER_EYE), SWORD | BOW), //good
             LIGHT = new Modifier(16, 5, 5, "Light", YELLOW, new ItemStack(Blocks.GLOWSTONE), SWORD | BOW | ROD), //good
             HEALING = new Modifier(17, 2, 6, "Healing", LIGHT_PURPLE, new ItemStack(ModItems.inertCore), ARMOR | ROD), //good
             ENDER = new Modifier(18, 8, 6, "Ender", AQUA, new ItemStack(Items.ENDER_PEARL), SWORD | ROD), //good
-            REPAIR = new Modifier(19, 3, 7, "Repair", LIGHT_PURPLE, new ItemStack(ModItems.repairToken), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
+            REPAIR = new Modifier(19, 3, 7, "Repair", LIGHT_PURPLE, ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(Enchantments.MENDING, 1)), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS), //good
             QUIVER = new Modifier(20, 1, 7, "Quiver", AQUA, new ItemStack(ModItems.arrowBundle), BOW), //good
             IMPERVIOUS = new Modifier(21, 1, 8, "Impervious", WHITE, new ItemStack(Items.NETHER_STAR), SWORD | AXE | PICKAXE | SHOVEL | ROD | ARMOR | BOW | SHEARS); //good
 

@@ -67,14 +67,14 @@ public class GUIInfuser extends GuiContainer {
                 if (item.getItem() == Items.POTIONITEM || item.getItem() == Items.ENCHANTED_BOOK) {
                     if (item.getTagCompound() != null && stack.getTagCompound() != null && item.getTagCompound().equals(stack.getTagCompound())) {
                         list.add(modifier.getColor()+modifier.getName());
+                        list.add(modifier.getColor()+"Tier "+modifier.getTier());
                     }
                 } else {
                     list.add(modifier.getColor()+modifier.getName());
+                    list.add(modifier.getColor()+"Tier "+modifier.getTier());
                 }
-                list.add(modifier.getColor()+"Tier "+modifier.getTier());
             }
         }
-
         return list;
     }
     @Override

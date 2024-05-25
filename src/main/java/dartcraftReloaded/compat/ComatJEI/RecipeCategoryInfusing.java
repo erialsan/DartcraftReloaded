@@ -12,15 +12,15 @@ import net.minecraft.util.ResourceLocation;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.recipe.IRecipeCategory;
 
-public class RecipeCategory implements IRecipeCategory<RecipeWrapper> {
-    public static final String NAME = "dcr.category";
+public class RecipeCategoryInfusing implements IRecipeCategory<RecipeWrapperInfusing> {
+    public static final String NAME = "dcr.category.infusing";
     private final IDrawable background;
     private final IDrawable icon;
     public static final ResourceLocation ICON;
 
-    public RecipeCategory(final IGuiHelper helper) {
+    public RecipeCategoryInfusing(final IGuiHelper helper) {
         this.background = helper.createDrawable(new ResourceLocation(Constants.modId, "textures/gui/jei.png"), 0, 0, 112, 113);
-        this.icon = helper.drawableBuilder(RecipeCategory.ICON, 0, 0, 16, 16).setTextureSize(16, 16).build();
+        this.icon = helper.drawableBuilder(RecipeCategoryInfusing.ICON, 0, 0, 16, 16).setTextureSize(16, 16).build();
     }
 
     public String getUid() {
@@ -43,7 +43,7 @@ public class RecipeCategory implements IRecipeCategory<RecipeWrapper> {
         return this.icon;
     }
 
-    public void setRecipe(final IRecipeLayout recipeLayout, final RecipeWrapper recipeWrapper, final IIngredients ingredients) {
+    public void setRecipe(final IRecipeLayout recipeLayout, final RecipeWrapperInfusing recipeWrapper, final IIngredients ingredients) {
         final List<List<ItemStack>> outputItem = ingredients.getOutputs(VanillaTypes.ITEM);
         final List<List<ItemStack>> inputItem = ingredients.getInputs(VanillaTypes.ITEM);
         final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();

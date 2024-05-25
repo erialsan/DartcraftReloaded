@@ -11,6 +11,7 @@ import dartcraftReloaded.items.nonburnable.EntityNonBurnableItem;
 import dartcraftReloaded.items.nonburnable.ItemInertCore;
 import dartcraftReloaded.items.tools.ItemForceRod;
 import dartcraftReloaded.networking.SoundMessage;
+import dartcraftReloaded.recipe.RecipeRod;
 import dartcraftReloaded.util.DartUtils;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
@@ -31,7 +32,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
@@ -165,31 +165,7 @@ public class InfusedActionHandler {
         if (!worldIn.isRemote) {
             BlockPos hitPos = pos.offset(facing);
             List<Entity> list = worldIn.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(hitPos.getX() - .5, hitPos.getY() - .5, hitPos.getZ() - .5, hitPos.getX() + 1.5, hitPos.getY() + 1.5, hitPos.getZ() + 1.5));
-
-            if (worldIn.getBlockState(pos.offset(facing)).getBlock().equals(Blocks.FIRE)) {
-                worldIn.setBlockToAir(pos.offset(facing));
-                boolean bw = false;
-                for (Entity i: list) {
-                    if(i instanceof EntityItem) {
-                        if(((EntityItem) i).getItem().getItem() instanceof ItemInertCore) {
-                            EntityItem bottledWither = new EntityNonBurnableItem(worldIn, pos.getX(), pos.getY()  + 1, pos.getZ(), new ItemStack(ModItems.bottledWither, ((EntityItem) i).getItem().getCount()));
-                            worldIn.spawnEntity(bottledWither);
-                            rodDoAction(held, player, worldIn);
-                            bw = true;
-                        }
-                    }
-                }
-                if(bw) {
-                    for(Entity i: list) {
-                        if(i instanceof EntityItem) {
-                            if (((EntityItem) i).getItem().getItem() instanceof ItemInertCore) {
-                                worldIn.removeEntity(i);
-                                return EnumActionResult.SUCCESS;
-                            }
-                        }
-                    }
-                }
-            } else if (worldIn.getBlockState(pos).getBlock().equals(Blocks.OBSIDIAN)) {
+            if (worldIn.getBlockState(pos).getBlock().equals(Blocks.OBSIDIAN)) {
                 worldIn.setBlockState(pos, ModBlocks.infuser.getDefaultState(), 3);
                 worldIn.notifyBlockUpdate(pos, Blocks.OBSIDIAN.getDefaultState(), ModBlocks.infuser.getDefaultState(), 3);
                 return rodDoAction(held, player, worldIn);
@@ -198,126 +174,33 @@ public class InfusedActionHandler {
                 worldIn.setBlockState(pos, ModBlocks.forceSapling.getDefaultState(), 3);
                 worldIn.notifyBlockUpdate(pos, i, ModBlocks.forceSapling.getDefaultState(), 3);
                 return rodDoAction(held, player, worldIn);
-            }
-            else {
+            } else {
+                boolean flag = false;
                 for(Entity i: list) {
                     if (i instanceof EntityItem) {
                         ItemStack item = ((EntityItem) i).getItem();
-                        if (item.getItem() == Items.ENCHANTED_BOOK) {
-                            NBTTagCompound nbt = item.getTagCompound();
-                            if (nbt != null) {
-                                NBTTagList enchantments = ItemEnchantedBook.getEnchantments(item);
-                                if (enchantments.toString().contains("id:70s")) {
+                        for (RecipeRod recipe : RecipeHandler.rodRecipes) {
+                            if (item.getItem() == recipe.input.getItem() && item.getItemDamage() == recipe.input.getItemDamage()) {
+                                if (recipe.needsFire) {
+                                    if (worldIn.getBlockState(pos.offset(facing)).getBlock().equals(Blocks.FIRE)) {
+                                        flag = true;
+                                        ItemStack newStack = recipe.output;
+                                        newStack.setCount(newStack.getCount() * item.getCount());
+                                        worldIn.removeEntity(i);
+                                        worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), newStack));
+                                    }
+                                } else {
+                                    ItemStack newStack = recipe.output;
+                                    newStack.setCount(newStack.getCount() * item.getCount());
                                     worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.repairToken)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-
-                            }
-                        } else if (ItemBlock.getItemFromBlock(Blocks.OBSIDIAN) == item.getItem()) {
-                            worldIn.removeEntity(i);
-                            worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ItemBlock.getItemFromBlock(ModBlocks.infuser), 1)));
-                            return rodDoAction(held, player, worldIn);
-                        } else if (ItemBlock.getItemFromBlock(Blocks.SAPLING) == item.getItem()) {
-                            worldIn.removeEntity(i);
-                            worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ItemBlock.getItemFromBlock(ModBlocks.forceSapling), 1)));
-                            return rodDoAction(held, player, worldIn);
-                        } else if (item.getItem() == Items.POTIONITEM) {
-                            NBTTagCompound nbt = item.getTagCompound();
-                            if (nbt != null) {
-                                String potion = nbt.getString("Potion");
-                                if (potion.equals("minecraft:long_night_vision")) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.sightToken)));
-                                    return rodDoAction(held, player, worldIn);
-                                } else if (potion.equals("minecraft:long_invisibility")) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.camoToken)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                            }
-                        } else if (item.getItem() == Items.BOOK) {
-                            worldIn.removeEntity(i);
-                            worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.upgradeTome)));
-                            return rodDoAction(held, player, worldIn);
-                            //} else if (item.getItem() == ModItems.experienceTome) {
-                            //    IExperienceTome cap = item.getCapability(CapabilityHandler.CAPABILITY_EXPTOME, null);
-                            //    int num = cap.getExperienceValue() / 100;
-                            //    worldIn.removeEntity(i);
-                            //    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.upgradeCore, num)));
-                            //    return doAction(held, player, worldIn);
-                        } else if(item.getItem() instanceof ItemArmor) {
-                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.CHEST) {
-                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 6)));
-                                    return rodDoAction(held, player, worldIn);
-
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 6)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceChest, 1)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                            }
-                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.LEGS) {
-                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 5)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 5)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceLegs, 1)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                            }
-                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.FEET) {
-                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 3)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 3)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceBoots, 1)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                            }
-                            if (((ItemArmor) item.getItem()).armorType == EntityEquipmentSlot.HEAD) {
-                                if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.IRON) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.IRON_INGOT, 4)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.GOLD) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(Items.GOLD_INGOT, 4)));
-                                    return rodDoAction(held, player, worldIn);
-                                }
-                                else if (((ItemArmor) item.getItem()).getArmorMaterial() == ItemArmor.ArmorMaterial.LEATHER) {
-                                    worldIn.removeEntity(i);
-                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.forceHelmet, 1)));
-                                    return rodDoAction(held, player, worldIn);
+                                    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), newStack));
                                 }
                             }
                         }
                     }
+                }
+                if (flag) {
+                    worldIn.setBlockToAir(pos.offset(facing));
                 }
             }
         }

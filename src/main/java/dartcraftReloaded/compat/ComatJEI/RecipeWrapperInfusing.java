@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RecipeWrapper implements IRecipeWrapper {
+public class RecipeWrapperInfusing implements IRecipeWrapper {
     public static final IRecipeWrapperFactory<Modifier> FACTORY;
     public final Modifier theModifier;
 
     List<List<ItemStack>> slots = new ArrayList<>();
 
-    public RecipeWrapper(final Modifier recipe) {
+    public RecipeWrapperInfusing(final Modifier recipe) {
         this.theModifier = recipe;
         for (int i = 0; i < 8; i++) {
             ArrayList<ItemStack> inner = new ArrayList<>();
@@ -39,6 +39,6 @@ public class RecipeWrapper implements IRecipeWrapper {
     }
 
     static {
-        FACTORY = RecipeWrapper::new;
+        FACTORY = RecipeWrapperInfusing::new;
     }
 }
