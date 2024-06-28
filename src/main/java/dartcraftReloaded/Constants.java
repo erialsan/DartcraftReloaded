@@ -135,5 +135,5 @@ public class Constants {
 
     public static final String modId = "dartcraftreloaded";
     public static final String name = "Dartcraft Reloaded";
-    public static final String version = "7.0";
+    public static final String version = "7.1";
 }
