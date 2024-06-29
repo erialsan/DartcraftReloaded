@@ -6,7 +6,10 @@ import dartcraftReloaded.capablilities.Modifiable.IModifiableTool;
 import dartcraftReloaded.capablilities.Modifiable.Modifier;
 import dartcraftReloaded.capablilities.UpgradeTome.IUpgradeTome;
 import dartcraftReloaded.config.ConfigHandler;
+import dartcraftReloaded.container.InfuserItemStackHandler;
+import dartcraftReloaded.container.InfuserSlotWrapper;
 import dartcraftReloaded.energy.DCREnergyStorage;
+import dartcraftReloaded.container.InfuserTank;
 import dartcraftReloaded.fluids.FluidForce;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.handlers.SoundHandler;
@@ -28,7 +31,6 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,8 +50,9 @@ import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_
 public class TileEntityInfuser extends TileEntity implements ITickable, ICapabilityProvider, ITileEntityProvider, IFluidHandler {
 
 
-    public final ItemStackHandler handler;
-    public FluidTank tank;
+    public final InfuserItemStackHandler handler;
+    public final InfuserSlotWrapper wrapper;
+    public InfuserTank tank;
     public int processTime = -1;
     public DCREnergyStorage energyStorage = new DCREnergyStorage(MAX_POWER, 1000);
     private int lastEnergy;
@@ -71,14 +74,15 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
     private static final Random rand = new Random();
 
     public TileEntityInfuser() {
-        this.handler = new ItemStackHandler(11) {
+        this.handler = new InfuserItemStackHandler(11, this) {
             @Override
-            protected int getStackLimit(int slot, ItemStack stack) {
-                return 1;
+            public int getSlotLimit(int slot) {
+                return slot == 9 ? 64 : 1; // 64 for force gems
             }
         };
+        this.wrapper = new InfuserSlotWrapper(handler);
 
-        tank = new FluidTank(10000);
+        tank = new InfuserTank(10000, this);
     }
 
     @Override
@@ -92,7 +96,6 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
         this.processTime = nbt.getInteger("time");
         this.maxProcessTime = nbt.getInteger("maxProcessTime");
         handler.deserializeNBT(nbt.getCompoundTag("ItemStackHandler"));
-        //ItemStackHelper.loadAllItems(nbt, this.infuserContents);
         tank.readFromNBT(nbt);
         energyStorage.readFromNBT(nbt);
         super.readFromNBT(nbt);
@@ -104,7 +107,6 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
         nbt.setInteger("time", processTime);
         nbt.setInteger("maxProcessTime", maxProcessTime);
         nbt.setTag("ItemStackHandler", handler.serializeNBT());
-        //ItemStackHelper.saveAllItems(nbt, this.infuserContents);
         tank.writeToNBT(nbt);
         energyStorage.writeToNBT(nbt);
         return super.writeToNBT(nbt);
@@ -334,7 +336,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
         }
     }
 
-    private void sync() {
+    public void sync() {
         world.markBlockRangeForRenderUpdate(pos, pos);
         world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
         world.scheduleBlockUpdate(pos,this.getBlockType(),0,0);
@@ -345,7 +347,7 @@ public class TileEntityInfuser extends TileEntity implements ITickable, ICapabil
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return (T) this.handler;
+            return (T) this.wrapper;
         if (capability == FLUID_HANDLER_CAPABILITY)
             return (T) this.tank;
         if (capability == CapabilityEnergy.ENERGY)

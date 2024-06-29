@@ -44,7 +44,7 @@ public class MCPNames {
 	}
 
 	public static boolean mcp() {
-		return LoadingPlugin.IN_MCP;
+		return DartcraftCore.IN_MCP;
 	}
 
 	public static String field(String srgName) {

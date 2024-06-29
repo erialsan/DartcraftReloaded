@@ -26,9 +26,6 @@ public class RecipeHandler {
         }
         registerForceIngots(ConfigHandler.ingots2, 2);
         registerForceIngots(ConfigHandler.ingots3, 3);
-        if (Loader.isModLoaded("ic2")) {
-
-        }
         GameRegistry.addSmelting(ModItems.filledJar, new ItemStack(ModItems.soulWafer), 5.0f);
         rodRecipes.add(new RecipeRod(new ItemStack(Items.BOOK), new ItemStack(ModItems.upgradeTome)));
         rodRecipes.add(new RecipeRod(new ItemStack(Blocks.OBSIDIAN), new ItemStack(ModBlocks.infuser)));

@@ -515,4 +515,15 @@ public class DartUtils {
         }
         return names;
     }
+
+    public static ArrayList<Modifier> getModifiersForTier (int tier) {
+        int tier2 = tier;
+        if (tier2 < 1) tier2 = 1;
+        if (tier2 > 8) tier2 = 8;
+        ArrayList<Modifier> modifiers = new ArrayList<>();
+        for (Modifier m : MODIFIER_REGISTRY.values()) {
+            if (m.getTier() <= tier2) modifiers.add(m);
+        }
+        return modifiers;
+    }
 }

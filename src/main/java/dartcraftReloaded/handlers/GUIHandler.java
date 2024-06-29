@@ -1,10 +1,12 @@
 package dartcraftReloaded.handlers;
 
+import dartcraftReloaded.client.gui.GUIBook;
 import dartcraftReloaded.client.gui.GUIFortune;
 import dartcraftReloaded.client.gui.GUIFurnace;
 import dartcraftReloaded.client.gui.GUIInfuser;
 import dartcraftReloaded.container.ContainerBlockFurnace;
 import dartcraftReloaded.container.ContainerBlockInfuser;
+import dartcraftReloaded.items.ModItems;
 import dartcraftReloaded.tileEntity.TileEntityForceFurnace;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import net.minecraft.client.resources.I18n;
@@ -21,7 +23,8 @@ public class GUIHandler implements IGuiHandler {
 
     public static final int INFUSER = 0;
     public static final int FURNACE = 1;
-    public static final int FORTUNE = 4;
+    public static final int BOOK = 2;
+    public static final int FORTUNE = 3;
 
 
     @Override
@@ -32,23 +35,30 @@ public class GUIHandler implements IGuiHandler {
         else if(ID == FURNACE) {
             return new GUIFurnace(player.inventory, (TileEntityForceFurnace)world.getTileEntity(new BlockPos(x, y, z)));
         }
+        else if (ID == BOOK) {
+            if (player.getHeldItemMainhand().getItem() == ModItems.upgradeTome) {
+                return new GUIBook(player.getHeldItemMainhand());
+            } else if (player.getHeldItemOffhand().getItem() == ModItems.upgradeTome) {
+                return new GUIBook(player.getHeldItemOffhand());
+            }
+        }
         else if (ID == FORTUNE) {
             NBTTagCompound nbt;
             ItemStack stack = player.getHeldItemMainhand();
-            if(stack.hasTagCompound()) {
+            if (stack.hasTagCompound()) {
                 nbt = stack.getTagCompound();
-            }
-            else {
+            } else {
                 nbt = new NBTTagCompound();
             }
 
-            if(!nbt.hasKey("message")) {
+            if (!nbt.hasKey("message")) {
                 addMessage(stack, nbt);
             }
 
 
             return new GUIFortune(I18n.format(nbt.getString("message")));
         }
+
         return null;
     }
 

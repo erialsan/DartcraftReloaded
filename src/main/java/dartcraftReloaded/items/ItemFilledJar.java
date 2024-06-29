@@ -52,6 +52,7 @@ public class ItemFilledJar extends ItemBase {
 
     public static void spawn(ItemStack stack, World worldIn, BlockPos pos, EnumFacing side) {
         if (stack.getItem() != ModItems.filledJar) return;
+        if (stack == null) return;
         if (!hasAnimal(stack.getTagCompound())) return;
         NBTTagCompound stackTags = stack.getTagCompound();
         NBTTagCompound entityTags = stackTags.getCompoundTag(NBT_ANIMAL);

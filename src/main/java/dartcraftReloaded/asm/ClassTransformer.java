@@ -14,7 +14,7 @@ import net.minecraft.launchwrapper.IClassTransformer;
 import static org.objectweb.asm.Opcodes.*;
 
 public class ClassTransformer implements IClassTransformer {
-	public static Logger logger = LogManager.getLogger("DCRCore");
+	public static Logger logger = LogManager.getLogger("DartcraftCore");
 
 	final String asmHandler = "dartcraftReloaded/handlers/AsmHandler";
 
@@ -179,9 +179,17 @@ public class ClassTransformer implements IClassTransformer {
 			AbstractInsnNode ain = method.instructions.get(0);
 			logger.log(Level.DEBUG, "Found setAttackTarget");
 			InsnList toInsert = new InsnList();
+			// load class instance+playerbase, call function
 			toInsert.add(new VarInsnNode(ALOAD, 0));
 			toInsert.add(new VarInsnNode(ALOAD, 1));
-			toInsert.add(new MethodInsnNode(INVOKESTATIC, asmHandler, "patchAttackTarget", "(Lnet/minecraft/entity/EntityLiving;Lnet/minecraft/entity/EntityLivingBase;)V", false));
+			toInsert.add(new MethodInsnNode(INVOKESTATIC, asmHandler, "patchAttackTarget", "(Lnet/minecraft/entity/EntityLiving;Lnet/minecraft/entity/EntityLivingBase;)Lnet/minecraft/entity/EntityLivingBase;", false));
+			// store result of function. then load instance and result of function
+			toInsert.add(new VarInsnNode(ASTORE, 2));
+			toInsert.add(new VarInsnNode(ALOAD, 0));
+			toInsert.add(new VarInsnNode(ALOAD, 2));
+			// set attacktarget in instance = result of function
+			toInsert.add(new FieldInsnNode(PUTFIELD, "net/minecraft/entity/EntityLiving", MCPNames.field("field_70696_bz"), "Lnet/minecraft/entity/EntityLivingBase;"));
+			// return
 			toInsert.add(new InsnNode(RETURN));
 			method.instructions.insertBefore(ain, toInsert);
 		}

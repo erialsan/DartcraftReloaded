@@ -86,7 +86,9 @@ public class GUIInfuser extends GuiContainer {
         this.drawTexturedModalRect(152, 11+107-height, 176, 20+107-height, 12, height);
 
 
-        int progressHeight = (int) ((double) te.processTime * 20 / te.maxProcessTime);
+        int progressHeight;
+        if (te.maxProcessTime == 0) progressHeight = 0;
+        else progressHeight = (int) ((double) te.processTime * 20 / te.maxProcessTime);
         this.drawTexturedModalRect(134, 93+20-progressHeight, 176, 20-progressHeight, 2, progressHeight);
 
         if (te.getBookLevel() < 1) {

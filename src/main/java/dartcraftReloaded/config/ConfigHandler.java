@@ -20,7 +20,7 @@ public class ConfigHandler {
     @Config.Comment("Put a modifier's id (integer) in this list to disable it. ")
     public static int[] disabledModifiers = {};
 
-    @Config.Comment("Luck/heat and luck/grinding interaction? Default: true")
+    @Config.Comment("Luck/heat interaction? Default: true")
     public static boolean luckHeatEnabled = true;
 
     @Config.Comment("Infuser rf/t. Default: 80")

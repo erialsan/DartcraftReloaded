@@ -22,15 +22,18 @@ public class playerInteractEvent {
             ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
             if (stack.hasCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null)) {
                 if (stack.getCapability(CapabilityHandler.CAPABILITY_MODIFIABLE, null).hasModifier(Constants.HOLDING)) {
-                    if (event.getTarget() instanceof EntityLiving) {
-                        ItemStack filledJar = new ItemStack(ModItems.filledJar);
-                        ItemFilledJar.addTargetToLasso(filledJar, (EntityLiving) event.getTarget());
-                        EntityItem droppedItem = new EntityItem(event.getWorld(), event.getTarget().posX, event.getTarget().posY + 1, event.getTarget().posZ, filledJar);
-                        event.getWorld().removeEntity(event.getTarget());
-                        event.setCanceled(true);
-                        event.getWorld().spawnEntity(droppedItem);
-                        InfusedActionHandler.damage(stack, event.getEntityPlayer());
-                        event.getEntityPlayer().inventory.markDirty();
+                    if (event.getTarget() instanceof EntityLiving && !(event.getTarget() instanceof EntityPlayer)) {
+                        if (!event.getEntityPlayer().getCooldownTracker().hasCooldown(event.getEntityPlayer().getHeldItem(event.getEntityPlayer().getActiveHand()).getItem())) {
+                            ItemStack filledJar = new ItemStack(ModItems.filledJar);
+                            ItemFilledJar.addTargetToLasso(filledJar, (EntityLiving) event.getTarget());
+                            EntityItem droppedItem = new EntityItem(event.getWorld(), event.getTarget().posX, event.getTarget().posY + 1, event.getTarget().posZ, filledJar);
+                            event.getWorld().removeEntity(event.getTarget());
+                            event.setCanceled(true);
+                            event.getWorld().spawnEntity(droppedItem);
+                            InfusedActionHandler.damage(stack, event.getEntityPlayer());
+                            event.getEntityPlayer().inventory.markDirty();
+                            event.getEntityPlayer().getCooldownTracker().setCooldown(event.getEntityPlayer().getHeldItem(event.getEntityPlayer().getActiveHand()).getItem(), 80);
+                        }
                     }
                 }
             }

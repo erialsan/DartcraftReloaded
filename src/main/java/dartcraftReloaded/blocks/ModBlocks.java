@@ -26,7 +26,7 @@ public class ModBlocks {
 
     public static BlockForceBrick forceBrick = new BlockForceBrick();
 
-    public static BlockForceBrickSlab forceBrickSlab = new BlockForceBrickSlab();
+    //public static BlockForceBrickSlab forceBrickSlab = new BlockForceBrickSlab();
     public static BlockForceBrickStair[] forceBrickStairs = new BlockForceBrickStair[16];
     static {
         for (int i = 0; i < 16; i++) {
@@ -49,7 +49,7 @@ public class ModBlocks {
                 forcePlanks,
                 litForceFurnace,
                 forceBrick,
-                forceBrickSlab,
+                //forceBrickSlab,
                 forceTorch
         );
 
@@ -74,7 +74,7 @@ public class ModBlocks {
         }
 
         registerDyeBlock(registry, forceBrick, FORCE_BRICK);
-        registerDyeBlock(registry, forceBrickSlab, FORCE_BRICK_SLAB);
+        //registerDyeBlock(registry, forceBrickSlab, FORCE_BRICK_SLAB);
     }
 
     public static void registerModels() {
@@ -88,7 +88,7 @@ public class ModBlocks {
         litForceFurnace.registerItemModel(Item.getItemFromBlock(litForceFurnace));
         forceBrick.registerItemModel(Item.getItemFromBlock(forceBrick));
         forceTorch.registerItemModel(Item.getItemFromBlock(forceTorch));
-        forceBrickSlab.registerItemModel(Item.getItemFromBlock(forceBrickSlab));
+        //forceBrickSlab.registerItemModel(Item.getItemFromBlock(forceBrickSlab));
         for (int i = 0; i < 16; i++) {
             forceBrickStairs[i].registerItemModel(Item.getItemFromBlock(forceBrickStairs[i]), "forceBrickStair."+EnumDyeColor.values()[i].getTranslationKey());
         }

@@ -298,7 +298,7 @@ public class InfusedActionHandler {
 
                         if (j > 0)
                         {
-                            entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
+                            entityarrow.setDamage(entityarrow.getDamage() * ((double)j * 0.25D + 1.25D));
                         }
 
                         int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack) + cap.getLevel(Constants.FORCE);

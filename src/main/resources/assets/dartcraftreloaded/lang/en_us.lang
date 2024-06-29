@@ -298,3 +298,27 @@ text.dartcraftReloaded.fortune185=A Yo-Yo isn't a tool for hurting people...
 gui.blockInfuser.Empty.tooltip=Empty
 gui.blockInfuserHelp.tooltip=Help
 gui.blockInfuser.Start.tooltip=Start Infusion
+
+info.Force=Increases knockback of weapons
+info.Damage=Increases damage of weapons
+info.Heat=Heat weapons set mobs on fire; heat rods can light fires; heat armor sets attacking entities on fire; heat tools smelt mined items
+info.Speed=Increases mining speed of tools; reduces draw time of bows; increases attack speed of weapons; speed rod and armor give speed potion effect
+info.Lumberjack=Allows an axe to cut down a whole tree at once
+info.Luck=Acts like fortune on tools, looting on weapons; luck rod and armor give luck potion effect
+info.Rainbow=Randomizes color of wool from sheared sheep
+info.Experience=Increases XP drop from killing mobs and mining
+info.Touch=Acts like silk touch
+info.Holding=Shift right-click with holding rod to bottle entities or package tileentities
+info.Sturdy=Makes items less likely to take damage; acts like protection on armor
+info.Sight=Sight rod and armor give night vision potion effect
+info.Camo=Camo rod and armor give invisibility potion effect; 4 pieces of camo armor makes a player invisible to hostile mobs
+info.Bleed=Inflicts attacked entities with Bleed status effect, continuing to hurt them
+info.Direct=Teleports all items dropped from mined blocks or killed mobs directly into your inventory
+info.Bane=Creepers hit with a bane weapon are unable to explode; endermen hit with a bane weapon are unable to teleport
+info.Light=Inflicts extra damage on undead; light rods can place torches
+info.Healing=Healing armor applies regeneration potion effect; healing rod applies status effects of golden apple for healing 1, enchanted golden apple for healing 2
+info.Ender=Allows teleportation by shift right-clicking
+info.Repair=Slowly repairs items over time
+info.Quiver=Allows a bow to shoot infinite arrows without any in your inventory
+info.Impervious=Makes an item unbreakable
+

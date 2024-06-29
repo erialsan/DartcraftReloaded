@@ -4,6 +4,7 @@ import dartcraftReloaded.DartcraftReloaded;
 import dartcraftReloaded.capablilities.UpgradeTome.UpgradeTomeProvider;
 import dartcraftReloaded.handlers.CapabilityHandler;
 import dartcraftReloaded.capablilities.UpgradeTome.IUpgradeTome;
+import dartcraftReloaded.handlers.GUIHandler;
 import dartcraftReloaded.tileEntity.TileEntityInfuser;
 import dartcraftReloaded.util.DartUtils;
 import net.minecraft.client.util.ITooltipFlag;
@@ -13,7 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -65,15 +68,19 @@ public class ItemUpgradeTome extends Item {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         IUpgradeTome cap = stack.getCapability(CapabilityHandler.CAPABILITY_UPGRADETOME, null);
-        if (player.isCreative()) {
-            if (player.isSneaking()) {
-                cap.setLevel(Math.max(1, cap.getLevel() - 1));
-            } else {
-                cap.setLevel(Math.min(8, cap.getLevel() + 1));
-            }
+        if (player.isCreative() && player.isSneaking()) {
+            cap.setLevel((cap.getLevel() % 8) + 1);
+            return new ActionResult<>(EnumActionResult.FAIL, stack);
+        } else {
+            player.openGui(DartcraftReloaded.instance, GUIHandler.BOOK, world, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
+            return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
         }
-        return new ActionResult<>(EnumActionResult.FAIL, stack);
     }
 
+    @Override
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        player.openGui(DartcraftReloaded.instance, GUIHandler.BOOK, worldIn, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
+        return EnumActionResult.PASS;
+    }
 
 }

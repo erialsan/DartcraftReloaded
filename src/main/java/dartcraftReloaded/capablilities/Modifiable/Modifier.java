@@ -5,15 +5,13 @@ import dartcraftReloaded.config.ConfigHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Modifier {
     private final int id;
     private final int maxLevels;
-    private final int tier;
-    private final ItemStack item;
+    private int tier;
+    private ItemStack item;
     private final long allowedTools;
     private final String name;
     private final TextFormatting color;
@@ -29,6 +27,14 @@ public class Modifier {
         if (Arrays.stream(ConfigHandler.disabledModifiers).noneMatch(i -> i == id)) {
             Constants.MODIFIER_REGISTRY.put(id, this);
         }
+    }
+
+    public void setTier(int tier) {
+        this.tier = tier;
+    }
+
+    public void setItem(ItemStack item) {
+        this.item = item;
     }
 
     public int getId() {

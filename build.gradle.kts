@@ -29,7 +29,7 @@ val jar: Jar by tasks
 jar.apply {
     manifest {
         attributes(mapOf(
-            "FMLCorePlugin" to "dartcraftReloaded.asm.LoadingPlugin",
+            "FMLCorePlugin" to "dartcraftReloaded.asm.DartcraftCore",
             "FMLCorePluginContainsFMLMod" to "true"))
     }
 }
@@ -115,6 +115,10 @@ repositories {
             includeGroup("curse.maven")
         }
     }
+    maven {
+        name = ("jared")
+        url = uri("https://maven.blamejared.com")
+    }
 }
 
 dependencies {
@@ -123,9 +127,10 @@ dependencies {
     implementation("curse.maven:buildcraft-61811:3204475")
     implementation("curse.maven:forestry-59751:2918418")
     implementation("curse.maven:redstone-flux-270789:2920436")
+    implementation("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.700")
 }
 
-// Publishing to a Maven repository
+// Publishing to a Maven repositoWry
 publishing {
     publications {
         create<MavenPublication>("maven") {

@@ -1,17 +1,14 @@
 package dartcraftReloaded.entity;
 
-import dartcraftReloaded.handlers.SoundHandler;
 import dartcraftReloaded.items.ItemFilledJar;
 import dartcraftReloaded.items.ModItems;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -52,7 +49,7 @@ public class EntityBottle extends EntityThrowable {
         if (!this.world.isRemote) {
             ItemStack itemstack = this.getBottle();
 
-            if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
+            if (itemstack != null && result.typeOfHit == RayTraceResult.Type.BLOCK) {
                 ItemFilledJar.spawn(itemstack, world, pos, result.sideHit);
             }
 
@@ -64,7 +61,7 @@ public class EntityBottle extends EntityThrowable {
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         ItemStack itemstack = new ItemStack(compound.getCompoundTag("Bottle"));
-        if (itemstack.isEmpty()) {
+        if (itemstack == null || itemstack.isEmpty()) {
             this.setDead();
         } else {
             this.setItem(itemstack);
@@ -75,7 +72,7 @@ public class EntityBottle extends EntityThrowable {
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         ItemStack itemstack = this.getBottle();
-        if (!itemstack.isEmpty()) {
+        if (itemstack != null && !itemstack.isEmpty()) {
             compound.setTag("Bottle", itemstack.writeToNBT(new NBTTagCompound()));
         }
 

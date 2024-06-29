@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+// Hooks injected in asm/ClassTransformer
 public class AsmHandler {
 
 	static PlayerInteractionManager interactionManager;
@@ -92,7 +93,7 @@ public class AsmHandler {
 		return (float)(1.0D / player.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue() * 20.0D);
 	}
 
-	public static void patchAttackTarget(EntityLiving attacker, EntityLivingBase target) {
+	public static EntityLivingBase patchAttackTarget(EntityLiving attacker, EntityLivingBase target) {
 		int j = 0;
 		if (target instanceof EntityPlayer) {
 			for (ItemStack i : ((EntityPlayer) target).inventory.armorInventory) {
@@ -102,10 +103,10 @@ public class AsmHandler {
 			}
 		}
 		if (j >= 4) {
-			return;
+			return null;
 		}
-		attacker.attackTarget = target;
 		net.minecraftforge.common.ForgeHooks.onLivingSetAttackTarget(attacker, target);
+		return target;
 	}
 
 	public static boolean patchTeleport(EntityEnderman enderman, double x, double y, double z) {
