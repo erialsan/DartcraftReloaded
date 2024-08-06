@@ -35,6 +35,9 @@ public class ConfigHandler {
     @Config.Comment("Cold animals regen timer. Default: 3600")
     public static int ticksUntilConversion = 3600;
 
+    @Config.Comment("Chances to generate power ore. Set 0 to disable. Default: 5")
+    public static int genChances = 5;
+
     @Mod.EventBusSubscriber(modid = Constants.modId)
     private static class EventHandler {
 

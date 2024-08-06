@@ -1,6 +1,7 @@
 package dartcraftReloaded.world;
 
 import dartcraftReloaded.blocks.ModBlocks;
+import dartcraftReloaded.config.ConfigHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
@@ -36,12 +37,14 @@ public class DCRWorldGen implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
-        switch(world.provider.getDimension()) {
+        if (ConfigHandler.genChances > 0) {
             //Overworld
-            case 0:
+            if (world.provider.getDimension() == 0) {
                 if (!(world.getWorldType() == WorldType.FLAT)) {
-                    this.runGenerator(forceOre, world, random, chunkX, chunkZ, 5, 0, 64);
+                    this.runGenerator(forceOre, world, random, chunkX, chunkZ, ConfigHandler.genChances, 0, 64);
                 }
+            }
         }
+
     }
 }
